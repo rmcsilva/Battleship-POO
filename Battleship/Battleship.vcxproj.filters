@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Controller">
+      <UniqueIdentifier>{d91a0a0e-f7bd-4bd3-8d25-4ba15d2ecfb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{470c8108-fc59-49cf-982e-9b9cb531e4c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{a2047fb1-386e-4a94-b609-cd663b15e98d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View\Library">
+      <UniqueIdentifier>{2dfced10-f7cc-4fc6-9364-1fb8c911ce1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Map">
+      <UniqueIdentifier>{9e2cb086-6e0a-4cf6-8a32-a395dd0b7c8c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Controller">
+      <UniqueIdentifier>{9e6149bb-e92e-496b-a85d-a0a939030e69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View">
+      <UniqueIdentifier>{fe2a3e2e-004e-4588-a3c6-2c9953664eb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View\Library">
+      <UniqueIdentifier>{96bf3ca1-726c-4aab-881a-a530155d6ae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model">
+      <UniqueIdentifier>{42077776-d7cd-4c83-a556-dc7d4fac93aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Map">
+      <UniqueIdentifier>{b538a7cc-edb4-4e9e-a58f-a2bec529ad8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Ship">
+      <UniqueIdentifier>{75b9a417-e3af-4c7f-95d2-56c6c2a56140}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Ship">
+      <UniqueIdentifier>{29420095-2102-46ab-bb45-f0f1f54d8be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Model\Event">
+      <UniqueIdentifier>{8abcbbbb-2764-4937-a3b6-f90f8ebab6cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model\Event">
+      <UniqueIdentifier>{94807eac-48e2-43d7-8263-a41f531a081c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Consola.h">
+      <Filter>Header Files\View\Library</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerModel.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="CellModel.h">
+      <Filter>Header Files\Model\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GroundModel.h">
+      <Filter>Header Files\Model\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MapModel.h">
+      <Filter>Header Files\Model\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="PortModel.h">
+      <Filter>Header Files\Model\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="SeaModel.h">
+      <Filter>Header Files\Model\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>Header Files\View</Filter>
+    </ClInclude>
+    <ClInclude Include="FileControler.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="ShipModel.h">
+      <Filter>Header Files\Model\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="EventModel.h">
+      <Filter>Header Files\Model\Event</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Battleship.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Exemplo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Consola.cpp">
+      <Filter>Source Files\View\Library</Filter>
+    </ClCompile>
+    <ClCompile Include="CellModel.cpp">
+      <Filter>Source Files\Model\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="SeaModel.cpp">
+      <Filter>Source Files\Model\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="PortModel.cpp">
+      <Filter>Source Files\Model\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MapModel.cpp">
+      <Filter>Source Files\Model\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="GroundModel.cpp">
+      <Filter>Source Files\Model\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="FileController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ShipModel.cpp">
+      <Filter>Source Files\Model\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="EventModel.cpp">
+      <Filter>Source Files\Model\Event</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

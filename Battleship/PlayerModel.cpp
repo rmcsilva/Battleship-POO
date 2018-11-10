@@ -1,0 +1,33 @@
+#include "stdafx.h"
+#include "PlayerModel.h"
+
+PlayerModel::PlayerModel(const std::string &name, int coins) : name(name), coins(coins) {}
+
+PlayerModel::PlayerModel(int coins) : coins(coins) {}
+
+const std::string &PlayerModel::getName() const {
+    return name;
+}
+
+int PlayerModel::getCoins() const {
+    return coins;
+}
+
+void PlayerModel::addCoins(int amount) {
+    coins += amount;
+}
+
+bool PlayerModel::removeCoins(int amount) {
+    if (canRemoveCoins(amount)){
+        coins -= amount;
+        return true;
+    }else{
+        return false;
+    }
+
+
+}
+
+bool PlayerModel::canRemoveCoins(int amount) const {
+    return coins > amount;
+}
