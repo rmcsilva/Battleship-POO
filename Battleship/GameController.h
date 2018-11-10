@@ -1,16 +1,11 @@
-//
-// Created by Ricardo Silva on 01/11/2018.
-//
-
-#include "stdafx.h"
-
-#ifndef BATTLESHIP_POO_GAMECONTROLLER_H
-#define BATTLESHIP_POO_GAMECONTROLLER_H
-
-
+#pragma once
+#include "FileControler.h"
 class GameController {
-
+	FileController fileController;
+	MapModel *map;
+public:
+	GameController();
+	bool readInitialFileConfigs(std::string filename);
+	CellModel* getCellAt(int x, int y) const;
 };
 
-
-#endif //BATTLESHIP_POO_GAMECONTROLLER_H

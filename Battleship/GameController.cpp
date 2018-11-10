@@ -1,5 +1,18 @@
-//
-// Created by Ricardo Silva on 01/11/2018.
-//
 #include "stdafx.h"
 #include "GameController.h"
+
+//TODO: Initialize with defaults
+
+GameController::GameController()
+{
+}
+
+bool GameController::readInitialFileConfigs(std::string filename)
+{
+	return fileController.readInitialFileConfigs(filename, map);
+}
+
+CellModel * GameController::getCellAt(int x, int y) const
+{
+	return map->getCellAt(x,y);
+}

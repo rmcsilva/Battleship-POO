@@ -6,10 +6,10 @@ class ShipModel
 	const int maxCapacity, maxSoldiers, maxWater;
 	int capacity, soldiers, water;
 public:
-	ShipModel();
-	~ShipModel();
+	//ShipModel();
+	//~ShipModel();
 
 	//TODO: Expand ships
-	void refillWater();
+	virtual void refillWater() = 0;
 };
 

@@ -1,3 +1,4 @@
+#pragma once
 #include "CellModel.h"
 
 class SeaModel : public CellModel{

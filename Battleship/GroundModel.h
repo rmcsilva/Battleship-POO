@@ -1,3 +1,4 @@
+#pragma once
 #include "CellModel.h"
 
 class GroundModel : public CellModel{
