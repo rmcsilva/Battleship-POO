@@ -8,7 +8,9 @@ class GameController {
 public:
 	GameController();
 	~GameController();
+
 	bool readInitialFileConfigs(std::string filename);
 	CellModel* getCellAt(int x, int y) const;
+	GameState getGameState() const;
 };
 

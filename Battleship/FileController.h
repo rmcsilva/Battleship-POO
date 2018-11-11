@@ -20,7 +20,8 @@ class FileController
 		probtempestade,
 		probsereias,
 		probcalmaria,
-		probmotim
+		probmotim,
+		INVALID
 	};
 public:
 	FileController();

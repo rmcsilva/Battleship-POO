@@ -21,16 +21,16 @@ bool FileController::readInitialFileConfigs(std::string filename, MapModel *&map
 	if (file.is_open()) {
 		while (std::getline(file, line)) {
 			std::stringstream linestream(line);
-			std::string comand;
+			std::string command;
 			int value;
 
 			//Teste stream
 			std::cout << linestream.str() << std::endl;
 			
-			linestream >> comand >> value;
-			//std::cout << comand << std::endl;
+			linestream >> command >> value;
+			//std::cout << command << std::endl;
 
-			switch (stringToInitialConfigs(comand))
+			switch (stringToInitialConfigs(command))
 			{
 				case InitialConfigsCommands::linhas:
 					if (!setupMap(file, value, map, game)) {
@@ -60,7 +60,7 @@ bool FileController::readInitialFileConfigs(std::string filename, MapModel *&map
 					game->setMerchSellPrice(value);
 					break;
 				case InitialConfigsCommands::soldadosporto:
-
+					//TODO: COMPLETEEE
 					break;
 				case InitialConfigsCommands::probevento:
 					event->setProbability(value);
@@ -104,6 +104,7 @@ FileController::InitialConfigsCommands FileController::stringToInitialConfigs(st
 	if (inString == "probsereias") return InitialConfigsCommands::probsereias;
 	if (inString == "probcalmaria") return InitialConfigsCommands::probcalmaria;
 	if (inString == "probmotim") return InitialConfigsCommands::probmotim;
+	return InitialConfigsCommands::INVALID;
 }
 
 bool FileController::setupMap(std::ifstream &file,int const &lines, MapModel *&map, GameModel *game)
@@ -114,15 +115,15 @@ bool FileController::setupMap(std::ifstream &file,int const &lines, MapModel *&m
 		std::stringstream linestream(line);
 		std::cout << linestream.str() << std::endl;
 
-		std::string comand;
+		std::string command;
 		int value;
 
-		linestream >> comand >> value;
+		linestream >> command >> value;
 
-		std::cout << comand << std::endl;
+		std::cout << command << std::endl;
 		std::cout << value << std::endl;
 
-		if (stringToInitialConfigs(comand) == InitialConfigsCommands::colunas) {
+		if (stringToInitialConfigs(command) == InitialConfigsCommands::colunas) {
 			try {
 				map = new MapModel(lines, value);
 			}

@@ -4,6 +4,12 @@
 
 GameModel::GameModel()
 {
+	state = GameState::SETUP;
+}
+
+GameState GameModel::getGameState() const
+{
+	return state;
 }
 
 int GameModel::getPlayerCoins() const
@@ -39,6 +45,11 @@ int GameModel::getMerchBuyPrice() const
 std::vector<PortModel*> GameModel::getFriendlyPorts() const
 {
 	return friendlyPorts;
+}
+
+void GameModel::setGameState(GameState state)
+{
+	this->state = state;
 }
 
 void GameModel::setPlayerCoins(int amount)
