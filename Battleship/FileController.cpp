@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "FileControler.h"
+#include "FileController.h"
 
 
 FileController::FileController()
@@ -11,7 +11,7 @@ FileController::~FileController()
 {
 }
 
-bool FileController::readInitialFileConfigs(std::string filename, MapModel *&map)
+bool FileController::readInitialFileConfigs(std::string filename, MapModel *&map, EventModel *event, GameModel *game)
 {
 	//TODO: Add info to logs
 
@@ -33,14 +33,49 @@ bool FileController::readInitialFileConfigs(std::string filename, MapModel *&map
 			switch (stringToInitialConfigs(comand))
 			{
 				case InitialConfigsCommands::linhas:
-					if (!setupMap(file, value, map)) {
+					if (!setupMap(file, value, map, game)) {
 						//TODO: Error reading file 
 						return false;
 					}
 					break;
 				case InitialConfigsCommands::moedas:
+					game->setPlayerCoins(value);
 					break;
 				case InitialConfigsCommands::probpirata:
+					map->setPirateProb(value);
+					break;
+				case InitialConfigsCommands::preconavio:
+					game->setShipPrice(value);
+					break;
+				case InitialConfigsCommands::precosoldado:
+					game->setSoldierPrice(value);
+					break;
+				case InitialConfigsCommands::precovendpeixe:
+					game->setFishSellPrice(value);
+					break;
+				case InitialConfigsCommands::precocompmercad:
+					game->setMerchBuyPrice(value);
+					break;
+				case InitialConfigsCommands::precovendmercad:
+					game->setMerchSellPrice(value);
+					break;
+				case InitialConfigsCommands::soldadosporto:
+
+					break;
+				case InitialConfigsCommands::probevento:
+					event->setProbability(value);
+					break;
+				case InitialConfigsCommands::probtempestade:
+					event->setStormProbability(value);
+					break;
+				case InitialConfigsCommands::probsereias:
+					event->setMermaidProbability(value);
+					break;
+				case InitialConfigsCommands::probcalmaria:
+					event->setCalmProbability(value);
+					break;
+				case InitialConfigsCommands::probmotim:
+					event->setRiotProbability(value);
 					break;
 				default:
 					return false;
@@ -71,7 +106,7 @@ FileController::InitialConfigsCommands FileController::stringToInitialConfigs(st
 	if (inString == "probmotim") return InitialConfigsCommands::probmotim;
 }
 
-bool FileController::setupMap(std::ifstream &file,int const &lines, MapModel *&map)
+bool FileController::setupMap(std::ifstream &file,int const &lines, MapModel *&map, GameModel *game)
 {
 	std::string line;
 
@@ -95,7 +130,7 @@ bool FileController::setupMap(std::ifstream &file,int const &lines, MapModel *&m
 				//TODO: add to log invalid lines, columns number
 			}
 
-			if (readMap(file, lines, value, map)) {
+			if (readMap(file, lines, value, map, game)) {
 				return true;
 			}
 			else {
@@ -115,7 +150,7 @@ bool FileController::setupMap(std::ifstream &file,int const &lines, MapModel *&m
 	return true;
 }
 
-bool FileController::readMap(std::ifstream & file, int const & lines, int const & columns, MapModel *map)
+bool FileController::readMap(std::ifstream & file, int const & lines, int const & columns, MapModel *map, GameModel *game)
 {
 	char cellType;
 	for (int i = 0; i < lines; i++)
@@ -127,10 +162,11 @@ bool FileController::readMap(std::ifstream & file, int const & lines, int const 
 			{
 				if (isupper(cellType)) 
 				{
-					map->addPortCellAt(j, i, CellModel::Owner::PLAYER);
+					map->addPortCellAt(j, i, cellType, CellModel::Owner::PLAYER);
+					game->addFriendlyPort((PortModel*)map->getCellAt(j,i));
 				} 
 				else {
-					map->addPortCellAt(j, i, CellModel::Owner::PIRATE);
+					map->addPortCellAt(j, i, cellType, CellModel::Owner::PIRATE);
 				}
 			}
 			else if (cellType == '.') {

@@ -28,15 +28,15 @@ void MapModel::addCellAt(int x, int y, CellModel::Type type)
 	}
 }
 
-void MapModel::addPortCellAt(int x, int y, CellModel::Owner owner)
+void MapModel::addPortCellAt(int x, int y, char id,CellModel::Owner owner)
 {
 	switch (owner)
 	{
 	case CellModel::Owner::PLAYER:
-		map.push_back(new PortModel(x, y, CellModel::Owner::PLAYER));
+		map.push_back(new PortModel(x, y, id, CellModel::Owner::PLAYER));
 		break;
 	case CellModel::Owner::PIRATE:
-		map.push_back(new PortModel(x, y, CellModel::Owner::PIRATE));
+		map.push_back(new PortModel(x, y, id, CellModel::Owner::PIRATE));
 		break;
 	}
 }
@@ -70,4 +70,14 @@ int MapModel::getNumLines() const
 int MapModel::getNumColumns() const
 {
 	return numColumns;
+}
+
+int MapModel::getPirateProb() const
+{
+	return pirateProb;
+}
+
+void MapModel::setPirateProb(int prob)
+{
+	pirateProb = prob;
 }

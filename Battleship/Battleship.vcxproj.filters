@@ -90,14 +90,17 @@
     <ClInclude Include="View.h">
       <Filter>Header Files\View</Filter>
     </ClInclude>
-    <ClInclude Include="FileControler.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="ShipModel.h">
       <Filter>Header Files\Model\Ship</Filter>
     </ClInclude>
     <ClInclude Include="EventModel.h">
       <Filter>Header Files\Model\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="FileController.h">
+      <Filter>Header Files\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="GameModel.h">
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="EventModel.cpp">
       <Filter>Source Files\Model\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="GameModel.cpp">
+      <Filter>Source Files\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

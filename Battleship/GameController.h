@@ -1,10 +1,13 @@
 #pragma once
-#include "FileControler.h"
+#include "FileController.h"
 class GameController {
 	FileController fileController;
-	MapModel *map;
+	MapModel *map = NULL;
+	EventModel event;
+	GameModel game;
 public:
 	GameController();
+	~GameController();
 	bool readInitialFileConfigs(std::string filename);
 	CellModel* getCellAt(int x, int y) const;
 };

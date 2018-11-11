@@ -152,8 +152,9 @@
     <ClInclude Include="CellModel.h" />
     <ClInclude Include="Consola.h" />
     <ClInclude Include="EventModel.h" />
-    <ClInclude Include="FileControler.h" />
+    <ClInclude Include="FileController.h" />
     <ClInclude Include="GameController.h" />
+    <ClInclude Include="GameModel.h" />
     <ClInclude Include="GroundModel.h" />
     <ClInclude Include="MapModel.h" />
     <ClInclude Include="PlayerModel.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Exemplo.cpp" />
     <ClCompile Include="FileController.cpp" />
     <ClCompile Include="GameController.cpp" />
+    <ClCompile Include="GameModel.cpp" />
     <ClCompile Include="GroundModel.cpp" />
     <ClCompile Include="MapModel.cpp" />
     <ClCompile Include="PlayerModel.cpp" />

@@ -1,2 +1,8 @@
-﻿  Battleship.cpp
+﻿  GameController.cpp
+  FileController.cpp
+c:\users\ricardo\documents\github\battleship-poo\battleship\filecontroller.cpp(129): warning C4101: 'e': unreferenced local variable
+  Battleship.cpp
+  Generating Code...
+c:\users\ricardo\documents\github\battleship-poo\battleship\filecontroller.cpp(107): warning C4715: 'FileController::stringToInitialConfigs': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\filecontroller.cpp(88): warning C4715: 'FileController::readInitialFileConfigs': not all control paths return a value
   Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe
