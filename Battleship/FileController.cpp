@@ -85,6 +85,7 @@ bool FileController::readInitialFileConfigs(std::string filename, MapModel *&map
 	} else {
 		return false;
 	}
+	file.close();
 }
 
 FileController::InitialConfigsCommands FileController::stringToInitialConfigs(std::string const & inString)
@@ -168,6 +169,7 @@ bool FileController::readMap(std::ifstream & file, int const & lines, int const 
 				} 
 				else {
 					map->addPortCellAt(j, i, cellType, CellModel::Owner::PIRATE);
+					game->addPiratePort((PortModel*)map->getCellAt(j, i));
 				}
 			}
 			else if (cellType == '.') {

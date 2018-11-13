@@ -12,5 +12,7 @@ public:
 	bool readInitialFileConfigs(std::string filename);
 	CellModel* getCellAt(int x, int y) const;
 	GameState getGameState() const;
+	int getNumLines() const;
+	int getNumColumns() const;
 };
 

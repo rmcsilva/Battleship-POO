@@ -9,4 +9,6 @@ public:
     PortModel(int x, int y, char id,CellModel::Owner owner);
 
     Type getType() override;
+	Owner getOwner() const;
+	char getID() const;
 };

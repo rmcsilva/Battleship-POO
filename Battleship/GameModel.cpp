@@ -87,4 +87,7 @@ void GameModel::addFriendlyPort(PortModel *port)
 	friendlyPorts.push_back(port);
 }
 
-
+void GameModel::addPiratePort(PortModel* port)
+{
+	piratePorts.push_back(port);
+}

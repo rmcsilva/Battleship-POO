@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "View.h"
+#include <iomanip>
 
 
 View::View()
@@ -13,12 +14,14 @@ void View::setupLayout(GameController *gameController)
 		switch (gameController->getGameState())
 		{
 		case GameState::SETUP:
+			//TODO:Uncomment this is for tests only
 			initialLayout(gameController);
+			//gameController->readInitialFileConfigs("initialConfig.txt");
 			break;
 		case GameState::GAME:
 			//TODO: Make game menu
 			Consola::clrscr();
-			std::cout << "In game";
+			gameLayout(gameController);
 			Consola::getch();
 			break;
 		case GameState::END:
@@ -26,7 +29,6 @@ void View::setupLayout(GameController *gameController)
 			break;
 		}
 	}
-
 }
 
 void View::initialLayout(GameController *gameController)
@@ -85,5 +87,82 @@ View::InitialCommands View::stringToInitialCommand(std::string const & inString)
 {
 	if (inString == "config") return InitialCommands::CONFIG;
 	return InitialCommands::INVALID;
+}
+
+void View::gameLayout(GameController* gameController)
+{	
+	Consola::gotoxy(2, 0);
+	for (int i = 0; i <gameController->getNumColumns(); i++)
+	{
+		if (i%2)Consola::setTextColor(Consola::CINZENTO); 
+		else	Consola::setTextColor(Consola::BRANCO_CLARO);
+		std::cout << std::setw(2) << i;
+	}
+
+	Consola::setTextColor(TEXT_COLOR);
+	Consola::gotoxy(0, 1);
+
+	bool mainColor;
+	for (int i = 0; i < gameController->getNumLines(); i++) 
+	{
+		Consola::setTextColor(TEXT_COLOR);
+		std::cout << std::setw(2) << i;
+		for (int j = 0; j < gameController->getNumColumns(); j++)
+		{
+			if ((i+j) % 2) mainColor = true;
+			else	   mainColor = false;
+			paintMapCell(gameController->getCellAt(j, i), mainColor);
+		}
+		Consola::setBackgroundColor(TEXT_BACKGROUND);
+		std::cout << '\n';
+	}
+	Consola::setBackgroundColor(TEXT_BACKGROUND);
+}
+
+void View::paintMapCell(CellModel* cell, bool mainColor)
+{
+	switch (cell->getType())
+	{
+	case CellModel::Type::SEA:
+		if (mainColor)
+		{
+			Consola::setBackgroundColor(SEA_COLOR_MAIN);
+			std::cout << "  ";
+		}
+		else
+		{
+			Consola::setBackgroundColor(SEA_COLOR_OFF);
+			std::cout << "  ";
+		}
+		break;
+	case CellModel::Type::PORT: {
+		PortModel* port = (PortModel*)cell;
+		if (port->getOwner() == CellModel::Owner::PLAYER)
+		{
+			Consola::setTextColor(FRIENDLY_SHIP_COLOR);
+			Consola::setBackgroundColor(FRIENDLY_PORT_COLOR);
+			std::cout << ' ' << port->getID();
+		}
+		else
+		{
+			Consola::setTextColor(ENEMY_SHIP_COLOR);
+			Consola::setBackgroundColor(ENEMY_PORT_COLOR);
+			std::cout << ' ' << port->getID();
+		}
+		break;
+	}
+	case CellModel::Type::GROUND:
+		if (mainColor)
+		{
+			Consola::setBackgroundColor(GROUND_COLOR_MAIN);
+			std::cout << "  ";
+		}
+		else
+		{
+			Consola::setBackgroundColor(GROUND_COLOR_OFF);
+			std::cout << "  ";
+		}
+		break;
+	}
 }
 

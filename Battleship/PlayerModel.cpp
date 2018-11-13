@@ -34,8 +34,6 @@ bool PlayerModel::removeCoins(int amount) {
     }else{
         return false;
     }
-
-
 }
 
 bool PlayerModel::canRemoveCoins(int amount) const {

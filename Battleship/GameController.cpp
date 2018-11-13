@@ -33,3 +33,13 @@ GameState GameController::getGameState() const
 {
 	return game.getGameState();
 }
+
+int GameController::getNumLines() const
+{
+	return map->getNumLines();
+}
+
+int GameController::getNumColumns() const
+{
+	return map->getNumColumns();
+}

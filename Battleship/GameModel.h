@@ -13,6 +13,7 @@ class GameModel
 	int score=0;
 	//TODO: Main port is the first one
 	std::vector<PortModel*> friendlyPorts;
+	std::vector<PortModel*> piratePorts;
 	//TODO: Add enemy ports
 	//TODO: Add list of friendly and enemy ships
 	//TODO: If if by doing so its easy to update map
@@ -39,5 +40,6 @@ public:
 	void setMerchBuyPrice(int amount);
 
 	void addFriendlyPort(PortModel *port);
+	void addPiratePort(PortModel *port);
 };
 
