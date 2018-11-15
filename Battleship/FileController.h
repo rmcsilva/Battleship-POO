@@ -28,7 +28,7 @@ public:
 	~FileController();
 
 	bool readInitialFileConfigs(std::string filename, MapModel *&map, EventModel *event, GameModel *game);
-	InitialConfigsCommands stringToInitialConfigs(std::string const& inString);
+	static InitialConfigsCommands stringToInitialConfigs(std::string const& inString);
 	bool setupMap(std::ifstream &file,int const &lines, MapModel *&map, GameModel *game);
 	bool readMap(std::ifstream &file, int const &lines, int const &columns,MapModel *map, GameModel *game);
 };

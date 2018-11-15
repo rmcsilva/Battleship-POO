@@ -19,6 +19,15 @@ class View
 	const int TEXT_BACKGROUND = Consola::PRETO;
 
 	enum class InitialCommands {CONFIG, INVALID};
+	enum class GameCommands
+	{
+		EXEC,
+		PROX,
+		COMPRANAV,
+		MOEDAS,
+		SAIR,
+		INVALID
+	};
 	//TODO: Put in a separate header file with error messages and stuff
 	const char* INITIAL_LAYOUT = "Battleship Setup\n";
 	const char* COMMAND_LINE = "Command Line: ";
@@ -28,11 +37,15 @@ public:
 	View();
 
 	void setupLayout(GameController *gameController);
-	void initialLayout(GameController *gameController);
-	bool readInitialCommands(std::string const &input, GameController *gameController);
-	InitialCommands stringToInitialCommand(std::string const& inString);
+	void initialLayout(GameController *gameController) const;
+	bool readInitialCommands(std::string const &input, GameController *gameController) const;
+	static InitialCommands stringToInitialCommand(std::string const& inString);
 
-	void gameLayout(GameController *gameController);
-	void paintMapCell(CellModel* cell, bool mainColor);
+	void gameLayout(GameController *gameController) const;
+	void paintMapCell(CellModel* cell, bool mainColor) const;
+	void gameAction(GameController *gameController);
+	bool readGameCommands(std::string const &input, GameController *gameController) const;
+	static GameCommands stringToGameCommand(std::string const& inString);
+	void showFriendlyPortsInfo(std::vector<PortModel*> const &ports) const;
 };
 

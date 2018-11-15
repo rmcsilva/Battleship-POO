@@ -34,6 +34,28 @@ GameState GameController::getGameState() const
 	return game.getGameState();
 }
 
+std::vector<PortModel*> GameController::getFriendlyPorts()
+{
+	return game.getFriendlyPorts();
+}
+
+bool GameController::buyShip()
+{
+	//TODO:: Complete! Needs to recieve ship type and see if the player has money to buy
+	
+	if (game.getFriendlyPorts().size()>0)
+	{
+		if (game.removeCoins(game.getShipPrice()))
+		{
+			//game.addFriendlyShip(new ShipModel);
+			//game.getFriendlyPorts().at(0)->addShipToPort(new ShipModel);
+			return true;
+		}
+		
+	}
+	return false;
+}
+
 int GameController::getNumLines() const
 {
 	return map->getNumLines();
@@ -42,4 +64,9 @@ int GameController::getNumLines() const
 int GameController::getNumColumns() const
 {
 	return map->getNumColumns();
+}
+
+void GameController::endGame()
+{
+	game.setGameState(GameState::END);
 }

@@ -10,10 +10,7 @@ MapModel::MapModel(const int numLines, const int numColumns) : numLines(numLines
 }
 
 
-CellModel* MapModel::getCellAt(int x, int y) const
-{
-	return map.at(x + (numColumns * y));
-}
+CellModel* MapModel::getCellAt(int x, int y) const {return map.at(x + (numColumns * y));}
 
 void MapModel::addCellAt(int x, int y, CellModel::Type type)
 {
@@ -62,22 +59,8 @@ void MapModel::addPortCellAt(int x, int y, char id,CellModel::Owner owner)
 //	}
 //}
 
-int MapModel::getNumLines() const
-{
-	return numLines;
-}
+int MapModel::getNumLines() const {return numLines;}
+int MapModel::getNumColumns() const {return numColumns;}
+int MapModel::getPirateProb() const {return pirateProb;}
 
-int MapModel::getNumColumns() const
-{
-	return numColumns;
-}
-
-int MapModel::getPirateProb() const
-{
-	return pirateProb;
-}
-
-void MapModel::setPirateProb(int prob)
-{
-	pirateProb = prob;
-}
+void MapModel::setPirateProb(int prob) {pirateProb = prob;}

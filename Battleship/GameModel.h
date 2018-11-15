@@ -7,6 +7,7 @@ enum class GameState { SETUP, GAME, END };
 class GameModel
 {
 	PlayerModel player;
+	//TODO: Arranjar constantes para os precos de acordo com a difuculdade
 	int shipPrice, soldierPrice;
 	int fishSellPrice, merchSellPrice;
 	int merchBuyPrice;
@@ -14,9 +15,11 @@ class GameModel
 	//TODO: Main port is the first one
 	std::vector<PortModel*> friendlyPorts;
 	std::vector<PortModel*> piratePorts;
-	//TODO: Add enemy ports
 	//TODO: Add list of friendly and enemy ships
+	std::vector<ShipModel*> friendlyShips;
+	std::vector<ShipModel*> pirateShips;
 	//TODO: If if by doing so its easy to update map
+	//TODO: Maybe add a list of all the sea cells to add random pirate ships
 	GameState state;
 
 public:
@@ -41,5 +44,8 @@ public:
 
 	void addFriendlyPort(PortModel *port);
 	void addPiratePort(PortModel *port);
+
+	void addFriendlyShip(ShipModel* ship);
+	void addPirateShip(ShipModel* ship);
 };
 

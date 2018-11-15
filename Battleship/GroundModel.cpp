@@ -3,6 +3,4 @@
 
 GroundModel::GroundModel(int x, int y) : CellModel(x, y) {}
 
-CellModel::Type GroundModel::getType() {
-    return Type::GROUND;
-}
+CellModel::Type GroundModel::getType() {return Type::GROUND;}

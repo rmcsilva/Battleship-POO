@@ -10,22 +10,12 @@ PlayerModel::PlayerModel() : PlayerModel(COINS_EASY)
 	
 }
 
-const std::string &PlayerModel::getName() const {
-    return name;
-}
+const std::string &PlayerModel::getName() const {return name;}
+int PlayerModel::getCoins() const {return coins;}
 
-int PlayerModel::getCoins() const {
-    return coins;
-}
+void PlayerModel::setCoins(int coins) {this->coins = coins;}
 
-void PlayerModel::setCoins(int coins)
-{
-	this->coins = coins;
-}
-
-void PlayerModel::addCoins(int amount) {
-    coins += amount;
-}
+void PlayerModel::addCoins(int amount) {coins += amount;}
 
 bool PlayerModel::removeCoins(int amount) {
     if (canRemoveCoins(amount)){
@@ -36,6 +26,4 @@ bool PlayerModel::removeCoins(int amount) {
     }
 }
 
-bool PlayerModel::canRemoveCoins(int amount) const {
-    return coins > amount;
-}
+bool PlayerModel::canRemoveCoins(int amount) const {return coins > amount;}

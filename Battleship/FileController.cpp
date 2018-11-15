@@ -77,7 +77,8 @@ bool FileController::readInitialFileConfigs(std::string filename, MapModel *&map
 				case InitialConfigsCommands::probmotim:
 					event->setRiotProbability(value);
 					break;
-				default:
+				case InitialConfigsCommands::INVALID:
+					file.close();
 					return false;
 					break;
 			}
@@ -128,7 +129,8 @@ bool FileController::setupMap(std::ifstream &file,int const &lines, MapModel *&m
 			try {
 				map = new MapModel(lines, value);
 			}
-			catch (int e) {
+			catch (std::bad_alloc& e) {
+				std::cerr << "bad_alloc caught: " << e.what() << '\n';
 				//TODO: add to log invalid lines, columns number
 			}
 
