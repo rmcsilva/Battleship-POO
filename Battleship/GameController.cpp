@@ -9,11 +9,16 @@ GameController::GameController()
 
 GameController::~GameController()
 {
-	if (map != NULL)
-	{
-		delete(map);
-	}
+	if (map != NULL) {delete(map);}
+	//TODO: Delete ships and all that was allocated with new
 }
+
+CellModel * GameController::getCellAt(int x, int y) const { return map->getCellAt(x, y); }
+GameState GameController::getGameState() const { return game.getGameState(); }
+std::vector<PortModel*> GameController::getFriendlyPorts() { return game.getFriendlyPorts(); }
+int GameController::getNumLines() const { return map->getNumLines(); }
+int GameController::getNumColumns() const { return map->getNumColumns(); }
+int GameController::getPlayerCoins() const { return game.getPlayerCoins(); }
 
 bool GameController::readInitialFileConfigs(std::string filename)
 {
@@ -24,25 +29,9 @@ bool GameController::readInitialFileConfigs(std::string filename)
 	return false;
 }
 
-CellModel * GameController::getCellAt(int x, int y) const
-{
-	return map->getCellAt(x,y);
-}
-
-GameState GameController::getGameState() const
-{
-	return game.getGameState();
-}
-
-std::vector<PortModel*> GameController::getFriendlyPorts()
-{
-	return game.getFriendlyPorts();
-}
-
 bool GameController::buyShip()
 {
-	//TODO:: Complete! Needs to recieve ship type and see if the player has money to buy
-	
+	//TODO:: Complete! Needs to recieve ship type 
 	if (game.getFriendlyPorts().size()>0)
 	{
 		if (game.removeCoins(game.getShipPrice()))
@@ -51,22 +40,11 @@ bool GameController::buyShip()
 			//game.getFriendlyPorts().at(0)->addShipToPort(new ShipModel);
 			return true;
 		}
-		
+		else {
+			return false;
+		}
 	}
 	return false;
 }
 
-int GameController::getNumLines() const
-{
-	return map->getNumLines();
-}
-
-int GameController::getNumColumns() const
-{
-	return map->getNumColumns();
-}
-
-void GameController::endGame()
-{
-	game.setGameState(GameState::END);
-}
+void GameController::endGame() {game.setGameState(GameState::END);}

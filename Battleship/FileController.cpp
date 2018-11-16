@@ -176,6 +176,7 @@ bool FileController::readMap(std::ifstream & file, int const & lines, int const 
 			}
 			else if (cellType == '.') {
 				map->addCellAt(j, i, CellModel::Type::SEA);
+				game->addSeaCell(map->getCellAt(j, i));
 			}
 			else if (cellType == '+') {
 				map->addCellAt(j, i, CellModel::Type::GROUND);

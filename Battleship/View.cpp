@@ -173,6 +173,7 @@ void View::gameAction(GameController* gameController)
 	{
 		Consola::clrcommands(gameController->getNumLines() + 1);
 		showFriendlyPortsInfo(gameController->getFriendlyPorts());
+		std::cout << "Player Coins: " << gameController->getPlayerCoins() << '\n';
 		std::cout << COMMAND_LINE;
 		std::getline(std::cin, command);
 	} while (readGameCommands(command, gameController));

@@ -102,6 +102,21 @@
     <ClInclude Include="GameModel.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
+    <ClInclude Include="SailboatModel.h">
+      <Filter>Header Files\Model\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="GalleonModel.h">
+      <Filter>Header Files\Model\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="SchoonerModel.h">
+      <Filter>Header Files\Model\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="FrigateModel.h">
+      <Filter>Header Files\Model\Ship</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostShip.h">
+      <Filter>Header Files\Model\Ship</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -151,6 +166,21 @@
     </ClCompile>
     <ClCompile Include="GameModel.cpp">
       <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="SailboatModel.cpp">
+      <Filter>Source Files\Model\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="GalleonModel.cpp">
+      <Filter>Source Files\Model\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="SchoonerModel.cpp">
+      <Filter>Source Files\Model\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="FrigateModel.cpp">
+      <Filter>Source Files\Model\Ship</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostShip.cpp">
+      <Filter>Source Files\Model\Ship</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

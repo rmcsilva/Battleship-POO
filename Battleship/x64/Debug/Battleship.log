@@ -1,15 +1,7 @@
-﻿  Battleship.cpp
-  CellModel.cpp
-  EventModel.cpp
-  FileController.cpp
-  GameController.cpp
-  GameModel.cpp
-  GroundModel.cpp
-  MapModel.cpp
-  PlayerModel.cpp
-  PortModel.cpp
-  ShipModel.cpp
-  View.cpp
+﻿  SchoonerModel.cpp
+  SailboatModel.cpp
+  GhostShip.cpp
+  GalleonModel.cpp
+  FrigateModel.cpp
   Generating Code...
-\\mac\home\documents\github\battleship-poo\battleship\filecontroller.cpp(90): warning C4715: 'FileController::readInitialFileConfigs': not all control paths return a value
-  Battleship.vcxproj -> \\Mac\Home\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe
+  Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

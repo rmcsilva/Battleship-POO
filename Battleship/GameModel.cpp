@@ -34,6 +34,8 @@ void GameModel::addPiratePort(PortModel* port) {piratePorts.push_back(port);}
 void GameModel::addFriendlyShip(ShipModel* ship) {friendlyShips.push_back(ship);}
 void GameModel::addPirateShip(ShipModel* ship) {pirateShips.push_back(ship);}
 
+void GameModel::addSeaCell(CellModel * cell) { seaCells.push_back(cell); }
+
 //Player Coins
 void GameModel::addCoins(int amount) {player.addCoins(amount);}
 bool GameModel::removeCoins(int amount) {return player.removeCoins(amount);}

@@ -20,6 +20,7 @@ class GameModel
 	std::vector<ShipModel*> pirateShips;
 	//TODO: If if by doing so its easy to update map
 	//TODO: Maybe add a list of all the sea cells to add random pirate ships
+	std::vector<CellModel*> seaCells;
 	GameState state;
 
 public:
@@ -47,5 +48,10 @@ public:
 
 	void addFriendlyShip(ShipModel* ship);
 	void addPirateShip(ShipModel* ship);
+
+	void addSeaCell(CellModel* cell);
+
+	void addCoins(int amount);
+	bool removeCoins(int amount);
 };
 

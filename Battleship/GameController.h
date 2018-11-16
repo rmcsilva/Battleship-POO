@@ -15,6 +15,7 @@ public:
 	std::vector<PortModel*> getFriendlyPorts();
 	int getNumLines() const;
 	int getNumColumns() const;
+	int getPlayerCoins() const;
 
 	//Initial Read From file
 	bool readInitialFileConfigs(std::string filename);
