@@ -1,6 +1,7 @@
 #pragma once
 #include "PlayerModel.h"
 #include "PortModel.h"
+#include "SeaModel.h"
 
 enum class GameState { SETUP, GAME, END };
 
@@ -11,20 +12,21 @@ class GameModel
 	int shipPrice, soldierPrice;
 	int fishSellPrice, merchSellPrice;
 	int merchBuyPrice;
-	int score=0;
+	double score=0;
 	//TODO: Main port is the first one
 	std::vector<PortModel*> friendlyPorts;
 	std::vector<PortModel*> piratePorts;
-	//TODO: Add list of friendly and enemy ships
+
 	std::vector<ShipModel*> friendlyShips;
 	std::vector<ShipModel*> pirateShips;
-	//TODO: If if by doing so its easy to update map
-	//TODO: Maybe add a list of all the sea cells to add random pirate ships
-	std::vector<CellModel*> seaCells;
+
+	std::vector<SeaModel*> seaCells;
+
 	GameState state;
 
 public:
 	GameModel();
+	~GameModel();
 
 	GameState getGameState() const;
 	int getPlayerCoins() const;
@@ -34,6 +36,8 @@ public:
 	int getMerchSellPrice() const;
 	int getMerchBuyPrice() const;
 	std::vector<PortModel*> getFriendlyPorts() const;
+	std::vector<ShipModel*> getFriendlyShips() const;
+	std::vector<SeaModel*> getSeaCells() const;
 
 	void setGameState(GameState state);
 	void setPlayerCoins(int amount);
@@ -49,9 +53,10 @@ public:
 	void addFriendlyShip(ShipModel* ship);
 	void addPirateShip(ShipModel* ship);
 
-	void addSeaCell(CellModel* cell);
+	void addSeaCell(SeaModel* cell);
 
-	void addCoins(int amount);
+	void addCoins(double amount);
+	bool canRemoveCoins(int amount);
 	bool removeCoins(int amount);
 };
 

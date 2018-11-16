@@ -4,18 +4,19 @@
 
 class PortModel : public CellModel{
 	char id;
-	CellModel::Owner owner;
+	CellModel::CellOwner owner;
 	int numSoldiers = 100;
 	std::vector<ShipModel*> ships;
 public:
-    PortModel(int x, int y, char id,CellModel::Owner owner);
+    PortModel(int x, int y, char id,CellModel::CellOwner owner);
 
     Type getType() override;
-	Owner getOwner() const;
+	CellOwner getOwner() const;
 	char getID() const;
 	std::vector<ShipModel*> getShips() const;
 
 	void addShipToPort(ShipModel* ship);
+	bool removeShipFromPort(ShipModel* ship);
 };
 
 std::ostream& operator<<(std::ostream& os, const PortModel &port);

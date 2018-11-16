@@ -3,7 +3,7 @@
 class PlayerModel {
     std::string name = "Guest";
 	const int COINS_EASY = 5000;
-    int coins;
+    double coins;
 
 public:
     PlayerModel(const std::string &name, int coins);
@@ -14,7 +14,7 @@ public:
     int getCoins() const;
 	void setCoins(int coins);
 
-    void addCoins(int amount);
+    void addCoins(double amount);
     bool removeCoins(int amount);
 
     bool canRemoveCoins(int amount) const;

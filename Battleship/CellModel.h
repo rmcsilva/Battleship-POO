@@ -6,11 +6,13 @@ public:
     CellModel(int x, int y);
 
     enum class Type {GROUND, SEA, PORT};
-	enum class Owner {PLAYER,PIRATE};
+	enum class CellOwner {PLAYER,PIRATE};
 
     virtual Type getType() = 0;
 
 	int getX() const;
 	int getY() const;
+
+	bool operator==(CellModel const &cell) const;
 };
 

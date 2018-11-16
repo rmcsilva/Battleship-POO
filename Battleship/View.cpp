@@ -91,7 +91,7 @@ void View::gameLayout(GameController* gameController) const
 	Consola::gotoxy(2, 0);
 
 	//Show X Positions
-	for (int i = 0; i <gameController->getNumColumns(); i++)
+	for (int i = 1; i <=gameController->getNumColumns(); i++)
 	{
 		if (i%2)Consola::setTextColor(Consola::CINZENTO); 
 		else	Consola::setTextColor(Consola::BRANCO_CLARO);
@@ -106,12 +106,12 @@ void View::gameLayout(GameController* gameController) const
 	for (int i = 0; i < gameController->getNumLines(); i++) 
 	{
 		Consola::setTextColor(TEXT_COLOR);
-		std::cout << std::setw(2) << i;
+		std::cout << std::setw(2) << i+1;
 		for (int j = 0; j < gameController->getNumColumns(); j++)
 		{
 			if ((i+j) % 2) mainColor = true;
 			else	   mainColor = false;
-			paintMapCell(gameController->getCellAt(j, i), mainColor);
+			paintInitialMapCell(gameController->getCellAt(j, i), mainColor);
 		}
 		Consola::setBackgroundColor(TEXT_BACKGROUND);
 		std::cout << '\n';
@@ -119,7 +119,7 @@ void View::gameLayout(GameController* gameController) const
 	Consola::setBackgroundColor(TEXT_BACKGROUND);
 }
 
-void View::paintMapCell(CellModel* cell, bool mainColor) const
+void View::paintInitialMapCell(CellModel* cell, bool mainColor) const
 {
 	switch (cell->getType())
 	{
@@ -137,7 +137,7 @@ void View::paintMapCell(CellModel* cell, bool mainColor) const
 			break;
 		case CellModel::Type::PORT: {
 			PortModel* port = (PortModel*)cell;
-			if (port->getOwner() == CellModel::Owner::PLAYER)
+			if (port->getOwner() == CellModel::CellOwner::PLAYER)
 			{
 				Consola::setTextColor(FRIENDLY_SHIP_COLOR);
 				Consola::setBackgroundColor(FRIENDLY_PORT_COLOR);
@@ -189,15 +189,44 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 	switch (stringToGameCommand(command))
 	{
 		case GameCommands::EXEC: break;
-		case GameCommands::PROX: break;
+		case GameCommands::PROX:
+			//TODO:Perform commands
+			//TODO: Implement ships auto movement
+			updateAllSeaCells(gameController->getSeaCells());
+			updateAllShips(gameController->getFriendlyShips());
+			
+			break;
 		case GameCommands::COMPRANAV:
 			//TODO: Complete function, need to implement ships first!
-			if (!gameController->buyShip())
-				std::cout << "Player does not have enough coins!";
+			char type;
+			line >> type;
+			if (!gameController->buyShip(type))
+				std::cout << COMMAND_EXECUTE_ERROR;
+			break; 
+		case GameCommands::MOVE: {
+			int id;
+			line >> id;
+			std::string pos;
+			line >> pos;
+			try
+			{
+				CellModel* oldPosition = gameController->getFriendlyShipPositionByID(id);
+				CellModel* position = convertStringCommandToCell(pos, oldPosition, gameController);
+				gameController->move(id, position);
+			}
+			catch (std::out_of_range e)
+			{
+				std::cout << "Ship does not exist!";
+				break;
+			}
 			break;
+		}
 		case GameCommands::MOEDAS:
-			//Read amount
-			//gameController->addCoins(100);
+			double amount;
+			line >> amount;
+			//TODO: Add restrictions 
+			if (amount < 0) {break;}
+			gameController->addCoins(amount);
 			break;
 		case GameCommands::SAIR:
 			gameController->endGame();
@@ -206,6 +235,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 		case GameCommands::INVALID:
 			break;
 	}
+	Consola::getch();
 	return true;
 }
 
@@ -214,6 +244,22 @@ View::GameCommands View::stringToGameCommand(std::string const& inString)
 	if (inString == "exec") return GameCommands::EXEC;
 	if (inString == "prox") return GameCommands::PROX;
 	if (inString == "compranav") return GameCommands::COMPRANAV;
+	if (inString == "vendenav") return GameCommands::VENDENAV;
+	if (inString == "lista") return GameCommands::LISTA;
+	if (inString == "compra") return GameCommands::COMPRA;
+	if (inString == "vende") return GameCommands::VENDE;
+	if (inString == "move") return GameCommands::MOVE;
+	if (inString == "auto") return GameCommands::AUTO;
+	if (inString == "stop") return GameCommands::STOP;
+	if (inString == "pirata") return GameCommands::PIRATA;
+	if (inString == "evpos") return GameCommands::EVPOS;
+	if (inString == "evnav") return GameCommands::EVNAV;
+	if (inString == "moedas") return GameCommands::MOEDAS;
+	if (inString == "vaipara") return GameCommands::VAIPARA;
+	if (inString == "comprasold") return GameCommands::COMPRASOLD;
+	if (inString == "saveg") return GameCommands::SAVEG;
+	if (inString == "loadg") return GameCommands::LOADG;
+	if (inString == "delg") return GameCommands::DELG;
 	if (inString == "sair") return GameCommands::SAIR;
 	return GameCommands::INVALID;
 }
@@ -229,7 +275,93 @@ void View::showFriendlyPortsInfo(std::vector<PortModel*> const& ports) const
 	else
 	{
 		std::cout << "Player has no friendly ports!";
-	}
-	
+	}	
 }
 
+void View::updateAllSeaCells(std::vector<SeaModel*> const& seaCells) const
+{
+	for (SeaModel* const &seaCell : seaCells)
+		updateSeaCell(seaCell);	
+}
+
+void View::updateSeaCell(SeaModel* const& seaCell) const
+{
+	bool mainColor;
+	int x = seaCell->getX();
+	int y = seaCell->getY();
+
+	if ((x + y) % 2) mainColor = true;
+	else	   mainColor = false;
+
+	goToMapPosition(x, y);
+
+	//TODO: Review
+	if (seaCell->hasShip())
+	{
+		//if (seaCell->getShipOwner() == ShipOwner::PLAYER)
+		//{
+		//	Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
+		//	std::cout << std::setw(2) << seaCell->getShip()->getID();
+		//}
+		//else
+		//{
+		//	Consola::setBackgroundColor(ENEMY_SHIP_COLOR);
+		//	std::cout << std::setw(2) << seaCell->getShip()->getID();
+		//}
+	}
+	else
+	{
+		//TODO: Check if cell has fish
+		if (mainColor)
+		{
+			Consola::setBackgroundColor(SEA_COLOR_MAIN);
+			std::cout << "  ";
+		}
+		else
+		{
+			Consola::setBackgroundColor(SEA_COLOR_OFF);
+			std::cout << "  ";
+		}
+	}
+
+	Consola::setBackgroundColor(TEXT_BACKGROUND);
+}
+
+void View::updateAllShips(std::vector<ShipModel*> const& ships) const
+{
+	
+	for (ShipModel* const &ship : ships)
+	{
+		int x = ship->getPosition()->getX();
+		int y = ship->getPosition()->getY();
+		goToMapPosition(x, y);
+		Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
+		std::cout << std::setw(2) << ship->getID();
+	}
+	Consola::setBackgroundColor(TEXT_BACKGROUND);
+}
+
+void View::goToMapPosition(int x, int y) const
+{
+	x = (x + 1) * 2;
+	y = (y + 1);
+	Consola::gotoxy(x, y);
+}
+
+CellModel* View::convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController) const
+{
+	if (command.length() == 1)
+	{
+		if (command.compare("D") == 0) return gameController->getCellRight(currentCell);
+		if (command.compare("E") == 0) return gameController->getCellLeft(currentCell);
+		if (command.compare("C") == 0) return gameController->getCellAbove(currentCell);
+		if (command.compare("B") == 0) return gameController->getCellBelow(currentCell);
+	}else if (command.length() == 2)
+	{
+		if (command.compare("CD") == 0) return gameController->getCellAboveRight(currentCell);
+		if (command.compare("CE") == 0) return gameController->getCellAboveLeft(currentCell);
+		if (command.compare("BE") == 0) return gameController->getCellBelowLeft(currentCell);
+		if (command.compare("BD") == 0) return gameController->getCellBelowRight(currentCell);
+	}
+	return currentCell;
+}

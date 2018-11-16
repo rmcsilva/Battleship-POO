@@ -1,14 +1,27 @@
 #include "stdafx.h"
 #include "PortModel.h"
 
-PortModel::PortModel(int x, int y, char id,CellModel::Owner owner) : CellModel(x, y), id(id), owner(owner) {}
+PortModel::PortModel(int x, int y, char id,CellModel::CellOwner owner) : CellModel(x, y), id(id), owner(owner) {}
 
 CellModel::Type PortModel::getType() {return Type::PORT;}
-CellModel::Owner PortModel::getOwner() const {return owner;}
+CellModel::CellOwner PortModel::getOwner() const {return owner;}
 char PortModel::getID() const {return id;}
 std::vector<ShipModel*> PortModel::getShips() const {return ships;}
 
 void PortModel::addShipToPort(ShipModel* ship) {ships.push_back(ship);}
+
+bool PortModel::removeShipFromPort(ShipModel* ship)
+{
+	for (int i = 0; i < ships.size(); i++)
+	{
+		if (ships.at(i)==ship)
+		{
+			ships.erase(ships.begin() + i);
+			return true;
+		}
+	}
+	return false;
+}
 
 std::ostream& operator<<(std::ostream& os, const PortModel& port)
 {

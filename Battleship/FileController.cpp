@@ -166,17 +166,17 @@ bool FileController::readMap(std::ifstream & file, int const & lines, int const 
 			{
 				if (isupper(cellType)) 
 				{
-					map->addPortCellAt(j, i, cellType, CellModel::Owner::PLAYER);
+					map->addPortCellAt(j, i, cellType, CellModel::CellOwner::PLAYER);
 					game->addFriendlyPort((PortModel*)map->getCellAt(j,i));
 				} 
 				else {
-					map->addPortCellAt(j, i, cellType, CellModel::Owner::PIRATE);
+					map->addPortCellAt(j, i, cellType, CellModel::CellOwner::PIRATE);
 					game->addPiratePort((PortModel*)map->getCellAt(j, i));
 				}
 			}
 			else if (cellType == '.') {
 				map->addCellAt(j, i, CellModel::Type::SEA);
-				game->addSeaCell(map->getCellAt(j, i));
+				game->addSeaCell((SeaModel*)map->getCellAt(j, i));
 			}
 			else if (cellType == '+') {
 				map->addCellAt(j, i, CellModel::Type::GROUND);

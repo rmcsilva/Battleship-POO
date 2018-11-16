@@ -15,7 +15,7 @@ int PlayerModel::getCoins() const {return coins;}
 
 void PlayerModel::setCoins(int coins) {this->coins = coins;}
 
-void PlayerModel::addCoins(int amount) {coins += amount;}
+void PlayerModel::addCoins(double amount) {coins += amount;}
 
 bool PlayerModel::removeCoins(int amount) {
     if (canRemoveCoins(amount)){

@@ -24,7 +24,22 @@ class View
 		EXEC,
 		PROX,
 		COMPRANAV,
+		VENDENAV,
+		LISTA,
+		COMPRA,
+		VENDE,
+		MOVE,
+		AUTO,
+		STOP,
+		PIRATA,
+		EVPOS,
+		EVNAV,
 		MOEDAS,
+		VAIPARA,
+		COMPRASOLD,
+		SAVEG,
+		LOADG,
+		DELG,
 		SAIR,
 		INVALID
 	};
@@ -33,6 +48,7 @@ class View
 	const char* COMMAND_LINE = "Command Line: ";
 	const char* READ_SUCESS = "File read sucessfully! \nPress any key to start the game...";
 	const char* ERROR_READING_FILE = "Error reading from file: ";
+	const char* COMMAND_EXECUTE_ERROR = "Command could not be executed! Recheck and try again!\n";
 public:
 	View();
 
@@ -42,10 +58,16 @@ public:
 	static InitialCommands stringToInitialCommand(std::string const& inString);
 
 	void gameLayout(GameController *gameController) const;
-	void paintMapCell(CellModel* cell, bool mainColor) const;
+	void paintInitialMapCell(CellModel* cell, bool mainColor) const;
 	void gameAction(GameController *gameController);
 	bool readGameCommands(std::string const &input, GameController *gameController) const;
 	static GameCommands stringToGameCommand(std::string const& inString);
 	void showFriendlyPortsInfo(std::vector<PortModel*> const &ports) const;
+	void updateAllSeaCells(std::vector<SeaModel*> const &seaCells) const;
+	void updateSeaCell(SeaModel* const &seaCell) const;
+	//TODO:Add all ships
+	void updateAllShips(std::vector<ShipModel*> const &ships) const;
+	void goToMapPosition(int x, int y) const;
+	CellModel* convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController) const;
 };
 

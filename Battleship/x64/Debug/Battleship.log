@@ -1,7 +1,10 @@
-﻿  SchoonerModel.cpp
-  SailboatModel.cpp
-  GhostShip.cpp
-  GalleonModel.cpp
-  FrigateModel.cpp
+﻿  GameController.cpp
   Generating Code...
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(103): warning C4715: 'GameController::move': not all control paths return a value
+  Compiling...
+  Battleship.cpp
+c:\users\ricardo\documents\github\battleship-poo\battleship\battleship.cpp(16): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  View.cpp
   Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe
