@@ -1,10 +1,10 @@
 #include "stdafx.h"
 #include "PortModel.h"
 
-PortModel::PortModel(int x, int y, char id,CellModel::CellOwner owner) : CellModel(x, y), id(id), owner(owner) {}
+PortModel::PortModel(int x, int y, char id,Owner owner) : CellModel(x, y), id(id), owner(owner) {}
 
 CellModel::Type PortModel::getType() {return Type::PORT;}
-CellModel::CellOwner PortModel::getOwner() const {return owner;}
+Owner PortModel::getOwner() const {return owner;}
 char PortModel::getID() const {return id;}
 std::vector<ShipModel*> PortModel::getShips() const {return ships;}
 

@@ -1,8 +1,9 @@
 #pragma once
 #include "CellModel.h"
+#include "ShipModel.h"
 
 class MapModel {
-	const int MIN_LINES = 10, MIN_COLUMNS = 20;
+	static const int MIN_LINES = 10, MIN_COLUMNS = 20;
     int numLines, numColumns;
 	int pirateProb;
 	std::vector<CellModel*> map;
@@ -19,7 +20,7 @@ public:
 
 	CellModel* getCellAt(int x, int y) const;
 	void addCellAt(int x, int y,CellModel::Type type);
-	void addPortCellAt(int x, int y, char id, CellModel::CellOwner owner);
+	void addPortCellAt(int x, int y, char id, Owner owner);
 
 	CellModel* getCellAbove(const CellModel* currentCell) const;
 	CellModel* getCellBelow(const CellModel* currentCell) const;

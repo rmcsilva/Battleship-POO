@@ -1,8 +1,14 @@
 #include "stdafx.h"
 #include "GalleonModel.h"
 
+const int GalleonModel::MAX_SOLDIERS = 40;
+const int GalleonModel::MAX_CAPACITY = 70;
+const int GalleonModel::MAX_WATER = 400;
+const int GalleonModel::MAX_MOVES = 1;
+const int GalleonModel::STORM_SOLDIERS_AFFECTED_PERCENTAGE = 10;
+const int GalleonModel::STORM_SINK_PROB = 40;
 
-GalleonModel::GalleonModel(CellModel* position) : ShipModel(MAX_CAPACITY, MAX_SOLDIERS, MAX_WATER, MAX_MOVES, ShipOwner::PLAYER, position)
+GalleonModel::GalleonModel(CellModel* position) : ShipModel(MAX_CAPACITY, MAX_SOLDIERS, MAX_WATER, MAX_MOVES, Owner::PLAYER, position)
 {
 }
 

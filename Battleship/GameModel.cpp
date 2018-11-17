@@ -12,7 +12,7 @@ GameModel::~GameModel()
 	for (ShipModel* friendlyShip : friendlyShips)
 		delete(friendlyShip);
 
-	for (ShipModel* pirateShip : pirateShips)
+	for (ShipModel* pirateShip : enemyShips)
 		delete(pirateShip);
 }
 
@@ -26,6 +26,8 @@ int GameModel::getMerchSellPrice() const {return merchSellPrice;}
 int GameModel::getMerchBuyPrice() const {return merchBuyPrice;}
 std::vector<PortModel*> GameModel::getFriendlyPorts() const {return friendlyPorts;}
 std::vector<ShipModel*> GameModel::getFriendlyShips() const {return friendlyShips;}
+std::vector<ShipModel*> GameModel::getEnemyShips() const {return enemyShips;}
+
 std::vector<SeaModel*> GameModel::getSeaCells() const {return seaCells;}
 
 //Sets
@@ -47,7 +49,7 @@ void GameModel::addFriendlyShip(ShipModel* ship)
 	ship->setID(friendlyShips.size() + 1);
 	friendlyShips.push_back(ship);
 }
-void GameModel::addPirateShip(ShipModel* ship) {pirateShips.push_back(ship);}
+void GameModel::addPirateShip(ShipModel* ship) {enemyShips.push_back(ship);}
 
 void GameModel::addSeaCell(SeaModel * cell) { seaCells.push_back(cell); }
 

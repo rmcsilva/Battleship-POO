@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SeaModel.h"
 
+SeaModel::SeaModel(int x, int y) : CellModel(x, y) {}
 
 CellModel::Type SeaModel::getType() {
     return Type::SEA;
@@ -15,13 +16,11 @@ ShipModel::Type SeaModel::getShipType() const
 	if (ship!=nullptr) {return ship->getType();}
 }
 
-ShipOwner SeaModel::getShipOwner() const
-{
-	if (ship!=nullptr) return ship->getOwner();
-}
+Owner SeaModel::getShipOwner() const {if (ship!=nullptr) return ship->getOwner();}
 
 void SeaModel::setShip(ShipModel* ship) {this->ship = ship;}
-
 void SeaModel::removeShip() {ship = nullptr;}
 
-SeaModel::SeaModel(int x, int y) : CellModel(x, y) {}
+bool SeaModel::hasFish() {return fish.hasFish();}
+void SeaModel::catchFish() {return fish.catchFish();}
+void SeaModel::updateCountdown() {return fish.updateCountdown();}

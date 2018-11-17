@@ -2,12 +2,12 @@
 #include "ShipModel.h"
 class SchoonerModel : public ShipModel
 {
-	const int MAX_SOLDIERS = 10;
-	const int MAX_CAPACITY = 20;
-	const int MAX_WATER = 100;
-	const int MAX_MOVES = 1;
-	const int STORM_LOSE_CARGO_PROB = 20;
-	const int STORM_SINK_PROB = 35;
+	static const int MAX_SOLDIERS;
+	static const int MAX_CAPACITY;
+	static const int MAX_WATER;
+	static const int MAX_MOVES;
+	static const int STORM_LOSE_CARGO_PROB;
+	static const int STORM_SINK_PROB;
 public:
 	SchoonerModel(CellModel* position);
 	~SchoonerModel();

@@ -37,15 +37,15 @@ void MapModel::addCellAt(int x, int y, CellModel::Type type)
 	}
 }
 
-void MapModel::addPortCellAt(int x, int y, char id,CellModel::CellOwner owner)
+void MapModel::addPortCellAt(int x, int y, char id,Owner owner)
 {
 	switch (owner)
 	{
-	case CellModel::CellOwner::PLAYER:
-		map.push_back(new PortModel(x, y, id, CellModel::CellOwner::PLAYER));
+	case Owner::PLAYER:
+		map.push_back(new PortModel(x, y, id, Owner::PLAYER));
 		break;
-	case CellModel::CellOwner::PIRATE:
-		map.push_back(new PortModel(x, y, id, CellModel::CellOwner::PIRATE));
+	case Owner::ENEMY:
+		map.push_back(new PortModel(x, y, id, Owner::ENEMY));
 		break;
 	}
 }

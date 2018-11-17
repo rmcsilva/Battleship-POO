@@ -153,6 +153,7 @@
     <ClInclude Include="Consola.h" />
     <ClInclude Include="EventModel.h" />
     <ClInclude Include="FileController.h" />
+    <ClInclude Include="FishModel.h" />
     <ClInclude Include="FrigateModel.h" />
     <ClInclude Include="GalleonModel.h" />
     <ClInclude Include="GameController.h" />
@@ -177,6 +178,7 @@
     <ClCompile Include="EventModel.cpp" />
     <ClCompile Include="Exemplo.cpp" />
     <ClCompile Include="FileController.cpp" />
+    <ClCompile Include="FishModel.cpp" />
     <ClCompile Include="FrigateModel.cpp" />
     <ClCompile Include="GalleonModel.cpp" />
     <ClCompile Include="GameController.cpp" />

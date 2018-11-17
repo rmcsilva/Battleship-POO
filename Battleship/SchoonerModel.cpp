@@ -1,8 +1,14 @@
 #include "stdafx.h"
 #include "SchoonerModel.h"
 
+const int SchoonerModel::MAX_SOLDIERS = 10;
+const int SchoonerModel::MAX_CAPACITY = 20;
+const int SchoonerModel::MAX_WATER = 100;
+const int SchoonerModel::MAX_MOVES = 1;
+const int SchoonerModel::STORM_LOSE_CARGO_PROB = 20;
+const int SchoonerModel::STORM_SINK_PROB = 35;
 
-SchoonerModel::SchoonerModel(CellModel* position) : ShipModel(MAX_CAPACITY, MAX_SOLDIERS, MAX_WATER, MAX_MOVES, ShipOwner::PLAYER, position)
+SchoonerModel::SchoonerModel(CellModel* position) : ShipModel(MAX_CAPACITY, MAX_SOLDIERS, MAX_WATER, MAX_MOVES, Owner::PLAYER, position)
 {
 }
 

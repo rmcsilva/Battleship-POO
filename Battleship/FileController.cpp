@@ -166,11 +166,11 @@ bool FileController::readMap(std::ifstream & file, int const & lines, int const 
 			{
 				if (isupper(cellType)) 
 				{
-					map->addPortCellAt(j, i, cellType, CellModel::CellOwner::PLAYER);
+					map->addPortCellAt(j, i, cellType, Owner::PLAYER);
 					game->addFriendlyPort((PortModel*)map->getCellAt(j,i));
 				} 
 				else {
-					map->addPortCellAt(j, i, cellType, CellModel::CellOwner::PIRATE);
+					map->addPortCellAt(j, i, cellType, Owner::ENEMY);
 					game->addPiratePort((PortModel*)map->getCellAt(j, i));
 				}
 			}

@@ -15,11 +15,10 @@ void View::setupLayout(GameController *gameController)
 		{
 		case GameState::SETUP:
 			//TODO:Uncomment this is for tests only
-			//initialLayout(gameController);
-			gameController->readInitialFileConfigs("initialConfig.txt");
+			initialLayout(gameController);
+			//gameController->readInitialFileConfigs("initialConfig.txt");
 			break;
 		case GameState::GAME:
-			//TODO: Make game menu
 			gameLayout(gameController);
 			gameAction(gameController);
 			break;
@@ -137,7 +136,7 @@ void View::paintInitialMapCell(CellModel* cell, bool mainColor) const
 			break;
 		case CellModel::Type::PORT: {
 			PortModel* port = (PortModel*)cell;
-			if (port->getOwner() == CellModel::CellOwner::PLAYER)
+			if (port->getOwner() == Owner::PLAYER)
 			{
 				Consola::setTextColor(FRIENDLY_SHIP_COLOR);
 				Consola::setBackgroundColor(FRIENDLY_PORT_COLOR);
@@ -192,12 +191,10 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 		case GameCommands::PROX:
 			//TODO:Perform commands
 			//TODO: Implement ships auto movement
+			gameController->proxCommand();
 			updateAllSeaCells(gameController->getSeaCells());
-			updateAllShips(gameController->getFriendlyShips());
-			
 			break;
 		case GameCommands::COMPRANAV:
-			//TODO: Complete function, need to implement ships first!
 			char type;
 			line >> type;
 			if (!gameController->buyShip(type))
@@ -212,7 +209,8 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			{
 				CellModel* oldPosition = gameController->getFriendlyShipPositionByID(id);
 				CellModel* position = convertStringCommandToCell(pos, oldPosition, gameController);
-				gameController->move(id, position);
+				if (!gameController->moveCommand(id, position)) {std::cout << COMMAND_EXECUTE_ERROR;}
+				updateAllSeaCells(gameController->getSeaCells());
 			}
 			catch (std::out_of_range e)
 			{
@@ -235,7 +233,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 		case GameCommands::INVALID:
 			break;
 	}
-	Consola::getch();
+	//Consola::getch();
 	return true;
 }
 
@@ -298,16 +296,16 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 	//TODO: Review
 	if (seaCell->hasShip())
 	{
-		//if (seaCell->getShipOwner() == ShipOwner::PLAYER)
-		//{
-		//	Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
-		//	std::cout << std::setw(2) << seaCell->getShip()->getID();
-		//}
-		//else
-		//{
-		//	Consola::setBackgroundColor(ENEMY_SHIP_COLOR);
-		//	std::cout << std::setw(2) << seaCell->getShip()->getID();
-		//}
+		if (seaCell->getShipOwner() == Owner::PLAYER)
+		{
+			Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
+			std::cout << std::setw(2) << seaCell->getShip()->getID();
+		}
+		else
+		{
+			Consola::setBackgroundColor(ENEMY_SHIP_COLOR);
+			std::cout << std::setw(2) << seaCell->getShip()->getID();
+		}
 	}
 	else
 	{

@@ -2,15 +2,14 @@
 #include "ShipModel.h"
 class FrigateModel : public ShipModel
 {
-	const int MAX_SOLDIERS = 50;
-	const int MAX_CAPACITY = 0;
-	const int MAX_WATER = 500;
-	//TODO: Change to 2 
-	const int MAX_MOVES = 1;
-	const int STORM_SOLDIERS_AFFECTED_PERCENTAGE = 15;
-	const int STORM_SINK_PROB = 20;
+	static const int MAX_SOLDIERS;
+	static const int MAX_CAPACITY;
+	static const int MAX_WATER;
+	static const int MAX_MOVES;
+	static const int STORM_SOLDIERS_AFFECTED_PERCENTAGE;
+	static const int STORM_SINK_PROB;
 public:
-	FrigateModel(ShipOwner owner, CellModel* position);
+	FrigateModel(Owner owner, CellModel* position);
 	~FrigateModel();
 
 	Type getType() const override;

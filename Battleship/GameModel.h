@@ -18,7 +18,7 @@ class GameModel
 	std::vector<PortModel*> piratePorts;
 
 	std::vector<ShipModel*> friendlyShips;
-	std::vector<ShipModel*> pirateShips;
+	std::vector<ShipModel*> enemyShips;
 
 	std::vector<SeaModel*> seaCells;
 
@@ -37,6 +37,7 @@ public:
 	int getMerchBuyPrice() const;
 	std::vector<PortModel*> getFriendlyPorts() const;
 	std::vector<ShipModel*> getFriendlyShips() const;
+	std::vector<ShipModel*> getEnemyShips() const;
 	std::vector<SeaModel*> getSeaCells() const;
 
 	void setGameState(GameState state);

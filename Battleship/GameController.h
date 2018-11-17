@@ -6,7 +6,6 @@ class GameController {
 	EventModel event;
 	GameModel game;
 
-	
 public:
 	GameController();
 	~GameController();
@@ -27,7 +26,17 @@ public:
 	
 	bool buyShip(char type);
 
-	bool move(int id, CellModel* goToPosition);
+	bool canMoveShip(ShipModel* ship) const;
+	bool moveShip(ShipModel* ship, CellModel* goToPosition);
+	bool moveCommand(int id, CellModel* goToPosition);
+
+	void proxCommand();
+	void friendlyFleetMovement(std::vector<ShipModel*> friendlyShips);
+	void enemyFleetMovement(std::vector<ShipModel*> enemyShips);
+
+	void lostShipMovement(ShipModel* ship);
+
+	CellModel* generateRandomMove(const CellModel* currentCell) const;
 
 	CellModel* getCellAbove(const CellModel* currentCell) const;
 	CellModel* getCellBelow(const CellModel* currentCell) const;
