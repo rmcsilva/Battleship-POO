@@ -14,7 +14,7 @@ public:
 	CellModel* getCellAt(int x, int y) const;
 	GameState getGameState() const;
 	std::vector<PortModel*> getFriendlyPorts() const;
-	std::vector<ShipModel*> GameController::getFriendlyShips() const;
+	std::vector<ShipModel*> getFriendlyShips() const;
 	std::vector<SeaModel*> getSeaCells() const;
 	int getNumLines() const;
 	int getNumColumns() const;
