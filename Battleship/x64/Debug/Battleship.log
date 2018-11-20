@@ -1,10 +1,2 @@
-﻿  Battleship.cpp
-c:\users\ricardo\documents\github\battleship-poo\battleship\battleship.cpp(16): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  CellModel.cpp
-  GameController.cpp
-  GameModel.cpp
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamemodel.cpp(49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-  View.cpp
-  Generating Code...
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(237): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
-  Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe
+﻿  View.cpp
+  Battleship.vcxproj -> \\Mac\Home\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

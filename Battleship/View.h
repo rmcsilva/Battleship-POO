@@ -65,7 +65,7 @@ public:
 	void showFriendlyPortsInfo(std::vector<PortModel*> const &ports) const;
 	void updateAllSeaCells(std::vector<SeaModel*> const &seaCells) const;
 	void updateSeaCell(SeaModel* const &seaCell) const;
-	//TODO:Add all ships
+	//TODO:See if its still needed
 	void updateAllShips(std::vector<ShipModel*> const &ships) const;
 	void goToMapPosition(int x, int y) const;
 	CellModel* convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController) const;

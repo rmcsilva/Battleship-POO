@@ -122,45 +122,46 @@ void View::paintInitialMapCell(CellModel* cell, bool mainColor) const
 {
 	switch (cell->getType())
 	{
-		case CellModel::Type::SEA:
+		case CellModel::Type::SEA:{
 			if (mainColor)
-			{
 				Consola::setBackgroundColor(SEA_COLOR_MAIN);
-				std::cout << "  ";
-			}
 			else
-			{
 				Consola::setBackgroundColor(SEA_COLOR_OFF);
-				std::cout << "  ";
-			}
+
+			std::cout << " ";
+
+			SeaModel* seaCell = (SeaModel*)cell;
+
+			if (seaCell->hasFish()) 
+				std::cout << "*";
+			else 
+				std::cout << " ";
+
 			break;
+		}
 		case CellModel::Type::PORT: {
 			PortModel* port = (PortModel*)cell;
 			if (port->getOwner() == Owner::PLAYER)
 			{
 				Consola::setTextColor(FRIENDLY_SHIP_COLOR);
-				Consola::setBackgroundColor(FRIENDLY_PORT_COLOR);
-				std::cout << ' ' << port->getID();
+				Consola::setBackgroundColor(FRIENDLY_PORT_COLOR);	
 			}
 			else
 			{
 				Consola::setTextColor(ENEMY_SHIP_COLOR);
 				Consola::setBackgroundColor(ENEMY_PORT_COLOR);
-				std::cout << ' ' << port->getID();
 			}
+			std::cout << ' ' << port->getID();
+			Consola::setTextColor(TEXT_COLOR);
 			break;
 		}
 		case CellModel::Type::GROUND:
 			if (mainColor)
-			{
 				Consola::setBackgroundColor(GROUND_COLOR_MAIN);
-				std::cout << "  ";
-			}
 			else
-			{
 				Consola::setBackgroundColor(GROUND_COLOR_OFF);
-				std::cout << "  ";
-			}
+
+			std::cout << "  ";
 			break;
 	}
 }
@@ -293,33 +294,29 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 
 	goToMapPosition(x, y);
 
-	//TODO: Review
 	if (seaCell->hasShip())
 	{
+		//TODO: Identify ship type
 		if (seaCell->getShipOwner() == Owner::PLAYER)
-		{
 			Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
-			std::cout << std::setw(2) << seaCell->getShip()->getID();
-		}
 		else
-		{
 			Consola::setBackgroundColor(ENEMY_SHIP_COLOR);
-			std::cout << std::setw(2) << seaCell->getShip()->getID();
-		}
+
+		std::cout << std::setw(2) << seaCell->getShip()->getID();
 	}
 	else
 	{
-		//TODO: Check if cell has fish
 		if (mainColor)
-		{
 			Consola::setBackgroundColor(SEA_COLOR_MAIN);
-			std::cout << "  ";
-		}
 		else
-		{
 			Consola::setBackgroundColor(SEA_COLOR_OFF);
-			std::cout << "  ";
-		}
+
+		std::cout << " ";
+
+		if (seaCell->hasFish())
+			std::cout << "*";
+		else 
+			std::cout << " ";
 	}
 
 	Consola::setBackgroundColor(TEXT_BACKGROUND);
@@ -327,7 +324,7 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 
 void View::updateAllShips(std::vector<ShipModel*> const& ships) const
 {
-	
+	//TODO: Check if needed
 	for (ShipModel* const &ship : ships)
 	{
 		int x = ship->getPosition()->getX();
