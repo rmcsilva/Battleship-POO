@@ -61,6 +61,12 @@
     <Filter Include="Source Files\Model\Map\Cell">
       <UniqueIdentifier>{4a9e7808-e10e-4170-929e-2b53b30aa92f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{ced15b8e-2455-46f1-87d7-285a579f9608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{e54ab2bb-129a-4b01-b19c-b2cfd2ea3986}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -90,9 +96,6 @@
     <ClInclude Include="EventModel.h">
       <Filter>Header Files\Model\Event</Filter>
     </ClInclude>
-    <ClInclude Include="FileController.h">
-      <Filter>Header Files\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="GameModel.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>
@@ -106,9 +109,6 @@
       <Filter>Header Files\Model\Ship</Filter>
     </ClInclude>
     <ClInclude Include="FrigateModel.h">
-      <Filter>Header Files\Model\Ship</Filter>
-    </ClInclude>
-    <ClInclude Include="GhostShip.h">
       <Filter>Header Files\Model\Ship</Filter>
     </ClInclude>
     <ClInclude Include="FishModel.h">
@@ -125,6 +125,12 @@
     </ClInclude>
     <ClInclude Include="SeaModel.h">
       <Filter>Header Files\Model\Map\Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="FileManager.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostShipModel.h">
+      <Filter>Header Files\Model\Ship</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,9 +158,6 @@
     <ClCompile Include="View.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
-    <ClCompile Include="FileController.cpp">
-      <Filter>Source Files\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="ShipModel.cpp">
       <Filter>Source Files\Model\Ship</Filter>
     </ClCompile>
@@ -176,9 +179,6 @@
     <ClCompile Include="FrigateModel.cpp">
       <Filter>Source Files\Model\Ship</Filter>
     </ClCompile>
-    <ClCompile Include="GhostShip.cpp">
-      <Filter>Source Files\Model\Ship</Filter>
-    </ClCompile>
     <ClCompile Include="CellModel.cpp">
       <Filter>Source Files\Model\Map\Cell</Filter>
     </ClCompile>
@@ -193,6 +193,12 @@
     </ClCompile>
     <ClCompile Include="FishModel.cpp">
       <Filter>Source Files\Model\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="FileManager.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostShipModel.cpp">
+      <Filter>Source Files\Model\Ship</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

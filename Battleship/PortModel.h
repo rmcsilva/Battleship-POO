@@ -13,7 +13,11 @@ public:
     Type getType() override;
 	Owner getOwner() const;
 	char getID() const;
+	int getNumOfSoldiers() const;
 	std::vector<ShipModel*> getShips() const;
+	int getNumberOfShips() const;
+
+	void setNumberOfSoldiers(int numSoldiers);
 
 	void addShipToPort(ShipModel* ship);
 	bool removeShipFromPort(ShipModel* ship);

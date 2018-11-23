@@ -13,20 +13,20 @@ void View::setupLayout(GameController *gameController)
 	{
 		switch (gameController->getGameState())
 		{
-		case GameState::SETUP:
-			//TODO:Uncomment this is for tests only
-			initialLayout(gameController);
-			//gameController->readInitialFileConfigs("initialConfig.txt");
-			break;
-		case GameState::GAME:
-			gameLayout(gameController);
-			gameAction(gameController);
-			break;
-		case GameState::END:
-			//TODO: Menu with score
-			std::cout << "Leaving game!";
-			Consola::getch();
-			exit(1);
+			case GameState::SETUP:
+				//TODO:Uncomment this is for tests only
+				initialLayout(gameController);
+				//gameController->readInitialFileConfigs("initialConfig.txt");
+				break;
+			case GameState::GAME:
+				gameLayout(gameController);
+				gameAction(gameController);
+				break;
+			case GameState::END:
+				//TODO: Menu with score
+				std::cout << "Leaving game!";
+				Consola::getch();
+				return;
 			break;
 		}
 	}
@@ -105,6 +105,7 @@ void View::gameLayout(GameController* gameController) const
 	for (int i = 0; i < gameController->getNumLines(); i++) 
 	{
 		Consola::setTextColor(TEXT_COLOR);
+		Consola::gotoxy(0, i * 2 + 1);
 		std::cout << std::setw(2) << i+1;
 		for (int j = 0; j < gameController->getNumColumns(); j++)
 		{
@@ -120,6 +121,7 @@ void View::gameLayout(GameController* gameController) const
 
 void View::paintInitialMapCell(CellModel* cell, bool mainColor) const
 {
+	goToMapPosition(cell->getX(), cell->getY());
 	switch (cell->getType())
 	{
 		case CellModel::Type::SEA:{
@@ -128,15 +130,11 @@ void View::paintInitialMapCell(CellModel* cell, bool mainColor) const
 			else
 				Consola::setBackgroundColor(SEA_COLOR_OFF);
 
-			std::cout << " ";
+			//Initially every cell has fish
+			std::cout << " *";
 
-			SeaModel* seaCell = (SeaModel*)cell;
-
-			if (seaCell->hasFish()) 
-				std::cout << "*";
-			else 
-				std::cout << " ";
-
+			goToMapOffPosition(cell->getX(), cell->getY());
+			std::cout << "  ";
 			break;
 		}
 		case CellModel::Type::PORT: {
@@ -153,6 +151,10 @@ void View::paintInitialMapCell(CellModel* cell, bool mainColor) const
 			}
 			std::cout << ' ' << port->getID();
 			Consola::setTextColor(TEXT_COLOR);
+
+			goToMapOffPosition(cell->getX(), cell->getY());
+			//Initially all ports are empty
+			std::cout << "  ";
 			break;
 		}
 		case CellModel::Type::GROUND:
@@ -161,6 +163,9 @@ void View::paintInitialMapCell(CellModel* cell, bool mainColor) const
 			else
 				Consola::setBackgroundColor(GROUND_COLOR_OFF);
 
+			std::cout << "  ";
+
+			goToMapOffPosition(cell->getX(), cell->getY());
 			std::cout << "  ";
 			break;
 	}
@@ -171,7 +176,7 @@ void View::gameAction(GameController* gameController)
 	std::string command;
 	do
 	{
-		Consola::clrcommands(gameController->getNumLines() + 1);
+		Consola::clrcommands(gameController->getNumLines() * 2 + 1);
 		showFriendlyPortsInfo(gameController->getFriendlyPorts());
 		std::cout << "Player Coins: " << gameController->getPlayerCoins() << '\n';
 		std::cout << COMMAND_LINE;
@@ -194,12 +199,15 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			//TODO: Implement ships auto movement
 			gameController->proxCommand();
 			updateAllSeaCells(gameController->getSeaCells());
+			updateAllPortCells(gameController->getFriendlyPorts());
 			break;
 		case GameCommands::COMPRANAV:
 			char type;
 			line >> type;
 			if (!gameController->buyShip(type))
 				std::cout << COMMAND_EXECUTE_ERROR;
+			else
+				updatePortCell(gameController->getFriendlyPorts().at(0));
 			break; 
 		case GameCommands::MOVE: {
 			int id;
@@ -210,8 +218,9 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			{
 				CellModel* oldPosition = gameController->getFriendlyShipPositionByID(id);
 				CellModel* position = convertStringCommandToCell(pos, oldPosition, gameController);
-				if (!gameController->moveCommand(id, position)) {std::cout << COMMAND_EXECUTE_ERROR;}
+				if (!gameController->moveCommand(id, position)) { std::cout << COMMAND_EXECUTE_ERROR; Consola::getch(); }
 				updateAllSeaCells(gameController->getSeaCells());
+				updateAllPortCells(gameController->getFriendlyPorts());
 			}
 			catch (std::out_of_range e)
 			{
@@ -296,6 +305,8 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 
 	if (seaCell->hasShip())
 	{
+		Consola::setTextColor(TEXT_BACKGROUND);
+
 		//TODO: Identify ship type
 		if (seaCell->getShipOwner() == Owner::PLAYER)
 			Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
@@ -303,6 +314,20 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 			Consola::setBackgroundColor(ENEMY_SHIP_COLOR);
 
 		std::cout << std::setw(2) << seaCell->getShip()->getID();
+		
+		goToMapOffPosition(x, y);
+
+		//TODO: Verify ship type and add corresponding color
+		switch (seaCell->getShipType())
+		{
+			case ShipModel::Type::FRIGATE: std::cout << " F"; break;
+			case ShipModel::Type::GALLEON: std::cout << " G"; break;
+			case ShipModel::Type::GHOST: std::cout << " S"; break;
+			case ShipModel::Type::SAILBOAT: std::cout << " V"; break;
+			case ShipModel::Type::SCHOONER: std::cout << " E"; break;
+		}
+
+		Consola::setTextColor(TEXT_COLOR);
 	}
 	else
 	{
@@ -317,8 +342,47 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 			std::cout << "*";
 		else 
 			std::cout << " ";
-	}
 
+		goToMapOffPosition(x, y);
+		std::cout << "  ";
+	}
+	Consola::setBackgroundColor(TEXT_BACKGROUND);
+}
+
+void View::updateAllPortCells(std::vector<PortModel*> const& ports) const
+{
+	for (PortModel* const &port : ports)
+		updatePortCell(port);
+}
+
+void View::updatePortCell(PortModel* const& portCell) const
+{
+	int x = portCell->getX();
+	int y = portCell->getY();
+	goToMapPosition(x, y);
+
+	if (portCell->getOwner() == Owner::PLAYER)
+	{
+		Consola::setTextColor(FRIENDLY_SHIP_COLOR);
+		Consola::setBackgroundColor(FRIENDLY_PORT_COLOR);
+	}
+	else
+	{
+		Consola::setTextColor(ENEMY_SHIP_COLOR);
+		Consola::setBackgroundColor(ENEMY_PORT_COLOR);
+	}
+	std::cout << ' ' << portCell->getID();
+
+	goToMapOffPosition(x,y);
+
+	int numberOfShips = portCell->getNumberOfShips();
+
+	if (numberOfShips)
+		std::cout << std::setw(2) << numberOfShips;
+	else
+		std::cout << "  ";
+
+	Consola::setTextColor(TEXT_COLOR);
 	Consola::setBackgroundColor(TEXT_BACKGROUND);
 }
 
@@ -339,7 +403,14 @@ void View::updateAllShips(std::vector<ShipModel*> const& ships) const
 void View::goToMapPosition(int x, int y) const
 {
 	x = (x + 1) * 2;
-	y = (y + 1);
+	y = y * 2 + 1;
+	Consola::gotoxy(x, y);
+}
+
+void View::goToMapOffPosition(int x, int y) const
+{
+	x = (x + 1) * 2;
+	y = y * 2 + 2;
 	Consola::gotoxy(x, y);
 }
 

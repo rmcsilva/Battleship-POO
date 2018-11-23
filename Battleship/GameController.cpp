@@ -4,7 +4,7 @@
 #include "GalleonModel.h"
 #include "SchoonerModel.h"
 #include "FrigateModel.h"
-#include "GhostShip.h"
+#include "GhostShipModel.h"
 
 //TODO: Initialize with defaults
 
@@ -55,7 +55,7 @@ bool GameController::buyShip(char type)
 				case 'G': ship = new GalleonModel(position); break;
 				case 'E': ship = new SchoonerModel(position); break;
 				case 'F': ship = new FrigateModel(Owner::PLAYER, position); break;
-				case 'S': ship = new GhostShip(position); break;
+				case 'S': ship = new GhostShipModel(position); break;
 				default: return false; break;
 			}
 			if (ship!=nullptr)

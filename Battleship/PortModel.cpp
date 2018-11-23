@@ -6,7 +6,11 @@ PortModel::PortModel(int x, int y, char id,Owner owner) : CellModel(x, y), id(id
 CellModel::Type PortModel::getType() {return Type::PORT;}
 Owner PortModel::getOwner() const {return owner;}
 char PortModel::getID() const {return id;}
+int PortModel::getNumOfSoldiers() const {return numSoldiers;}
 std::vector<ShipModel*> PortModel::getShips() const {return ships;}
+int PortModel::getNumberOfShips() const {return ships.size();}
+
+void PortModel::setNumberOfSoldiers(int numSoldiers) {this->numSoldiers = numSoldiers;}
 
 void PortModel::addShipToPort(ShipModel* ship) {ships.push_back(ship);}
 

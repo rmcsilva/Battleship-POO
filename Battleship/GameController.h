@@ -1,7 +1,7 @@
 #pragma once
-#include "FileController.h"
+#include "FileManager.h"
 class GameController {
-	FileController fileController;
+	FileManager fileController;
 	MapModel *map = NULL;
 	EventModel event;
 	GameModel game;
@@ -54,3 +54,4 @@ public:
 	void endGame();
 };
 
+std::ostream& operator<<(std::ostream& os, const GameController &gameController);
