@@ -176,7 +176,6 @@
     <ClCompile Include="CellModel.cpp" />
     <ClCompile Include="Consola.cpp" />
     <ClCompile Include="EventModel.cpp" />
-    <ClCompile Include="Exemplo.cpp" />
     <ClCompile Include="FileManager.cpp" />
     <ClCompile Include="FishModel.cpp" />
     <ClCompile Include="FrigateModel.cpp" />

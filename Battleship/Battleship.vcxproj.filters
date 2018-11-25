@@ -140,9 +140,6 @@
     <ClCompile Include="Battleship.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Exemplo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Consola.cpp">
       <Filter>Source Files\View\Library</Filter>
     </ClCompile>

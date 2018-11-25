@@ -8,7 +8,7 @@ enum class GameState { SETUP, GAME, END };
 class GameModel
 {
 	PlayerModel player;
-	//TODO: Arranjar constantes para os precos de acordo com a difuculdade
+	//TODO: Change consts of the prices according to game difficulty
 	int shipPrice, soldierPrice;
 	int fishSellPrice, merchSellPrice;
 	int merchBuyPrice;

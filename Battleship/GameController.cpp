@@ -95,7 +95,7 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 			sea->setShip(ship);
 
 		}
-		else //Other option left to go to a port
+		else //Other option left is to go to a port
 		{
 			PortModel* port = (PortModel*)goToPosition;
 			if (port->getOwner() == ship->getOwner())
@@ -149,7 +149,7 @@ bool GameController::moveCommand(int id, CellModel* goToPosition)
 	}
 	catch (std::out_of_range e)
 	{
-		//TODO: Add to log ship doesnt exist
+		//TODO: Add to log ship doesn't exist
 		return false;
 	}
 }

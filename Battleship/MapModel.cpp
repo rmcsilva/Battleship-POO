@@ -50,25 +50,6 @@ void MapModel::addPortCellAt(int x, int y, char id,Owner owner)
 	}
 }
 
-//void MapModel::setCellAt(int x, int y, CellModel::Type type)
-//{
-//	CellModel* cell = getCellAt(x,y);
-//
-//	//TODO:Verify if cells can be of the specific type
-//	switch (type)
-//	{
-//		case CellModel::Type::SEA:
-//			cell = new SeaModel(x, y);
-//			break;
-//		case CellModel::Type::PORT:
-//			cell = new PortModel(x, y);
-//			break;
-//		case CellModel::Type::GROUND:
-//			cell = new GroundModel(x, y);
-//			break;
-//	}
-//}
-
 CellModel* MapModel::getCellAbove(const CellModel* currentCell) const
 {
 	int x = currentCell->getX();
