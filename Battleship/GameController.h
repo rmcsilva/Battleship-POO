@@ -1,8 +1,11 @@
 #pragma once
 #include "FileManager.h"
+#include "Logger.h"
+
 class GameController {
 	FileManager fileController;
-	MapModel *map = NULL;
+	Logger logger;
+	MapModel *map = nullptr;
 	EventModel event;
 	GameModel game;
 
@@ -28,16 +31,20 @@ public:
 
 	bool canMoveShip(ShipModel* ship) const;
 	bool moveShip(ShipModel* ship, CellModel* goToPosition);
-	bool moveCommand(int id, CellModel* goToPosition);
 
+	//Game Comands
+	bool moveCommand(int id, CellModel* goToPosition);
 	void proxCommand();
+
+	//Game Logic
+	bool spawnRandomEnemyShip(std::vector<SeaModel*>seaCells, int probability);
 	void friendlyFleetMovement(std::vector<ShipModel*> friendlyShips);
 	void enemyFleetMovement(std::vector<ShipModel*> enemyShips);
 
 	void lostShipMovement(ShipModel* ship);
 
-	CellModel* generateRandomMove(const CellModel* currentCell) const;
-
+	CellModel* generateRandomMove(const CellModel* currentCell);
+	
 	CellModel* getCellAbove(const CellModel* currentCell) const;
 	CellModel* getCellBelow(const CellModel* currentCell) const;
 	CellModel* getCellRight(const CellModel* currentCell) const;
@@ -52,6 +59,10 @@ public:
 	void addCoins(double amount);
 	
 	void endGame();
+
+	//Logger Methods
+	void addLineToInfoLog(std::string line);
+	void addLineToCombatLog(std::string line);
 };
 
 std::ostream& operator<<(std::ostream& os, const GameController &gameController);

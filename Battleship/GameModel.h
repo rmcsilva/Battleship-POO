@@ -61,6 +61,5 @@ public:
 	bool removeCoins(int amount);
 
 	bool canRemoveCoins(int amount);
-	
 };
 

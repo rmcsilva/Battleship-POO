@@ -1,0 +1,25 @@
+Enemy Ship random number: 10
+Spawing random F at x: 8 y: 0
+
+
+NEXT TURN
+
+Cell Left
+Cell Below Right
+
+NEXT TURN
+
+Cell Below Right
+Cell Right
+Cell Bellow
+
+NEXT TURN
+
+Cell Right
+Cell Above Left
+Enemy Ship random number: 17
+Spawing random F at x: 1 y: 8
+
+
+NEXT TURN
+

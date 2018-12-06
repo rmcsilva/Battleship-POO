@@ -49,7 +49,8 @@ void GameModel::addPiratePort(PortModel* port) {piratePorts.push_back(port);}
 //Add Ships
 void GameModel::addFriendlyShip(ShipModel* ship)
 {
-	ship->setID(friendlyShips.size() + 1);
+	//TODO:Implement dynamic ID
+	//ship->setID(friendlyShips.size() + 1);
 	friendlyShips.push_back(ship);
 }
 void GameModel::addPirateShip(ShipModel* ship) {enemyShips.push_back(ship);}

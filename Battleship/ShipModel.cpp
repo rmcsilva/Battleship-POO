@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ShipModel.h"
-#include <iomanip>
+
+int ShipModel::shipCount = 1;
 
 ShipModel::ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMoves, Owner owner, CellModel* position) : maxCapacity(maxCapacity), maxSoldiers(maxSoldiers), maxWater(maxWater), maxMoves(maxMoves), owner(owner), position(position)
 {
@@ -9,6 +10,7 @@ ShipModel::ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMove
 	water = maxWater;
 	soldiers = maxSoldiers;
 	capacity = merch = fish = 0;
+	id = shipCount++;
 }
 
 int ShipModel::getID() const {return id;}
@@ -19,7 +21,7 @@ Navigation ShipModel::getNavigation() const {return navigation;}
 CellModel* ShipModel::getPosition() const {return position;}
 CellModel* ShipModel::getGoTo() const {return goTo;}
 
-void ShipModel::setID(int id) {this->id = id;}
+//void ShipModel::setID(int id) {this->id = id;}
 void ShipModel::setOwner(Owner owner) {this->owner = owner;}
 void ShipModel::setNavigation(Navigation navigation) {this->navigation = navigation;}
 void ShipModel::setPosition(CellModel* position) {this->position = position;}

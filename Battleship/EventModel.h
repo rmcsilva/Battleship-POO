@@ -7,6 +7,8 @@ class EventModel
 	const int DEFAULT_CALM_PROB = 20;
 	const int DEFAULT_RIOT_PROB = 20;
 	int probability, stormProb, mermaidProb, calmProb, riotProb;
+	//TODO: Add a vector of cells that are the affected ones
+	//TODO: Add a ship pointer to affect that ship
 public:
 	EventModel();
 

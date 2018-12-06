@@ -1,4 +1,5 @@
-﻿  GameModel.cpp
-\\mac\home\documents\github\battleship-poo\battleship\gamemodel.cpp(24): warning C4244: 'return': conversion from 'const double' to 'int', possible loss of data
-\\mac\home\documents\github\battleship-poo\battleship\gamemodel.cpp(52): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+﻿  GameController.cpp
+  SailboatModel.cpp
+  Generating Code...
+\\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(302): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
   Battleship.vcxproj -> \\Mac\Home\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

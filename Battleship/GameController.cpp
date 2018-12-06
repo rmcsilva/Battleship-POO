@@ -14,7 +14,7 @@ GameController::GameController()
 
 GameController::~GameController()
 {
-	if (map != NULL)
+	if (map != nullptr)
 		delete(map);
 	//TODO: Delete ships and all that was allocated with new
 }
@@ -56,7 +56,7 @@ bool GameController::buyShip(char type)
 				case 'E': ship = new SchoonerModel(position); break;
 				case 'F': ship = new FrigateModel(Owner::PLAYER, position); break;
 				case 'S': ship = new GhostShipModel(position); break;
-				default: return false; break;
+				default: return false;
 			}
 			if (ship!=nullptr)
 			{
@@ -158,6 +158,57 @@ void GameController::proxCommand()
 {
 	friendlyFleetMovement(game.getFriendlyShips());
 	enemyFleetMovement(game.getEnemyShips());
+	//TODO:Add Combats and events
+	spawnRandomEnemyShip(game.getSeaCells(), map->getPirateProb());
+	logger.addLineToInfoLog("\nNEXT TURN\n");
+}
+
+bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int probability)
+{
+	std::ostringstream log;
+	//generate random number from 0 to 99
+	int random = rand() % 100;
+
+	log << "Enemy Ship random number: " << random << '\n';
+	
+	if (random < probability)
+	{
+		//Spawn enemy ship
+		bool cellHasShip = true;
+		int position;
+		do
+		{
+			position = rand() % seaCells.size();
+			printf("Pos %d   : ", position);
+			cellHasShip = seaCells.at(position)->hasShip();
+		} while (cellHasShip);
+
+		CellModel* cell = (CellModel*)seaCells.at(position);
+
+		//generate two random values 0 or 1
+		int type = rand() % 2;
+		printf("Type:    %d   ", type);
+
+		ShipModel* enemyShip;
+
+		if (type==0)
+			enemyShip = new FrigateModel(Owner::ENEMY, cell);
+		else 
+			enemyShip = new SailboatModel(Owner::ENEMY, cell);
+
+		//Add ship to vector and sets ship position
+		game.addPirateShip(enemyShip);
+		seaCells.at(position)->setShip(enemyShip);
+
+		log << "Spawning random " << enemyShip->getAsString() << " at x: ";
+		log << cell->getX() + 1 << " y: " << cell->getY() + 1;
+		 
+		logger.addLineToInfoLog(log.str());
+
+		return true;
+	}
+
+	return false;
 }
 
 void GameController::friendlyFleetMovement(std::vector<ShipModel*> friendlyShips)
@@ -171,7 +222,12 @@ void GameController::friendlyFleetMovement(std::vector<ShipModel*> friendlyShips
 				//TODO: Implement 
 				case Navigation::AUTO: break;
 				case Navigation::ORDER: break;
-				case Navigation::LOST: lostShipMovement(friendlyShip); break;
+				case Navigation::LOST:{
+					std::ostringstream shipInfo;
+					shipInfo << friendlyShip->getID() << "  " << friendlyShip->getAsString();
+					logger.addLineToInfoLog(shipInfo.str());
+					lostShipMovement(friendlyShip);
+					break;}
 			default: break;
 			}
 		}
@@ -209,29 +265,36 @@ void GameController::lostShipMovement(ShipModel* ship)
 	} while (canMoveShip(ship));
 }
 
-CellModel* GameController::generateRandomMove(const CellModel* currentCell) const
+CellModel* GameController::generateRandomMove(const CellModel* currentCell)
 {
 	int randomNumber = rand() % 8 + 1;
-	//TODO: Send number to logs
-	//std::cout << randomNumber << " ";
+	
 
 	switch (randomNumber)
 	{
 		case 1:
+			logger.addLineToInfoLog("Cell Above");
 			return getCellAbove(currentCell);
 		case 2:
+			logger.addLineToInfoLog("Cell Bellow");
 			return getCellBelow(currentCell);
 		case 3:
+			logger.addLineToInfoLog("Cell Right");
 			return getCellRight(currentCell);
 		case 4:
+			logger.addLineToInfoLog("Cell Left");
 			return getCellLeft(currentCell);
 		case 5:
+			logger.addLineToInfoLog("Cell Above Right");
 			return getCellAboveRight(currentCell);
 		case 6:
+			logger.addLineToInfoLog("Cell Above Left");
 			return getCellAboveLeft(currentCell);
 		case 7:
+			logger.addLineToInfoLog("Cell Below Right");
 			return getCellBelowRight(currentCell);
 		case 8:
+			logger.addLineToInfoLog("Cell Below Left");
 			return getCellBelowLeft(currentCell);
 	}
 }
@@ -248,3 +311,6 @@ CellModel* GameController::getCellBelowLeft(const CellModel* currentCell) const 
 void GameController::addCoins(double amount) {game.addCoins(amount);}
 
 void GameController::endGame() {game.setGameState(GameState::END);}
+
+void GameController::addLineToInfoLog(std::string line) {logger.addLineToInfoLog(line);}
+void GameController::addLineToCombatLog(std::string line) {logger.addLineToCombatLog(line);}

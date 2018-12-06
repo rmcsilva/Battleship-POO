@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "FileManager.h"
+#include "Logger.h"
 
 
 FileManager::FileManager()

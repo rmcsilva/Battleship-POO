@@ -5,6 +5,7 @@ enum class Navigation { USER, AUTO, ORDER, LOST };
 
 class ShipModel
 {
+	static int shipCount;
 	int price; //value TODO: Check if its still valid
 	const int maxCapacity, maxSoldiers, maxWater, maxMoves;
 protected:
@@ -31,7 +32,7 @@ public:
 	CellModel* getPosition() const;
 	CellModel* getGoTo() const;
 
-	void setID(int id);
+	//void setID(int id);
 	void setOwner(Owner owner);
 	void setNavigation(Navigation navigation);
 	void setPosition(CellModel* position);
@@ -39,7 +40,9 @@ public:
 
 	void refillWater();
 	void navigationCost();
-	void moveShip(CellModel* goToPosition);
+	//TODO:Make pure virtual
+	void autoShipMovement();
+	void moveShip(CellModel* position);
 	void resetMoves();
 	virtual bool stormAttack() = 0;
 
