@@ -61,14 +61,7 @@ bool ShipModel::operator==(ShipModel const& ship) const {return this->id == ship
 
 std::ostream& operator<<(std::ostream& os, const ShipModel& ship)
 {
-	switch (ship.getType())
-	{
-		case ShipModel::Type::FRIGATE: os << "F "; break;
-		case ShipModel::Type::GALLEON: os << "G "; break;
-		case ShipModel::Type::GHOST: os << "S "; break;
-		case ShipModel::Type::SAILBOAT: os << "V "; break;
-		case ShipModel::Type::SCHOONER: os << "E "; break;
-	}
+	os << ship.getAsString();
 	os << ship.getID();
 	return os;
 }

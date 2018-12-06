@@ -26,3 +26,5 @@ bool FrigateModel::stormAttack()
 	soldiers -= soldiersLost;
 	return false;
 }
+
+std::string FrigateModel::getAsString() const {return "F";}

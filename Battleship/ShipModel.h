@@ -42,6 +42,8 @@ public:
 	void moveShip(CellModel* goToPosition);
 	void resetMoves();
 	virtual bool stormAttack() = 0;
+
+	virtual std::string getAsString() const = 0;
 	bool operator==(ShipModel const &ship) const;
 };
 

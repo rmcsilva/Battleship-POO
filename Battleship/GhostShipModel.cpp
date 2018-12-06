@@ -13,7 +13,6 @@ GhostShipModel::~GhostShipModel()
 
 ShipModel::Type GhostShipModel::getType() const {return ShipModel::Type::GHOST;}
 
-bool GhostShipModel::stormAttack()
-{
-	return false;
-}
+bool GhostShipModel::stormAttack() {return false;}
+
+std::string GhostShipModel::getAsString() const {return "S";}

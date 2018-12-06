@@ -26,3 +26,5 @@ bool SchoonerModel::stormAttack()
 	//STORM_SINK_PROB
 	return false;
 }
+
+std::string SchoonerModel::getAsString() const {return "E";}

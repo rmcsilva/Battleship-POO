@@ -27,3 +27,5 @@ bool GalleonModel::stormAttack()
 	//TODO: Sink probability
 	return false;
 }
+
+std::string GalleonModel::getAsString() const {return "G";}

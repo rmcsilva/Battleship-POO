@@ -33,3 +33,5 @@ bool SailboatModel::stormAttack()
 	}
 	return false;
 }
+
+std::string SailboatModel::getAsString() const {return "V";}
