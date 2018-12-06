@@ -1,10 +1,13 @@
 #include "stdafx.h"
 #include "GameModel.h"
 
+const int GameModel::COINS_EASY = 5000;
 
 GameModel::GameModel()
 {
 	state = GameState::SETUP;
+	//TODO: Check game difficulty
+	coins = COINS_EASY;
 }
 
 GameModel::~GameModel()
@@ -18,7 +21,7 @@ GameModel::~GameModel()
 
 //Gets
 GameState GameModel::getGameState() const {return state;}
-int GameModel::getPlayerCoins() const {return player.getCoins();}
+int GameModel::getPlayerCoins() const {return coins;}
 int GameModel::getShipPrice() const {return shipPrice;}
 int GameModel::getSoldierPrice() const {return soldierPrice;}
 int GameModel::getFishSellPrice() const {return fishSellPrice;}
@@ -32,7 +35,7 @@ std::vector<SeaModel*> GameModel::getSeaCells() const {return seaCells;}
 
 //Sets
 void GameModel::setGameState(GameState state) {this->state = state;}
-void GameModel::setPlayerCoins(int amount) {this->player.setCoins(amount);}
+void GameModel::setPlayerCoins(int amount) {this->coins = amount;}
 void GameModel::setShipPrice(int amount) {this->shipPrice = amount;}
 void GameModel::setSoldierPrice(int amount) {this->soldierPrice = amount;}
 void GameModel::setFishSellPrice(int amount) {this->fishSellPrice = amount;}
@@ -54,6 +57,16 @@ void GameModel::addPirateShip(ShipModel* ship) {enemyShips.push_back(ship);}
 void GameModel::addSeaCell(SeaModel * cell) { seaCells.push_back(cell); }
 
 //Player Coins
-void GameModel::addCoins(double amount) {player.addCoins(amount);}
-bool GameModel::canRemoveCoins(int amount) {return player.canRemoveCoins(amount);}
-bool GameModel::removeCoins(int amount) {return player.removeCoins(amount);}
+void GameModel::addCoins(double amount) {coins += amount;}
+
+bool GameModel::removeCoins(int amount) {
+	if (canRemoveCoins(amount)) {
+		coins -= amount;
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool GameModel::canRemoveCoins(int amount) {return coins > amount;}

@@ -1,3 +1,4 @@
 ﻿  GameModel.cpp
-\\mac\home\documents\github\battleship-poo\battleship\gamemodel.cpp(49): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+\\mac\home\documents\github\battleship-poo\battleship\gamemodel.cpp(24): warning C4244: 'return': conversion from 'const double' to 'int', possible loss of data
+\\mac\home\documents\github\battleship-poo\battleship\gamemodel.cpp(52): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   Battleship.vcxproj -> \\Mac\Home\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

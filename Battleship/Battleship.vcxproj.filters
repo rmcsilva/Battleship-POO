@@ -78,9 +78,6 @@
     <ClInclude Include="Consola.h">
       <Filter>Header Files\View\Library</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerModel.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
     <ClInclude Include="MapModel.h">
       <Filter>Header Files\Model\Map</Filter>
     </ClInclude>
@@ -145,9 +142,6 @@
     </ClCompile>
     <ClCompile Include="MapModel.cpp">
       <Filter>Source Files\Model\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerModel.cpp">
-      <Filter>Source Files\Model</Filter>
     </ClCompile>
     <ClCompile Include="GameController.cpp">
       <Filter>Source Files\Controller</Filter>

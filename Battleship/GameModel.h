@@ -1,5 +1,4 @@
 #pragma once
-#include "PlayerModel.h"
 #include "PortModel.h"
 #include "SeaModel.h"
 
@@ -7,11 +6,11 @@ enum class GameState { SETUP, GAME, END };
 
 class GameModel
 {
-	PlayerModel player;
 	//TODO: Change consts of the prices according to game difficulty
 	int shipPrice, soldierPrice;
 	int fishSellPrice, merchSellPrice;
 	int merchBuyPrice;
+	double coins;
 	double score=0;
 	//TODO: Main port is the first one
 	std::vector<PortModel*> friendlyPorts;
@@ -23,6 +22,8 @@ class GameModel
 	std::vector<SeaModel*> seaCells;
 
 	GameState state;
+
+	static const int COINS_EASY;
 
 public:
 	GameModel();
@@ -57,7 +58,9 @@ public:
 	void addSeaCell(SeaModel* cell);
 
 	void addCoins(double amount);
-	bool canRemoveCoins(int amount);
 	bool removeCoins(int amount);
+
+	bool canRemoveCoins(int amount);
+	
 };
 

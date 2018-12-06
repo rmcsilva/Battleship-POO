@@ -161,7 +161,6 @@
     <ClInclude Include="GhostShipModel.h" />
     <ClInclude Include="GroundModel.h" />
     <ClInclude Include="MapModel.h" />
-    <ClInclude Include="PlayerModel.h" />
     <ClInclude Include="PortModel.h" />
     <ClInclude Include="SailboatModel.h" />
     <ClInclude Include="SchoonerModel.h" />
@@ -185,7 +184,6 @@
     <ClCompile Include="GhostShipModel.cpp" />
     <ClCompile Include="GroundModel.cpp" />
     <ClCompile Include="MapModel.cpp" />
-    <ClCompile Include="PlayerModel.cpp" />
     <ClCompile Include="PortModel.cpp" />
     <ClCompile Include="SailboatModel.cpp" />
     <ClCompile Include="SchoonerModel.cpp" />
