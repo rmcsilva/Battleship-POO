@@ -17,6 +17,7 @@ public:
 	CellModel* getCellAt(int x, int y) const;
 	GameState getGameState() const;
 	std::vector<PortModel*> getFriendlyPorts() const;
+	std::vector<PortModel*> getEnemyPorts() const;
 	std::vector<ShipModel*> getFriendlyShips() const;
 	std::vector<SeaModel*> getSeaCells() const;
 	int getNumLines() const;
@@ -36,15 +37,21 @@ public:
 	bool moveCommand(int id, CellModel* goToPosition);
 	void proxCommand();
 
-	//Game Logic
+	//Game Logic (make private?)
+	void shipBattles(std::vector<ShipModel*>friendlyShips);
+	//TODO: Finish ship combat
+	void shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip);
+	bool portCombat(ShipModel* attacker, PortModel* port);
 	bool spawnRandomEnemyShip(std::vector<SeaModel*>seaCells, int probability);
 	void friendlyFleetMovement(std::vector<ShipModel*> friendlyShips);
 	void enemyFleetMovement(std::vector<ShipModel*> enemyShips);
 
 	void lostShipMovement(ShipModel* ship);
 
+	//TODO: Change to use getSurrouding method
 	CellModel* generateRandomMove(const CellModel* currentCell);
-	
+
+	std::vector<SeaModel*> getSurroundingSeaCells(const CellModel* currentCell);
 	CellModel* getCellAbove(const CellModel* currentCell) const;
 	CellModel* getCellBelow(const CellModel* currentCell) const;
 	CellModel* getCellRight(const CellModel* currentCell) const;

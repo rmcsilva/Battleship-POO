@@ -15,8 +15,8 @@ void View::setupLayout(GameController *gameController)
 		{
 			case GameState::SETUP:
 				//TODO:Uncomment this is for tests only
-				initialLayout(gameController);
-				//gameController->readInitialFileConfigs("initialConfig.txt");
+				//initialLayout(gameController);
+				gameController->readInitialFileConfigs("initialConfig.txt");
 				break;
 			case GameState::GAME:
 				gameLayout(gameController);
@@ -199,7 +199,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			//TODO: Implement ships auto movement
 			gameController->proxCommand();
 			updateAllSeaCells(gameController->getSeaCells());
-			updateAllPortCells(gameController->getFriendlyPorts());
+			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
 			break;
 		case GameCommands::COMPRANAV:
 			char type;
@@ -214,20 +214,18 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			line >> id;
 			std::string pos;
 			line >> pos;
-			try
-			{
-				CellModel* oldPosition = gameController->getFriendlyShipPositionByID(id);
-				CellModel* position = convertStringCommandToCell(pos, oldPosition, gameController);
-				if (!gameController->moveCommand(id, position)) { std::cout << COMMAND_EXECUTE_ERROR; Consola::getch(); }
-				updateAllSeaCells(gameController->getSeaCells());
-				updateAllPortCells(gameController->getFriendlyPorts());
-			}
-			catch (std::out_of_range e)
+
+			CellModel* oldPosition = gameController->getFriendlyShipPositionByID(id);
+			if (oldPosition==nullptr)
 			{
 				std::cout << "Ship does not exist!";
+				Consola::getch();
 				break;
 			}
-			break;
+			CellModel* position = convertStringCommandToCell(pos, oldPosition, gameController);
+			if (!gameController->moveCommand(id, position)) { std::cout << COMMAND_EXECUTE_ERROR; Consola::getch(); }
+			updateAllSeaCells(gameController->getSeaCells());
+			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
 		}
 		case GameCommands::MOEDAS:
 			double amount;
@@ -349,10 +347,12 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 	Consola::setBackgroundColor(TEXT_BACKGROUND);
 }
 
-void View::updateAllPortCells(std::vector<PortModel*> const& ports) const
+void View::updateAllPortCells(std::vector<PortModel*> const &friendlyPorts, std::vector<PortModel*> const &enemyPorts) const
 {
-	for (PortModel* const &port : ports)
-		updatePortCell(port);
+	for (PortModel* const &friendlyPort : friendlyPorts)
+		updatePortCell(friendlyPort);
+	for (PortModel* const &enemyPort : enemyPorts)
+		updatePortCell(enemyPort);
 }
 
 void View::updatePortCell(PortModel* const& portCell) const

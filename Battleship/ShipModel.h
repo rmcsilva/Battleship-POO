@@ -1,5 +1,9 @@
 #pragma once
 #include "CellModel.h"
+
+#define COMBAT_WON_AFFECTED_SOLDIERS_PERCENTAGE 20
+#define PORT_BATTLE_AFFECTED_SOLDIERS_PERCENTAGE 20
+
 enum class Owner { PLAYER, ENEMY, LOST };
 enum class Navigation { USER, AUTO, ORDER, LOST };
 
@@ -27,7 +31,11 @@ public:
 	int getID() const;
 	int getNumOfMoves() const;
 	int getMaxMoves() const;
+	int getWater() const;
+	int getFish() const;
+	int getMerch() const;
 	Owner getOwner() const;
+	int getSoldiers() const;
 	Navigation getNavigation() const;
 	CellModel* getPosition() const;
 	CellModel* getGoTo() const;
@@ -38,12 +46,19 @@ public:
 	void setPosition(CellModel* position);
 	void setGoTo(CellModel* goTo);
 
+	bool canAddToShipCargo(int amount);
 	void refillWater();
 	void navigationCost();
 	//TODO:Make pure virtual
 	void autoShipMovement();
 	void moveShip(CellModel* position);
 	void resetMoves();
+
+	int combatVictory();
+	void combatDefeat(int damage);
+	void portCombat();
+	void lootShip(ShipModel* ship);
+
 	virtual bool stormAttack() = 0;
 
 	virtual std::string getAsString() const = 0;

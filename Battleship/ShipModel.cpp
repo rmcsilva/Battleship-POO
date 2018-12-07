@@ -16,7 +16,11 @@ ShipModel::ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMove
 int ShipModel::getID() const {return id;}
 int ShipModel::getNumOfMoves() const {return numOfMoves;}
 int ShipModel::getMaxMoves() const {return maxMoves;}
+int ShipModel::getWater() const {return water;}
+int ShipModel::getFish() const{return fish;}
+int ShipModel::getMerch() const {return merch;}
 Owner ShipModel::getOwner() const {return owner;}
+int ShipModel::getSoldiers() const {return soldiers;}
 Navigation ShipModel::getNavigation() const {return navigation;}
 CellModel* ShipModel::getPosition() const {return position;}
 CellModel* ShipModel::getGoTo() const {return goTo;}
@@ -27,10 +31,13 @@ void ShipModel::setNavigation(Navigation navigation) {this->navigation = navigat
 void ShipModel::setPosition(CellModel* position) {this->position = position;}
 void ShipModel::setGoTo(CellModel* goTo) {this->goTo = goTo;}
 
+bool ShipModel::canAddToShipCargo(int amount) {return capacity + amount > maxCapacity;}
+
 void ShipModel::refillWater() {water = maxWater;}
 
 void ShipModel::navigationCost()
 {
+	//TODO:Test
 	if (water>=soldiers)
 	{
 		water -= soldiers;
@@ -57,6 +64,60 @@ void ShipModel::moveShip(CellModel* position)
 }
 
 void ShipModel::resetMoves() {numOfMoves = 0;}
+
+int ShipModel::combatVictory()
+{
+	int soldiersLost = soldiers * COMBAT_WON_AFFECTED_SOLDIERS_PERCENTAGE / 100;
+	soldiers -= soldiersLost;
+
+	if (soldiers < 0) soldiers = 0;
+
+	return soldiersLost;
+}
+
+void ShipModel::combatDefeat(int damage)
+{
+	soldiers -= damage * 2;
+
+	if (soldiers < 0) soldiers = 0;
+}
+
+void ShipModel::portCombat()
+{
+	int soldiersLost = soldiers * PORT_BATTLE_AFFECTED_SOLDIERS_PERCENTAGE / 100;
+	soldiers -= soldiersLost;
+
+	if (soldiers < 0) soldiers = 0;
+}
+
+void ShipModel::lootShip(ShipModel* ship)
+{
+	water += ship->getWater();
+	if (water > maxWater) water = maxWater;
+
+	if (capacity != maxCapacity)
+	{
+		int shipMerch = ship->getMerch();
+		if (shipMerch > 0)
+		{
+			shipMerch /= 2;
+			if (canAddToShipCargo(shipMerch)) {
+				merch += shipMerch;
+				capacity += shipMerch;
+			}
+		}
+
+		int shipFish = ship->getFish();
+		if (shipFish > 0)
+		{
+			shipFish /= 2;
+			if (canAddToShipCargo(shipMerch)) {
+				fish += shipFish;
+				capacity += shipFish;
+			}
+		}
+	}
+}
 
 
 bool ShipModel::operator==(ShipModel const& ship) const {return this->id == ship.getID();}

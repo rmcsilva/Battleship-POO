@@ -21,6 +21,8 @@ public:
 
 	void addShipToPort(ShipModel* ship);
 	bool removeShipFromPort(ShipModel* ship);
+
+	void changeOwner();
 };
 
 std::ostream& operator<<(std::ostream& os, const PortModel &port);

@@ -12,6 +12,8 @@ class View
 	const int FRIENDLY_SHIP_COLOR = Consola::VERDE_CLARO;
 	const int ENEMY_SHIP_COLOR = Consola::VERMELHO_CLARO;
 
+	//TODO:Add lost ship color
+
 	const int ERROR_COLOR = Consola::VERMELHO_CLARO;
 	const int SUCESS_COLOR = Consola::VERDE_CLARO;
 	const int TEXT_COLOR = Consola::BRANCO;

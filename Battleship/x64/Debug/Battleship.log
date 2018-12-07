@@ -1,5 +1,11 @@
-﻿  GameController.cpp
-  SailboatModel.cpp
+﻿  Battleship.cpp
+\\mac\home\documents\github\battleship-poo\battleship\battleship.cpp(14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  FileManager.cpp
+  GameController.cpp
+  GameModel.cpp
+\\mac\home\documents\github\battleship-poo\battleship\gamemodel.cpp(24): warning C4244: 'return': conversion from 'const double' to 'int', possible loss of data
+  View.cpp
   Generating Code...
-\\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(302): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
+\\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(454): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
+\\mac\home\documents\github\battleship-poo\battleship\filemanager.cpp(95): warning C4715: 'FileManager::readInitialFileConfigs': not all control paths return a value
   Battleship.vcxproj -> \\Mac\Home\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

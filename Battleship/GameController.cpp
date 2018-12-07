@@ -5,6 +5,7 @@
 #include "SchoonerModel.h"
 #include "FrigateModel.h"
 #include "GhostShipModel.h"
+#include "Consola.h"
 
 //TODO: Initialize with defaults
 
@@ -22,6 +23,7 @@ GameController::~GameController()
 CellModel* GameController::getCellAt(int x, int y) const { return map->getCellAt(x, y); }
 GameState GameController::getGameState() const { return game.getGameState(); }
 std::vector<PortModel*> GameController::getFriendlyPorts() const { return game.getFriendlyPorts(); }
+std::vector<PortModel*> GameController::getEnemyPorts() const {return game.getEnemyPorts();}
 std::vector<ShipModel*> GameController::getFriendlyShips() const { return game.getFriendlyShips(); }
 std::vector<SeaModel*> GameController::getSeaCells() const {return game.getSeaCells();}
 
@@ -29,7 +31,18 @@ int GameController::getNumLines() const { return map->getNumLines(); }
 int GameController::getNumColumns() const { return map->getNumColumns(); }
 int GameController::getPlayerCoins() const { return game.getPlayerCoins(); }
 
-CellModel* GameController::getFriendlyShipPositionByID(int id) const {return game.getFriendlyShips().at(id-1)->getPosition();}
+CellModel* GameController::getFriendlyShipPositionByID(int id) const
+{
+	// game.getFriendlyShips().at(id-1)->getPosition() Dynamic
+	for (auto friendlyShip : game.getFriendlyShips())
+	{
+		if (friendlyShip->getID()==id)
+		{
+			return friendlyShip->getPosition();
+		}
+	}
+	return nullptr;
+}
 
 bool GameController::readInitialFileConfigs(std::string filename)
 {
@@ -106,7 +119,19 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 			else
 			{
 				//TODO: Combat with enemy port
-				return false;
+				//Can only attack empty ports
+				if (port->getNumberOfShips()>0) return false;
+
+				//If ship wins battle it will enter the port
+				if(portCombat(ship, port))
+				{
+					port->addShipToPort(ship);
+					ship->refillWater();
+				} 
+				else
+				{
+					return false;
+				}
 			}
 		}
 
@@ -131,7 +156,21 @@ bool GameController::moveCommand(int id, CellModel* goToPosition)
 {
 	try
 	{
-		ShipModel* ship = game.getFriendlyShips().at(id - 1);
+		//ShipModel* ship = game.getFriendlyShips().at(id - 1); Dynamic ship id
+
+		ShipModel* ship = nullptr;
+
+		for (auto friendlyShip : game.getFriendlyShips())
+		{
+			if (friendlyShip->getID() == id)
+			{
+				ship = friendlyShip;
+				break;
+			}	
+		}
+
+		if (ship==nullptr) return false;
+
 
 		if (canMoveShip(ship))
 		{
@@ -158,9 +197,132 @@ void GameController::proxCommand()
 {
 	friendlyFleetMovement(game.getFriendlyShips());
 	enemyFleetMovement(game.getEnemyShips());
-	//TODO:Add Combats and events
+	shipBattles(game.getFriendlyShips());
+	//TODO:Add events
 	spawnRandomEnemyShip(game.getSeaCells(), map->getPirateProb());
 	logger.addLineToInfoLog("\nNEXT TURN\n");
+}
+
+void GameController::shipBattles(std::vector<ShipModel*> friendlyShips)
+{
+	for(auto friendlyShip : friendlyShips)
+	{
+		//TODO: Check if ship is on enemy port
+
+		std::vector<SeaModel*> surroundingSeaCells = getSurroundingSeaCells(friendlyShip->getPosition());
+		for(auto surroundingSeaCell : surroundingSeaCells)
+		{
+			if (surroundingSeaCell->hasShip())
+			{
+				if (surroundingSeaCell->getShipOwner() == Owner::ENEMY)
+					shipCombat(friendlyShip, surroundingSeaCell->getShip());
+			}
+		}
+	}
+}
+
+void GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
+{
+	std::ostringstream infoLog, combatLog;
+	combatLog << "Ship Combat Between Ship: " << friendlyShip->getID() << " and " << enemyShip->getID() << '\n';
+
+	int friendlyShipSoldiers = friendlyShip->getSoldiers();
+	int enemyShipSoldiers = enemyShip->getSoldiers();
+
+	infoLog << "Friendly Ship Soldiers: " << friendlyShipSoldiers << '\n';
+	infoLog << "Enemy Ship Soldiers: " << enemyShipSoldiers << '\n';
+
+	int friendlyShipRandom = rand() % friendlyShipSoldiers + 1;
+	int enemyShipRandom = rand() % enemyShipSoldiers + 1;
+
+	infoLog << "Friendly Ship Random: " << friendlyShipRandom << '\n';
+	infoLog << "Enemy Ship Random: " << enemyShipRandom << '\n';
+
+	int damage;
+	//If friendly Ship Wins
+	if (friendlyShipRandom > enemyShipRandom)
+	{
+		combatLog << "Ship " << friendlyShip->getID() <<" Won combat!\n";
+		damage = friendlyShip->combatVictory();
+		enemyShip->combatDefeat(damage);
+	} 
+	else
+	{
+		combatLog << "Ship " << enemyShip->getID() << " Won combat!\n";
+		damage = enemyShip->combatVictory();
+		friendlyShip->combatDefeat(damage);
+	}
+
+	friendlyShipSoldiers = friendlyShip->getSoldiers();
+	enemyShipSoldiers = enemyShip->getSoldiers();
+
+	infoLog << "Friendly Ship Soldiers After Combat: " << friendlyShipSoldiers << '\n';
+	infoLog << "Enemy Ship Soldiers After Combat: " << enemyShipSoldiers << '\n';
+
+	if (friendlyShipSoldiers==0 && enemyShipSoldiers==0)
+	{
+		//Remove both ships from game
+		game.removeFriendlyShip(friendlyShip);
+		game.removeEnemyShip(enemyShip);
+		combatLog << "Both Ships Sank!!\n";
+	} else if (friendlyShipSoldiers == 0)
+	{
+		//Enemy Ships gets friendly Ship stuff
+		enemyShip->lootShip(friendlyShip);
+		game.removeFriendlyShip(friendlyShip);
+		combatLog << "Ship " << friendlyShip->getID() << " Sank!\n";
+	}else if (enemyShipSoldiers == 0)
+	{
+		//Friendly Ships gets enemy Ship stuff
+		friendlyShip->lootShip(enemyShip);
+		game.removeEnemyShip(enemyShip);
+		combatLog << "Ship " << enemyShip->getID() << " Sank!\n";
+	}
+
+	logger.addLineToInfoLog(infoLog.str());
+	logger.addLineToCombatLog(combatLog.str());
+}
+
+bool GameController::portCombat(ShipModel* attacker, PortModel* port)
+{
+	std::ostringstream infoLog, combatLog;
+	combatLog << "Port Combat between Port: " << port->getID() << " and Ship: " << attacker->getID() <<'\n';
+
+	//generate random number from 0 to 100
+	int random = rand() % 100 + 1;
+	infoLog << "Random number for Port Combat: " << random;
+
+	//Attacker wins if random number is less than equal than the ships soldier number
+	if(random <= attacker->getSoldiers())
+	{
+		//Change port owner
+		game.changePortOwner(port);
+		combatLog << "Ship won the battle! \n";
+	}
+	else
+	{
+		//Afunadr navio?
+		attacker->portCombat();
+		combatLog << "Port won the battle! \n";
+		return false;
+	}
+
+	attacker->portCombat();
+
+	if (attacker->getSoldiers()==0)
+	{
+		if (attacker->getOwner() == Owner::PLAYER)
+			game.removeFriendlyShip(attacker);
+		else
+			game.removeEnemyShip(attacker);
+		logger.addLineToCombatLog(combatLog.str());
+		return false;
+	}
+
+	logger.addLineToInfoLog(infoLog.str());
+	logger.addLineToCombatLog(combatLog.str());
+
+	return true;
 }
 
 bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int probability)
@@ -179,7 +341,6 @@ bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int p
 		do
 		{
 			position = rand() % seaCells.size();
-			printf("Pos %d   : ", position);
 			cellHasShip = seaCells.at(position)->hasShip();
 		} while (cellHasShip);
 
@@ -187,7 +348,6 @@ bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int p
 
 		//generate two random values 0 or 1
 		int type = rand() % 2;
-		printf("Type:    %d   ", type);
 
 		ShipModel* enemyShip;
 
@@ -222,12 +382,7 @@ void GameController::friendlyFleetMovement(std::vector<ShipModel*> friendlyShips
 				//TODO: Implement 
 				case Navigation::AUTO: break;
 				case Navigation::ORDER: break;
-				case Navigation::LOST:{
-					std::ostringstream shipInfo;
-					shipInfo << friendlyShip->getID() << "  " << friendlyShip->getAsString();
-					logger.addLineToInfoLog(shipInfo.str());
-					lostShipMovement(friendlyShip);
-					break;}
+				case Navigation::LOST: lostShipMovement(friendlyShip); break;
 			default: break;
 			}
 		}
@@ -250,6 +405,7 @@ void GameController::enemyFleetMovement(std::vector<ShipModel*> enemyShips)
 			{
 				//TODO: Implement 
 				case Navigation::AUTO: break;
+				//TODO: Enemy ships will only use auto movement
 				case Navigation::LOST: lostShipMovement(enemyShip); break;
 				default: break;
 			}
@@ -260,6 +416,11 @@ void GameController::enemyFleetMovement(std::vector<ShipModel*> enemyShips)
 
 void GameController::lostShipMovement(ShipModel* ship)
 {
+	std::ostringstream os;
+	os << "Random Movement Ship -> " << ship->getAsString() << " ID: " << ship->getID();
+	os << " Position: x " << ship->getPosition()->getX() << " y: " << ship->getPosition()->getY();
+	logger.addLineToInfoLog(os.str());
+
 	do {
 		while (!moveShip(ship, generateRandomMove(ship->getPosition())));
 	} while (canMoveShip(ship));
@@ -297,6 +458,39 @@ CellModel* GameController::generateRandomMove(const CellModel* currentCell)
 			logger.addLineToInfoLog("Cell Below Left");
 			return getCellBelowLeft(currentCell);
 	}
+}
+
+std::vector<SeaModel*> GameController::getSurroundingSeaCells(const CellModel* currentCell)
+{
+	std::vector<SeaModel*> seaCells;
+
+	CellModel* cellTmp;
+
+	cellTmp = getCellAbove(currentCell);
+	if (cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
+
+	cellTmp = getCellBelow(currentCell);
+	if(cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
+
+	cellTmp = getCellRight(currentCell);
+	if (cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
+
+	cellTmp = getCellLeft(currentCell);
+	if (cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
+
+	cellTmp = getCellAboveRight(currentCell);
+	if (cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
+
+	cellTmp = getCellAboveLeft(currentCell);
+	if (cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
+
+	cellTmp = getCellBelowRight(currentCell);
+	if (cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
+
+	cellTmp = getCellBelowLeft(currentCell);
+	if (cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
+
+	return seaCells;
 }
 
 CellModel* GameController::getCellAbove(const CellModel* currentCell) const {return map->getCellAbove(currentCell);}

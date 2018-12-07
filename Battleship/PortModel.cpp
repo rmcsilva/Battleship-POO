@@ -27,6 +27,14 @@ bool PortModel::removeShipFromPort(ShipModel* ship)
 	return false;
 }
 
+void PortModel::changeOwner()
+{
+	if (owner == Owner::PLAYER)
+		owner = Owner::ENEMY;
+	else
+		owner = Owner::PLAYER;
+}
+
 std::ostream& operator<<(std::ostream& os, const PortModel& port)
 {
 	if (port.getShips().size()>0)

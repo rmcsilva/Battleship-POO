@@ -14,7 +14,7 @@ class GameModel
 	double score=0;
 	//TODO: Main port is the first one
 	std::vector<PortModel*> friendlyPorts;
-	std::vector<PortModel*> piratePorts;
+	std::vector<PortModel*> enemyPorts;
 
 	std::vector<ShipModel*> friendlyShips;
 	std::vector<ShipModel*> enemyShips;
@@ -38,6 +38,7 @@ public:
 	int getMerchBuyPrice() const;
 	std::vector<PortModel*> getFriendlyPorts() const;
 	std::vector<ShipModel*> getFriendlyShips() const;
+	std::vector<PortModel*> getEnemyPorts() const;
 	std::vector<ShipModel*> getEnemyShips() const;
 	std::vector<SeaModel*> getSeaCells() const;
 
@@ -54,6 +55,11 @@ public:
 
 	void addFriendlyShip(ShipModel* ship);
 	void addPirateShip(ShipModel* ship);
+
+	bool removeFriendlyShip(ShipModel* ship);
+	bool removeEnemyShip(ShipModel* ship);
+
+	void changePortOwner(PortModel* port);
 
 	void addSeaCell(SeaModel* cell);
 

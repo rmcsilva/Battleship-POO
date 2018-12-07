@@ -29,6 +29,7 @@ int GameModel::getMerchSellPrice() const {return merchSellPrice;}
 int GameModel::getMerchBuyPrice() const {return merchBuyPrice;}
 std::vector<PortModel*> GameModel::getFriendlyPorts() const {return friendlyPorts;}
 std::vector<ShipModel*> GameModel::getFriendlyShips() const {return friendlyShips;}
+std::vector<PortModel*> GameModel::getEnemyPorts() const {return enemyPorts;}
 std::vector<ShipModel*> GameModel::getEnemyShips() const {return enemyShips;}
 
 std::vector<SeaModel*> GameModel::getSeaCells() const {return seaCells;}
@@ -44,7 +45,7 @@ void GameModel::setMerchBuyPrice(int amount) {this->merchBuyPrice = amount;}
 
 //Add Ports
 void GameModel::addFriendlyPort(PortModel *port) {friendlyPorts.push_back(port);}
-void GameModel::addPiratePort(PortModel* port) {piratePorts.push_back(port);}
+void GameModel::addPiratePort(PortModel* port) {enemyPorts.push_back(port);}
 
 //Add Ships
 void GameModel::addFriendlyShip(ShipModel* ship)
@@ -54,6 +55,74 @@ void GameModel::addFriendlyShip(ShipModel* ship)
 	friendlyShips.push_back(ship);
 }
 void GameModel::addPirateShip(ShipModel* ship) {enemyShips.push_back(ship);}
+
+bool GameModel::removeFriendlyShip(ShipModel* ship)
+{
+	for (int i=0; i < friendlyShips.size(); i++)
+	{
+		if (friendlyShips.at(i)==ship)
+		{
+			CellModel *shipPosition = friendlyShips.at(i)->getPosition();
+			if (shipPosition->getType() == CellModel::Type::SEA)
+			{
+				SeaModel* seaCell = (SeaModel*)shipPosition;
+				seaCell->removeShip();
+			}
+			friendlyShips.erase(friendlyShips.begin() + i);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool GameModel::removeEnemyShip(ShipModel* ship)
+{
+	for (int i = 0; i < enemyShips.size(); i++)
+	{
+		if (enemyShips.at(i) == ship)
+		{
+			CellModel *shipPosition = enemyShips.at(i)->getPosition();
+			if(shipPosition->getType()==CellModel::Type::SEA)
+			{
+				SeaModel* seaCell = (SeaModel*)shipPosition;
+				seaCell->removeShip();
+			}
+			enemyShips.erase(enemyShips.begin() + i);
+			return true;
+		}
+	}
+	return false;
+}
+
+void GameModel::changePortOwner(PortModel* port)
+{
+	if (port->getOwner() == Owner::PLAYER)
+	{
+		for (int i = 0; i < friendlyPorts.size(); i++)
+		{
+			if (friendlyPorts.at(i)==port)
+			{
+				//Removes from player puts in pirate vector
+				friendlyPorts.erase(friendlyPorts.begin() + i);
+				enemyPorts.push_back(port);
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < enemyPorts.size(); i++)
+		{
+			if (enemyPorts.at(i) == port)
+			{
+				//Removes from pirate puts in player vector
+				enemyPorts.erase(enemyPorts.begin() + i);
+				friendlyPorts.push_back(port);
+			}
+		}
+	}
+
+	port->changeOwner();
+}
 
 void GameModel::addSeaCell(SeaModel * cell) { seaCells.push_back(cell); }
 
@@ -70,4 +139,4 @@ bool GameModel::removeCoins(int amount) {
 	}
 }
 
-bool GameModel::canRemoveCoins(int amount) {return coins > amount;}
+bool GameModel::canRemoveCoins(int amount) {return coins >= amount;}

@@ -72,3 +72,4 @@ ipch/
 # Visual Studio Trace Files
 *.e2e
 
+Battleship/infoLog.txt
