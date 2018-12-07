@@ -68,7 +68,7 @@ public:
 	void showFriendlyPortsInfo(std::vector<PortModel*> const &ports) const;
 	void updateAllSeaCells(std::vector<SeaModel*> const &seaCells) const;
 	void updateSeaCell(SeaModel* const &seaCell) const;
-	void updateAllPortCells(std::vector<PortModel*> const &ports) const;
+	void updateAllPortCells(std::vector<PortModel*> const &friendlyPorts, std::vector<PortModel*> const &enemyPorts) const;
 	void updatePortCell(PortModel* const &portCell) const;
 	//TODO:See if its still needed
 	void updateAllShips(std::vector<ShipModel*> const &ships) const;

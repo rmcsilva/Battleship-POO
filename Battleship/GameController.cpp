@@ -295,7 +295,7 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 	//Attacker wins if random number is less than equal than the ships soldier number
 	if(random <= attacker->getSoldiers())
 	{
-		//Change port owner
+		//Change port owners
 		game.changePortOwner(port);
 		combatLog << "Ship won the battle! \n";
 	}
