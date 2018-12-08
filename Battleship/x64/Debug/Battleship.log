@@ -1,11 +1,9 @@
-﻿  Battleship.cpp
-\\mac\home\documents\github\battleship-poo\battleship\battleship.cpp(14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  FileManager.cpp
-  GameController.cpp
-  GameModel.cpp
-\\mac\home\documents\github\battleship-poo\battleship\gamemodel.cpp(24): warning C4244: 'return': conversion from 'const double' to 'int', possible loss of data
-  View.cpp
+﻿  GameController.cpp
+  MermaidModel.cpp
+  SeaModel.cpp
+  StormModel.cpp
   Generating Code...
-\\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(454): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
-\\mac\home\documents\github\battleship-poo\battleship\filemanager.cpp(95): warning C4715: 'FileManager::readInitialFileConfigs': not all control paths return a value
-  Battleship.vcxproj -> \\Mac\Home\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe
+c:\users\ricardo\documents\github\battleship-poo\battleship\seamodel.cpp(17): warning C4715: 'SeaModel::getShipType': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\seamodel.cpp(19): warning C4715: 'SeaModel::getShipOwner': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(473): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
+  Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

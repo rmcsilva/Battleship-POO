@@ -1,13 +1,26 @@
 #include "stdafx.h"
 #include "GameModel.h"
+#include "EventModel.h"
 
 const int GameModel::COINS_EASY = 5000;
+
+const int GameModel::EVENT_PROB_EASY = 20;
+const int GameModel::STORM_EVENT_PROB_EASY = 30;
+const int GameModel::MERMAID_EVENT_PROB_EASY = 30;
+const int GameModel::LULL_EVENT_PROB_EASY = 20;
+const int GameModel::RIOT_EVENT_PROB_EASY = 20;
 
 GameModel::GameModel()
 {
 	state = GameState::SETUP;
 	//TODO: Check game difficulty
 	coins = COINS_EASY;
+
+	eventProb = EVENT_PROB_EASY;
+	stormProb = STORM_EVENT_PROB_EASY;
+	mermaidProb = MERMAID_EVENT_PROB_EASY;
+	lullProb = LULL_EVENT_PROB_EASY;
+	riotProb = RIOT_EVENT_PROB_EASY;
 }
 
 GameModel::~GameModel()
@@ -15,13 +28,13 @@ GameModel::~GameModel()
 	for (ShipModel* friendlyShip : friendlyShips)
 		delete(friendlyShip);
 
-	for (ShipModel* pirateShip : enemyShips)
-		delete(pirateShip);
+	for (ShipModel* enemyShip : enemyShips)
+		delete(enemyShip);
 }
 
 //Gets
 GameState GameModel::getGameState() const {return state;}
-int GameModel::getPlayerCoins() const {return coins;}
+double GameModel::getPlayerCoins() const {return coins;}
 int GameModel::getShipPrice() const {return shipPrice;}
 int GameModel::getSoldierPrice() const {return soldierPrice;}
 int GameModel::getFishSellPrice() const {return fishSellPrice;}
@@ -34,6 +47,12 @@ std::vector<ShipModel*> GameModel::getEnemyShips() const {return enemyShips;}
 
 std::vector<SeaModel*> GameModel::getSeaCells() const {return seaCells;}
 
+int GameModel::getEventProbability() const { return eventProb; }
+int GameModel::getStormEventProbability() const { return stormProb; }
+int GameModel::getMermaidEventProbability() const { return mermaidProb; }
+int GameModel::getLullEventProbability() const { return lullProb; }
+int GameModel::getRiotEventProbability() const { return riotProb; }
+
 //Sets
 void GameModel::setGameState(GameState state) {this->state = state;}
 void GameModel::setPlayerCoins(int amount) {this->coins = amount;}
@@ -42,6 +61,11 @@ void GameModel::setSoldierPrice(int amount) {this->soldierPrice = amount;}
 void GameModel::setFishSellPrice(int amount) {this->fishSellPrice = amount;}
 void GameModel::setMerchSellPrice(int amount) {this->merchSellPrice = amount;}
 void GameModel::setMerchBuyPrice(int amount) {this->merchBuyPrice = amount;}
+void GameModel::setEventProbability(int prob) { this->eventProb = prob; }
+void GameModel::setStormEventProbability(int prob) { this->stormProb = prob; }
+void GameModel::setMermaidEventProbability(int prob) { this->mermaidProb = prob; }
+void GameModel::setCalmEventProbability(int prob) { this->lullProb = prob; }
+void GameModel::setRiotEventProbability(int prob) { this->riotProb = prob; }
 
 //Add Ports
 void GameModel::addFriendlyPort(PortModel *port) {friendlyPorts.push_back(port);}

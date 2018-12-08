@@ -29,7 +29,7 @@ std::vector<SeaModel*> GameController::getSeaCells() const {return game.getSeaCe
 
 int GameController::getNumLines() const { return map->getNumLines(); }
 int GameController::getNumColumns() const { return map->getNumColumns(); }
-int GameController::getPlayerCoins() const { return game.getPlayerCoins(); }
+double GameController::getPlayerCoins() const { return game.getPlayerCoins(); }
 
 CellModel* GameController::getFriendlyShipPositionByID(int id) const
 {
@@ -46,7 +46,7 @@ CellModel* GameController::getFriendlyShipPositionByID(int id) const
 
 bool GameController::readInitialFileConfigs(std::string filename)
 {
-	if (fileController.readInitialFileConfigs(filename, map, &event, &game)) {
+	if (fileController.readInitialFileConfigs(filename, map, &game)) {
 		game.setGameState(GameState::GAME);
 		return true;
 	}
@@ -128,10 +128,6 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 					port->addShipToPort(ship);
 					ship->refillWater();
 				} 
-				else
-				{
-					return false;
-				}
 			}
 		}
 
@@ -199,6 +195,7 @@ void GameController::proxCommand()
 	enemyFleetMovement(game.getEnemyShips());
 	shipBattles(game.getFriendlyShips());
 	//TODO:Add events
+	//TODO: Update Fish on all Sea Cells
 	spawnRandomEnemyShip(game.getSeaCells(), map->getPirateProb());
 	logger.addLineToInfoLog("\nNEXT TURN\n");
 }
@@ -289,7 +286,7 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 	combatLog << "Port Combat between Port: " << port->getID() << " and Ship: " << attacker->getID() <<'\n';
 
 	//generate random number from 0 to 100
-	int random = rand() % 100 + 1;
+	int random = rand() % 101;
 	infoLog << "Random number for Port Combat: " << random;
 
 	//Attacker wins if random number is less than equal than the ships soldier number
@@ -301,9 +298,16 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 	}
 	else
 	{
-		//Afunadr navio?
+		//Sink Ship Because Battle was lost
 		attacker->portCombat();
-		combatLog << "Port won the battle! \n";
+		if (attacker->getOwner()==Owner::PLAYER)
+			game.removeFriendlyShip(attacker);
+		else
+			game.removeEnemyShip(attacker);
+
+		combatLog << "Port won the battle! Ship " << attacker->getID() << " down! \n";
+		logger.addLineToInfoLog(infoLog.str());
+		logger.addLineToCombatLog(combatLog.str());
 		return false;
 	}
 
@@ -327,7 +331,7 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 
 bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int probability)
 {
-	std::ostringstream log;
+	std::ostringstream log, enemyLog;
 	//generate random number from 0 to 99
 	int random = rand() % 100;
 
@@ -336,6 +340,7 @@ bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int p
 	if (random < probability)
 	{
 		//Spawn enemy ship
+		
 		bool cellHasShip = true;
 		int position;
 		do
@@ -362,11 +367,18 @@ bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int p
 
 		log << "Spawning random " << enemyShip->getAsString() << " at x: ";
 		log << cell->getX() + 1 << " y: " << cell->getY() + 1;
+
+		enemyLog << "A random enemy ship appeared at x: ";
+		enemyLog << cell->getX() + 1 << " y: " << cell->getY() + 1;
 		 
 		logger.addLineToInfoLog(log.str());
+		logger.addLineToEnemyLog(enemyLog.str());
 
 		return true;
 	}
+
+	enemyLog << "No Enemy Ship Appeared!";
+	logger.addLineToEnemyLog(enemyLog.str());
 
 	return false;
 }
@@ -508,3 +520,15 @@ void GameController::endGame() {game.setGameState(GameState::END);}
 
 void GameController::addLineToInfoLog(std::string line) {logger.addLineToInfoLog(line);}
 void GameController::addLineToCombatLog(std::string line) {logger.addLineToCombatLog(line);}
+void GameController::addLineToEnemyLog(std::string line) {logger.addLineToEnemyLog(line);}
+
+std::string GameController::getCombatLog() {return logger.getCombatLog();}
+std::string GameController::getEventLog() {return logger.getEventLog();}
+std::string GameController::getEnemyLog() {return logger.getEnemyLog();}
+
+void GameController::flushLogs()
+{
+	logger.flushEnemyLog();
+	logger.flushCombatLog();
+	logger.flushEventLog();
+}

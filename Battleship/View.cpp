@@ -178,6 +178,7 @@ void View::gameAction(GameController* gameController)
 	{
 		Consola::clrcommands(gameController->getNumLines() * 2 + 1);
 		showFriendlyPortsInfo(gameController->getFriendlyPorts());
+		showLogsInfo(gameController->getEnemyLog(), gameController->getCombatLog(), gameController->getEventLog());
 		std::cout << "Player Coins: " << gameController->getPlayerCoins() << '\n';
 		std::cout << COMMAND_LINE;
 		std::getline(std::cin, command);
@@ -195,6 +196,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 	{
 		case GameCommands::EXEC: break;
 		case GameCommands::PROX:
+			gameController->flushLogs();
 			//TODO:Perform commands
 			//TODO: Implement ships auto movement
 			gameController->proxCommand();
@@ -282,6 +284,17 @@ void View::showFriendlyPortsInfo(std::vector<PortModel*> const& ports) const
 	{
 		std::cout << "Player has no friendly ports!";
 	}	
+}
+
+void View::showLogsInfo(std::string enemyLog, std::string combatLog, std::string eventLog) const
+{
+	if (combatLog.empty())
+		std::cout << "No combats this turn! \n";
+	else
+		std::cout << '\n' << combatLog;
+	
+	std::cout << eventLog;
+	std::cout << enemyLog;
 }
 
 void View::updateAllSeaCells(std::vector<SeaModel*> const& seaCells) const

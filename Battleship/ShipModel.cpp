@@ -13,6 +13,10 @@ ShipModel::ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMove
 	id = shipCount++;
 }
 
+ShipModel::~ShipModel()
+{
+}
+
 int ShipModel::getID() const {return id;}
 int ShipModel::getNumOfMoves() const {return numOfMoves;}
 int ShipModel::getMaxMoves() const {return maxMoves;}
@@ -30,6 +34,8 @@ void ShipModel::setOwner(Owner owner) {this->owner = owner;}
 void ShipModel::setNavigation(Navigation navigation) {this->navigation = navigation;}
 void ShipModel::setPosition(CellModel* position) {this->position = position;}
 void ShipModel::setGoTo(CellModel* goTo) {this->goTo = goTo;}
+
+void ShipModel::blockShipMovement() {numOfMoves = maxMoves;}
 
 bool ShipModel::canAddToShipCargo(int amount) {return capacity + amount > maxCapacity;}
 
@@ -117,6 +123,14 @@ void ShipModel::lootShip(ShipModel* ship)
 			}
 		}
 	}
+}
+
+void ShipModel::mermaidAttack(int percentage)
+{
+	int affectedSoldiers = soldiers * percentage / 100;
+	soldiers -= affectedSoldiers;
+
+	if (soldiers < 0) soldiers = 0;
 }
 
 

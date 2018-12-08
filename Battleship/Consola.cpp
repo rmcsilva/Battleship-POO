@@ -78,7 +78,7 @@ void Consola::clrcommands(int y) {
 		csbi.dwSize.X * csbi.dwSize.Y,
 		startCoords,
 		&dummy);
-	gotoxy(0, y);  // reposicina no canto superior esquerdo
+	gotoxy(0, y);  // Sets after the map
 }
 
 void Consola::setTextColor(WORD color) {

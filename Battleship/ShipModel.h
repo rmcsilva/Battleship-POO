@@ -12,9 +12,10 @@ class ShipModel
 	static int shipCount;
 	int price; //value TODO: Check if its still valid
 	const int maxCapacity, maxSoldiers, maxWater, maxMoves;
+	int id; //Unique id generated according to the the amount of ships in game
 protected:
 	ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMoves, Owner owner, CellModel* position);
-	int id; //Unique id generated according to the the amount of ships in game
+	
 	int capacity, soldiers, water, merch, fish;
 	int numOfMoves = 0;
 	Owner owner;
@@ -23,7 +24,7 @@ protected:
 	//TODO: Value when ship is on a order 
 	CellModel* goTo;
 public:
-	//~ShipModel();
+	virtual ~ShipModel();
 	enum class Type { FRIGATE, GALLEON, GHOST, SAILBOAT, SCHOONER };
 	
 	//TODO: Expand ships
@@ -46,6 +47,8 @@ public:
 	void setPosition(CellModel* position);
 	void setGoTo(CellModel* goTo);
 
+	void blockShipMovement();
+
 	bool canAddToShipCargo(int amount);
 	void refillWater();
 	void navigationCost();
@@ -59,6 +62,7 @@ public:
 	void portCombat();
 	void lootShip(ShipModel* ship);
 
+	void mermaidAttack(int percentage);
 	virtual bool stormAttack() = 0;
 
 	virtual std::string getAsString() const = 0;

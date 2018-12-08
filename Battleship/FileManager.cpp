@@ -12,7 +12,7 @@ FileManager::~FileManager()
 {
 }
 
-bool FileManager::readInitialFileConfigs(std::string filename, MapModel *&map, EventModel *event, GameModel *game)
+bool FileManager::readInitialFileConfigs(std::string filename, MapModel *&map, GameModel *game)
 {
 	//TODO: Add info to logs
 	int portSoldiers=-1;
@@ -61,19 +61,19 @@ bool FileManager::readInitialFileConfigs(std::string filename, MapModel *&map, E
 					portSoldiers = value;
 					break;
 				case InitialConfigsCommands::probevento:
-					event->setProbability(value);
+					game->setEventProbability(value);
 					break;
 				case InitialConfigsCommands::probtempestade:
-					event->setStormProbability(value);
+					game->setStormEventProbability(value);
 					break;
 				case InitialConfigsCommands::probsereias:
-					event->setMermaidProbability(value);
+					game->setMermaidEventProbability(value);
 					break;
 				case InitialConfigsCommands::probcalmaria:
-					event->setCalmProbability(value);
+					game->setCalmEventProbability(value);
 					break;
 				case InitialConfigsCommands::probmotim:
-					event->setRiotProbability(value);
+					game->setRiotEventProbability(value);
 					break;
 				case InitialConfigsCommands::INVALID:
 					file.close();

@@ -3,6 +3,10 @@
 
 CellModel::CellModel(int x, int y) : x(x), y(y) {}
 
+CellModel::~CellModel()
+{
+}
+
 int CellModel::getX() const {return x;}
 int CellModel::getY() const {return y;}
 

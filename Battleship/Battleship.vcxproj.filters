@@ -132,6 +132,18 @@
     <ClInclude Include="Logger.h">
       <Filter>Header Files\Util</Filter>
     </ClInclude>
+    <ClInclude Include="LullModel.h">
+      <Filter>Header Files\Model\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="MermaidModel.h">
+      <Filter>Header Files\Model\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="RiotModel.h">
+      <Filter>Header Files\Model\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="StormModel.h">
+      <Filter>Header Files\Model\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -196,6 +208,18 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>Source Files\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="LullModel.cpp">
+      <Filter>Source Files\Model\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="MermaidModel.cpp">
+      <Filter>Source Files\Model\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="RiotModel.cpp">
+      <Filter>Source Files\Model\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="StormModel.cpp">
+      <Filter>Source Files\Model\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

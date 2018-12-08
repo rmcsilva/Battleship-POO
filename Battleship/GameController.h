@@ -6,7 +6,7 @@ class GameController {
 	FileManager fileController;
 	Logger logger;
 	MapModel *map = nullptr;
-	EventModel event;
+	EventModel *event = nullptr;
 	GameModel game;
 
 public:
@@ -22,7 +22,7 @@ public:
 	std::vector<SeaModel*> getSeaCells() const;
 	int getNumLines() const;
 	int getNumColumns() const;
-	int getPlayerCoins() const;
+	double getPlayerCoins() const;
 	CellModel* getFriendlyShipPositionByID(int id) const;
 	
 	//Initial Read From file
@@ -70,6 +70,11 @@ public:
 	//Logger Methods
 	void addLineToInfoLog(std::string line);
 	void addLineToCombatLog(std::string line);
+	void addLineToEnemyLog(std::string line);
+	std::string getCombatLog();
+	std::string getEventLog();
+	std::string getEnemyLog();
+	void flushLogs();
 };
 
 std::ostream& operator<<(std::ostream& os, const GameController &gameController);

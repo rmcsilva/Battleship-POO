@@ -13,9 +13,28 @@ Logger::~Logger()
 	infoLog.close();
 }
 
-void Logger::addLineToInfoLog(const std::string &line) {infoLog << line << std::endl;}
-void Logger::addLineToCombatLog(const std::string &line) {combatMessages << line << std::endl;}
-void Logger::addLineToEventLog(const std::string& line) {eventMessages << line << std::endl;}
+std::string Logger::getCombatLog() {return combatLog.str();}
+std::string Logger::getEventLog() {return eventLog.str();}
+std::string Logger::getEnemyLog() {return enemyLog.str();}
 
-void Logger::flushCombatLog() {combatMessages.flush();}
-void Logger::flushEventLog() {eventMessages.flush();}
+void Logger::addLineToInfoLog(const std::string &line) {infoLog << line << std::endl;}
+void Logger::addLineToCombatLog(const std::string &line) {combatLog << line << std::endl;}
+void Logger::addLineToEventLog(const std::string& line) {eventLog << line << std::endl;}
+void Logger::addLineToEnemyLog(const std::string& line) {enemyLog << line << std::endl;}
+
+void Logger::flushCombatLog()
+{
+	combatLog.str("");
+	combatLog.clear();
+}
+void Logger::flushEventLog()
+{
+	eventLog.str("");
+	eventLog.clear();
+}
+
+void Logger::flushEnemyLog()
+{
+	enemyLog.str("");
+	enemyLog.clear();
+}

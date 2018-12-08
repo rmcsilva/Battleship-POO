@@ -2,23 +2,10 @@
 #include "EventModel.h"
 
 
-EventModel::EventModel()
+EventModel::EventModel(int max_turns) : turnDuration(max_turns)
 {
-	probability = DEFAULT_PROB_EASY;
-	stormProb = DEFAULT_STORM_PROB;
-	mermaidProb = DEFAULT_MERMAID_PROB;
-	calmProb = DEFAULT_CALM_PROB;
-	riotProb = DEFAULT_RIOT_PROB;
 }
 
-int EventModel::getProbability() const {return probability;}
-int EventModel::getStormProbability() const {return stormProb;}
-int EventModel::getMermaidProbability() const {return mermaidProb;}
-int EventModel::getCalmProbability() const {return calmProb;}
-int EventModel::getRiotProbability() const {return riotProb;}
+bool EventModel::isOver() {return currentTurn == turnDuration;}
 
-void EventModel::setProbability(int prob) {this->probability = prob;}
-void EventModel::setStormProbability(int prob) {this->stormProb = prob;}
-void EventModel::setMermaidProbability(int prob) {this->mermaidProb = prob;}
-void EventModel::setCalmProbability(int prob) {this->calmProb = prob;}
-void EventModel::setRiotProbability(int prob) {this->riotProb = prob;}
+void EventModel::incrementTurn() {currentTurn++;}

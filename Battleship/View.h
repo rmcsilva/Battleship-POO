@@ -66,6 +66,7 @@ public:
 	bool readGameCommands(std::string const &input, GameController *gameController) const;
 	static GameCommands stringToGameCommand(std::string const& inString);
 	void showFriendlyPortsInfo(std::vector<PortModel*> const &ports) const;
+	void showLogsInfo(std::string enemyLog, std::string combatLog, std::string eventLog) const;
 	void updateAllSeaCells(std::vector<SeaModel*> const &seaCells) const;
 	void updateSeaCell(SeaModel* const &seaCell) const;
 	void updateAllPortCells(std::vector<PortModel*> const &friendlyPorts, std::vector<PortModel*> const &enemyPorts) const;
