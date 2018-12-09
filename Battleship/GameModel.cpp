@@ -45,8 +45,6 @@ std::vector<ShipModel*> GameModel::getFriendlyShips() const {return friendlyShip
 std::vector<PortModel*> GameModel::getEnemyPorts() const {return enemyPorts;}
 std::vector<ShipModel*> GameModel::getEnemyShips() const {return enemyShips;}
 
-std::vector<SeaModel*> GameModel::getSeaCells() const {return seaCells;}
-
 int GameModel::getEventProbability() const { return eventProb; }
 int GameModel::getStormEventProbability() const { return stormProb; }
 int GameModel::getMermaidEventProbability() const { return mermaidProb; }
@@ -148,7 +146,37 @@ void GameModel::changePortOwner(PortModel* port)
 	port->changeOwner();
 }
 
-void GameModel::addSeaCell(SeaModel * cell) { seaCells.push_back(cell); }
+void GameModel::changeShipOwner(ShipModel* ship, Navigation navigation)
+{
+	if (ship->getOwner() == Owner::PLAYER)
+	{
+		ship->setOwner(Owner::ENEMY);
+		ship->setNavigation(navigation);
+		enemyShips.push_back(ship);
+		for (int i = 0; i < friendlyShips.size(); i++)
+		{
+			if (friendlyShips.at(i)==ship)
+			{
+				friendlyShips.erase(friendlyShips.begin() + i);
+				break;
+			}
+		}
+	}
+	else
+	{
+		ship->setOwner(Owner::PLAYER);
+		ship->setNavigation(navigation);
+		friendlyShips.push_back(ship);
+		for (int i = 0; i < enemyShips.size(); i++)
+		{
+			if (enemyShips.at(i) == ship)
+			{
+				enemyShips.erase(enemyShips.begin() + i);
+				break;
+			}
+		}
+	}
+}
 
 //Player Coins
 void GameModel::addCoins(double amount) {coins += amount;}

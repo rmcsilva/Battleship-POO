@@ -2,7 +2,7 @@
 
 class EventModel
 {
-	int currentTurn;
+	int currentTurn = 0;
 	const int turnDuration;
 
 protected:
@@ -10,6 +10,8 @@ protected:
 
 public:
 	EventModel(int max_turns);
+
+	virtual ~EventModel();
 
 	enum class Type {LULL, MERMAID, RIOT, STORM};
 

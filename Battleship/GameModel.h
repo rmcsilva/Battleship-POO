@@ -28,8 +28,6 @@ class GameModel
 	std::vector<ShipModel*> friendlyShips;
 	std::vector<ShipModel*> enemyShips;
 
-	std::vector<SeaModel*> seaCells;
-
 	GameState state;
 
 public:
@@ -77,6 +75,7 @@ public:
 	bool removeEnemyShip(ShipModel* ship);
 
 	void changePortOwner(PortModel* port);
+	void changeShipOwner(ShipModel* ship, Navigation navigation);
 
 	void addSeaCell(SeaModel* cell);
 

@@ -38,20 +38,27 @@ public:
 	void proxCommand();
 
 	//Game Logic (make private?)
+	//Combat Logic
 	void shipBattles(std::vector<ShipModel*>friendlyShips);
-	//TODO: Finish ship combat
 	void shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip);
 	bool portCombat(ShipModel* attacker, PortModel* port);
+
+	//Event Logic
+	bool spawnRandomEvent();
+	//TODO: make event actions to sink ships and such
+	void endEvent(EventModel::Type type);
+
+	//Enemy Ship Spawn Logic
 	bool spawnRandomEnemyShip(std::vector<SeaModel*>seaCells, int probability);
+
+	//Ship Movement Logic
 	void friendlyFleetMovement(std::vector<ShipModel*> friendlyShips);
 	void enemyFleetMovement(std::vector<ShipModel*> enemyShips);
 
 	void lostShipMovement(ShipModel* ship);
 
-	//TODO: Change to use getSurrouding method
 	CellModel* generateRandomMove(const CellModel* currentCell);
 
-	std::vector<SeaModel*> getSurroundingSeaCells(const CellModel* currentCell);
 	CellModel* getCellAbove(const CellModel* currentCell) const;
 	CellModel* getCellBelow(const CellModel* currentCell) const;
 	CellModel* getCellRight(const CellModel* currentCell) const;

@@ -13,22 +13,16 @@ RiotModel::~RiotModel()
 {
 }
 
+ShipModel* RiotModel::getAffectedShip() {return affectedShip;}
+
+Navigation RiotModel::getShipsOldNavigation() {return shipsNavigation;}
+
 EventModel::Type RiotModel::getType() {return Type::RIOT;}
 
 bool RiotModel::executeEvent()
 {
 	if (isOver())
-	{
-		affectedShip->setOwner(Owner::PLAYER);
-		affectedShip->setNavigation(shipsNavigation);
 		return false;
-	}
-
-	if (affectedShip->getOwner() == Owner::PLAYER)
-	{
-		affectedShip->setOwner(Owner::ENEMY);
-		affectedShip->setNavigation(Navigation::AUTO);
-	}
 
 	incrementTurn();
 	return true;

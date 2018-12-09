@@ -14,6 +14,8 @@ public:
 	RiotModel(ShipModel* affectedShip);
 	~RiotModel();
 
+	ShipModel* getAffectedShip();
+	Navigation getShipsOldNavigation();
 
 	Type getType() override;
 	bool executeEvent() override;

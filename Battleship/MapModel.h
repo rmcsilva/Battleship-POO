@@ -1,12 +1,15 @@
 #pragma once
 #include "CellModel.h"
 #include "ShipModel.h"
+#include "SeaModel.h"
 
 class MapModel {
 	static const int MIN_LINES = 10, MIN_COLUMNS = 20;
     int numLines, numColumns;
 	int pirateProb;
 	std::vector<CellModel*> map;
+
+	std::vector<SeaModel*> seaCells;
 
 public:
     MapModel(const int numLines, const int numColumns);
@@ -19,8 +22,14 @@ public:
 	void setPirateProb(int prob);
 
 	CellModel* getCellAt(int x, int y) const;
+	std::vector<SeaModel*> getSeaCells() const;
+
 	void addCellAt(int x, int y,CellModel::Type type);
 	void addPortCellAt(int x, int y, char id, Owner owner);
+	void addSeaCell(SeaModel * cell);
+
+	std::vector<SeaModel*> getRandom2x2ContinuousSeaCells() const;
+	std::vector<SeaModel*> getSurroundingSeaCells(const CellModel* currentCell) const;
 
 	CellModel* getCellAbove(const CellModel* currentCell) const;
 	CellModel* getCellBelow(const CellModel* currentCell) const;

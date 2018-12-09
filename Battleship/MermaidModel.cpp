@@ -21,5 +21,6 @@ bool MermaidModel::executeEvent()
 	if (isOver()) return false;
 
 	affectedShip->mermaidAttack(SOLDIERS_LOST_PERCENTAGE);
+	incrementTurn();
 	return true;
 }
