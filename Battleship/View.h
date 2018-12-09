@@ -11,6 +11,7 @@ class View
 	const int ENEMY_PORT_COLOR = Consola::AMARELO_CLARO;
 	const int FRIENDLY_SHIP_COLOR = Consola::VERDE_CLARO;
 	const int ENEMY_SHIP_COLOR = Consola::VERMELHO_CLARO;
+	const int EVENT_COLOR = Consola::ROXO;
 
 	//TODO:Add lost ship color
 
@@ -71,8 +72,7 @@ public:
 	void updateSeaCell(SeaModel* const &seaCell) const;
 	void updateAllPortCells(std::vector<PortModel*> const &friendlyPorts, std::vector<PortModel*> const &enemyPorts) const;
 	void updatePortCell(PortModel* const &portCell) const;
-	//TODO:See if its still needed
-	void updateAllShips(std::vector<ShipModel*> const &ships) const;
+	void updateEventInformation(const GameController *gameController) const;
 	void goToMapPosition(int x, int y) const;
 	void goToMapOffPosition(int x, int y) const;
 	CellModel* convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController) const;

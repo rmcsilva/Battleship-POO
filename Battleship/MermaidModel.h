@@ -14,6 +14,8 @@ public:
 
 	~MermaidModel();
 
+	ShipModel* getAffectedShip();
+
 	Type getType() override;
 	bool executeEvent() override;
 };

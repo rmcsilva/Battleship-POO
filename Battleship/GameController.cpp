@@ -48,6 +48,8 @@ CellModel* GameController::getFriendlyShipPositionByID(int id) const
 	return nullptr;
 }
 
+EventModel* GameController::getEvent() const {return event;}
+
 bool GameController::readInitialFileConfigs(std::string filename)
 {
 	if (fileController.readInitialFileConfigs(filename, map, &game)) {
@@ -194,7 +196,7 @@ void GameController::proxCommand()
 {
 	friendlyFleetMovement(game.getFriendlyShips());
 	enemyFleetMovement(game.getEnemyShips());
-	if (event != nullptr)
+	if (hasEvent())
 	{
 		if (!event->executeEvent())
 		{
@@ -240,6 +242,7 @@ void GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 	int friendlyShipSoldiers = friendlyShip->getSoldiers();
 	int enemyShipSoldiers = enemyShip->getSoldiers();
 
+	//TODO: If ship sinks reset surrounding 
 	if (friendlyShipSoldiers == 0 || enemyShipSoldiers == 0)
 	{
 		infoLog << "Ship already sank, list update error!\n";
@@ -323,12 +326,14 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 	{
 		//Sink Ship Because Battle was lost
 		attacker->portCombat();
+		combatLog << "Port won the battle! Ship " << attacker->getID() << " down! \n";
+
 		if (attacker->getOwner()==Owner::PLAYER)
 			game.removeFriendlyShip(attacker);
 		else
 			game.removeEnemyShip(attacker);
 
-		combatLog << "Port won the battle! Ship " << attacker->getID() << " down! \n";
+		
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToCombatLog(combatLog.str());
 		return false;
@@ -351,6 +356,8 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 
 	return true;
 }
+
+bool GameController::hasEvent() const {return event != nullptr;}
 
 bool GameController::spawnRandomEvent() 
 {
@@ -434,8 +441,8 @@ bool GameController::spawnRandomEvent()
 				eventLog << "Ship " << affectedShip->getID() << " turned enemy during the riot!";
 				game.changeShipOwner(affectedShip, Navigation::AUTO);
 			} else {
-				game.removeFriendlyShip(affectedShip);
 				eventLog << "Ship " << affectedShip->getID() << " sank during the riot!";
+				game.removeFriendlyShip(affectedShip);
 				logger.addLineToInfoLog(infoLog.str());
 				logger.addLineToEventLog(eventLog.str());
 				return false;

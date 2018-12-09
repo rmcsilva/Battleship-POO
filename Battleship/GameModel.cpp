@@ -91,6 +91,7 @@ bool GameModel::removeFriendlyShip(ShipModel* ship)
 				seaCell->removeShip();
 			}
 			friendlyShips.erase(friendlyShips.begin() + i);
+			delete ship;
 			return true;
 		}
 	}
@@ -110,6 +111,7 @@ bool GameModel::removeEnemyShip(ShipModel* ship)
 				seaCell->removeShip();
 			}
 			enemyShips.erase(enemyShips.begin() + i);
+			delete ship;
 			return true;
 		}
 	}

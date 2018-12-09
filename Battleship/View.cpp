@@ -1,6 +1,10 @@
 #include "stdafx.h"
 #include "View.h"
 #include <iomanip>
+#include "LullModel.h"
+#include "MermaidModel.h"
+#include "RiotModel.h"
+#include "StormModel.h"
 
 
 View::View()
@@ -202,6 +206,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			gameController->proxCommand();
 			updateAllSeaCells(gameController->getSeaCells());
 			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
+			updateEventInformation(gameController);
 			break;
 		case GameCommands::COMPRANAV:
 			char type;
@@ -399,18 +404,81 @@ void View::updatePortCell(PortModel* const& portCell) const
 	Consola::setBackgroundColor(TEXT_BACKGROUND);
 }
 
-void View::updateAllShips(std::vector<ShipModel*> const& ships) const
+void View::updateEventInformation(const GameController *gameController) const
 {
-	//TODO: Check if needed
-	for (ShipModel* const &ship : ships)
+	if (gameController->hasEvent())
 	{
-		int x = ship->getPosition()->getX();
-		int y = ship->getPosition()->getY();
-		goToMapPosition(x, y);
-		Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
-		std::cout << std::setw(2) << ship->getID();
+		EventModel* event = gameController->getEvent();
+		Consola::setBackgroundColor(EVENT_COLOR);
+
+		switch (event->getType())
+		{
+			case EventModel::Type::LULL: {
+				LullModel* lull = (LullModel*)event;
+
+				std::vector<SeaModel*> affectedPositions = lull->getAffectedPositions();
+				for (SeaModel* affectedPosition : affectedPositions)
+				{
+					int x = affectedPosition->getX();
+					int y = affectedPosition->getY();
+		
+					if (affectedPosition->hasShip())
+					{
+						goToMapOffPosition(x, y);
+						std::cout << "C";
+					} 
+					else
+					{
+						goToMapPosition(x, y);
+						std::cout << std::setw(2) << "  ";
+
+						goToMapOffPosition(x, y);
+						std::cout << "C ";
+					}
+				}
+
+				break; }
+			case EventModel::Type::MERMAID: {
+				MermaidModel* mermaid = (MermaidModel*)event;
+				ShipModel* affectedShip = mermaid->getAffectedShip();
+				goToMapOffPosition(affectedShip->getPosition()->getX(), affectedShip->getPosition()->getY());
+				std::cout << "S";
+				break; }
+			case EventModel::Type::RIOT: {
+				RiotModel* riot = (RiotModel*)event;
+				ShipModel* affectedShip = riot->getAffectedShip();
+				goToMapOffPosition(affectedShip->getPosition()->getX(), affectedShip->getPosition()->getY());
+				std::cout << "M";
+				break; }
+			case EventModel::Type::STORM: {
+				StormModel* storm = (StormModel*)event;
+
+				std::vector<SeaModel*> affectedPositions = storm->getAffectedPositions();
+				for (SeaModel* affectedPosition : affectedPositions)
+				{
+					int x = affectedPosition->getX();
+					int y = affectedPosition->getY();
+
+					if (affectedPosition->hasShip())
+					{
+						goToMapOffPosition(x, y);
+						std::cout << "T";
+					}
+					else
+					{
+						goToMapPosition(x, y);
+						std::cout << std::setw(2) << "  ";
+
+						goToMapOffPosition(x, y);
+						std::cout << "T ";
+					}
+				}
+				break; }
+			default: ;
+		}
+
+		Consola::setBackgroundColor(TEXT_BACKGROUND);
 	}
-	Consola::setBackgroundColor(TEXT_BACKGROUND);
 }
 
 void View::goToMapPosition(int x, int y) const

@@ -14,6 +14,8 @@ MermaidModel::~MermaidModel()
 {
 }
 
+ShipModel* MermaidModel::getAffectedShip() {return affectedShip;}
+
 EventModel::Type MermaidModel::getType() {return Type::MERMAID;}
 
 bool MermaidModel::executeEvent()

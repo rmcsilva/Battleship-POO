@@ -15,6 +15,7 @@ public:
 	StormModel(std::vector<SeaModel*> affectedPositions);
 	~StormModel();
 
+	std::vector<SeaModel*> getAffectedPositions();
 	std::vector<ShipModel*> getSinkShips() const;
 
 	void addShipToSink(ShipModel* shipToSink);

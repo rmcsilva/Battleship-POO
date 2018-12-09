@@ -24,6 +24,7 @@ public:
 	int getNumColumns() const;
 	double getPlayerCoins() const;
 	CellModel* getFriendlyShipPositionByID(int id) const;
+	EventModel* getEvent() const;
 	
 	//Initial Read From file
 	bool readInitialFileConfigs(std::string filename);
@@ -44,6 +45,7 @@ public:
 	bool portCombat(ShipModel* attacker, PortModel* port);
 
 	//Event Logic
+	bool hasEvent() const;
 	bool spawnRandomEvent();
 	//TODO: make event actions to sink ships and such
 	void endEvent(EventModel::Type type);

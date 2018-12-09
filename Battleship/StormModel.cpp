@@ -12,6 +12,7 @@ StormModel::~StormModel()
 {
 }
 
+std::vector<SeaModel*> StormModel::getAffectedPositions() {return affectedPositions;}
 std::vector<ShipModel*> StormModel::getSinkShips() const {return sinkShips;}
 
 void StormModel::addShipToSink(ShipModel* shipToSink)
