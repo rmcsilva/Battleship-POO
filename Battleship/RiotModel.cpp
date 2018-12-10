@@ -24,6 +24,8 @@ bool RiotModel::executeEvent()
 	if (isOver())
 		return false;
 
+	if (affectedShip==nullptr) return false;
+
 	incrementTurn();
 	return true;
 }

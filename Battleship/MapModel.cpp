@@ -123,6 +123,72 @@ std::vector<SeaModel*> MapModel::getRandom2x2ContinuousSeaCells() const
 	return continuousCells;
 }
 
+std::vector<SeaModel*> MapModel::get2x2ContinuousSeaCells(CellModel* startingCell) const
+{
+	std::vector<SeaModel*> continuousCells;
+
+	if (startingCell->getType() == CellModel::Type::SEA) {
+		continuousCells.push_back((SeaModel*)startingCell);
+	}
+	else {
+		continuousCells.clear();
+		return continuousCells;
+	}
+
+
+	CellModel* tmp = getCellBelow(startingCell);
+
+	if (tmp->getType() == CellModel::Type::SEA) {
+		continuousCells.push_back((SeaModel*)tmp);
+	}
+	else {
+		continuousCells.clear();
+		return continuousCells;
+	}
+
+	tmp = getCellRight(startingCell);
+
+	if (tmp->getType() == CellModel::Type::SEA)
+	{
+		continuousCells.push_back((SeaModel*)tmp);
+
+		tmp = getCellBelowRight(startingCell);
+		if (tmp->getType() == CellModel::Type::SEA) {
+			continuousCells.push_back((SeaModel*)tmp);
+		}
+		else {
+			continuousCells.clear();
+			return continuousCells;
+		}
+
+		return continuousCells;
+
+	}
+	else
+	{
+		tmp = getCellLeft(startingCell);
+
+		if (tmp->getType() == CellModel::Type::SEA) {
+			continuousCells.push_back((SeaModel*)tmp);
+		}
+		else {
+			continuousCells.clear();
+			return continuousCells;
+		}
+
+		tmp = getCellBelowLeft(startingCell);
+		if (tmp->getType() == CellModel::Type::SEA) {
+			continuousCells.push_back((SeaModel*)tmp);
+		}
+		else {
+			continuousCells.clear();
+			return continuousCells;
+		}
+
+		return continuousCells;
+	}
+}
+
 std::vector<SeaModel*> MapModel::getSurroundingSeaCells(const CellModel* currentCell) const
 {
 	std::vector<SeaModel*> seaCells;

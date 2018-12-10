@@ -48,6 +48,18 @@ CellModel* GameController::getFriendlyShipPositionByID(int id) const
 	return nullptr;
 }
 
+ShipModel* GameController::getFriendlyShipByID(int id) const
+{
+	for (auto friendlyShip : game.getFriendlyShips())
+	{
+		if (friendlyShip->getID() == id)
+		{
+			return friendlyShip;
+		}
+	}
+	return nullptr;
+}
+
 EventModel* GameController::getEvent() const {return event;}
 
 bool GameController::readInitialFileConfigs(std::string filename)
@@ -61,7 +73,6 @@ bool GameController::readInitialFileConfigs(std::string filename)
 
 bool GameController::buyShip(char type)
 {
-	//TODO:: Complete! Needs to recieve ship type 
 	if (game.getFriendlyPorts().size()>0)
 	{
 		if (game.canRemoveCoins(game.getShipPrice()))
@@ -81,7 +92,12 @@ bool GameController::buyShip(char type)
 			{
 				game.removeCoins(game.getShipPrice());
 				game.addFriendlyShip(ship);
-				game.getFriendlyPorts().at(0)->addShipToPort(ship);
+				if (game.getFriendlyPorts().size()>0) {
+					game.getFriendlyPorts().at(0)->addShipToPort(ship);
+				} else {
+					return false;
+				}
+				
 			}
 			return true;
 		}
@@ -90,6 +106,72 @@ bool GameController::buyShip(char type)
 		}
 	}
 	return false;
+}
+
+bool GameController::spawnEnemyShipAt(CellModel* position, char type)
+{
+	ShipModel* ship = nullptr;
+
+	switch (toupper(type))
+	{
+				case 'V': ship = new SailboatModel(Owner::ENEMY, position); break;
+				case 'F': ship = new FrigateModel(Owner::ENEMY, position); break;
+				default: return false;
+	}
+
+	if (ship != nullptr)
+	{
+		
+		if (position->getType()==CellModel::Type::SEA)
+		{
+			SeaModel* seaCell = (SeaModel*)position;
+			if (seaCell->hasShip())
+				return false;
+
+			seaCell->setShip(ship);
+			
+		} else if(position->getType() == CellModel::Type::PORT)
+		{
+			PortModel* portCell = (PortModel*)position;
+			if (portCell->getOwner() == Owner::ENEMY)
+				portCell->addShipToPort(ship);
+			else 
+				return false;
+		}
+		game.addPirateShip(ship);
+		return true;
+	}
+
+	return false;
+}
+
+bool GameController::spawnPositionEvent(char type, CellModel* startingCell)
+{
+	std::vector<SeaModel*> affectedPositions = map->get2x2ContinuousSeaCells(startingCell);
+
+	if (affectedPositions.size() == 0) return false;
+
+	switch (toupper(type))
+	{
+	case 'C': event = new LullModel(affectedPositions); break;
+	case 'T': event = new StormModel(affectedPositions); break;
+	default: return false;
+	}
+	return true;
+}
+
+bool GameController::spawnShipEvent(char type, ShipModel* affectedShip)
+{
+	if (hasEvent()) return false;
+	if (affectedShip->getOwner() == Owner::ENEMY) return false;
+
+	switch (toupper(type))
+	{
+		case 'M': return spawnRiotEvent(affectedShip);
+		case 'S': event = new MermaidModel(affectedShip); break;
+		default: return false;
+	}
+	return true;
 }
 
 bool GameController::canMoveShip(ShipModel* ship) const {return ship->getNumOfMoves() < ship->getMaxMoves();}
@@ -196,22 +278,24 @@ void GameController::proxCommand()
 {
 	friendlyFleetMovement(game.getFriendlyShips());
 	enemyFleetMovement(game.getEnemyShips());
-	if (hasEvent())
-	{
+	shipBattles(game.getFriendlyShips());
+	if (hasEvent()) {
 		if (!event->executeEvent())
 		{
 			logger.addLineToInfoLog("Event ended!");
-			endEvent(event->getType());	
+			endEvent(event->getType());
 			logger.addLineToEventLog("Event ended!");
 			delete event;
 			event = nullptr;
-		}else
+		}
+		else
 		{
 			logger.addLineToEventLog("Event still going!");
 		}
+		
+	} else {
+		spawnRandomEvent();
 	}
-	shipBattles(game.getFriendlyShips());
-	if (event==nullptr) spawnRandomEvent();
 	//TODO: Update Fish on all Sea Cells
 	spawnRandomEnemyShip(map->getSeaCells(), map->getPirateProb());
 	logger.addLineToInfoLog("\nNEXT TURN\n");
@@ -238,6 +322,13 @@ void GameController::shipBattles(std::vector<ShipModel*> friendlyShips)
 void GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 {
 	std::ostringstream infoLog, combatLog;
+
+	if (friendlyShip==nullptr || enemyShip==nullptr)
+	{
+		infoLog << "Ship already sank, list update error nullptr!\n";
+		logger.addLineToInfoLog(infoLog.str());
+		return;
+	}
 
 	int friendlyShipSoldiers = friendlyShip->getSoldiers();
 	int enemyShipSoldiers = enemyShip->getSoldiers();
@@ -290,16 +381,16 @@ void GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 		combatLog << "Both Ships Sank!!\n";
 	} else if (friendlyShipSoldiers == 0)
 	{
+		combatLog << "Ship " << friendlyShip->getID() << " Sank!\n";
 		//Enemy Ships gets friendly Ship stuff
 		enemyShip->lootShip(friendlyShip);
 		game.removeFriendlyShip(friendlyShip);
-		combatLog << "Ship " << friendlyShip->getID() << " Sank!\n";
 	}else if (enemyShipSoldiers == 0)
 	{
+		combatLog << "Ship " << enemyShip->getID() << " Sank!\n";
 		//Friendly Ships gets enemy Ship stuff
 		friendlyShip->lootShip(enemyShip);
 		game.removeEnemyShip(enemyShip);
-		combatLog << "Ship " << enemyShip->getID() << " Sank!\n";
 	}
 
 	logger.addLineToInfoLog(infoLog.str());
@@ -412,7 +503,6 @@ bool GameController::spawnRandomEvent()
 			infoLog << "Affected Ship: " << affectedShip->getID() << '\n';
 
 			event = new MermaidModel(affectedShip);
-
 		} 
 		else if (randomEvent < riotProb)
 		{
@@ -432,21 +522,7 @@ bool GameController::spawnRandomEvent()
 
 			ShipModel* affectedShip = game.getFriendlyShips().at(randomPosition);
 
-			ShipModel::Type shipType = affectedShip->getType();
-
-			if (shipType == ShipModel::Type::FRIGATE || shipType == ShipModel::Type::SAILBOAT)
-			{
-				//TODO: Change ship sides from one vector to another!!!!
-				event = new RiotModel(affectedShip);
-				eventLog << "Ship " << affectedShip->getID() << " turned enemy during the riot!";
-				game.changeShipOwner(affectedShip, Navigation::AUTO);
-			} else {
-				eventLog << "Ship " << affectedShip->getID() << " sank during the riot!";
-				game.removeFriendlyShip(affectedShip);
-				logger.addLineToInfoLog(infoLog.str());
-				logger.addLineToEventLog(eventLog.str());
-				return false;
-			}
+			return spawnRiotEvent(affectedShip);
 		} 
 		else
 		{
@@ -498,6 +574,30 @@ void GameController::endEvent(EventModel::Type type)
 			break; }
 		default: break;
 	}
+}
+
+bool GameController::spawnRiotEvent(ShipModel* affectedShip)
+{
+	std::ostringstream infoLog, eventLog;
+
+	ShipModel::Type shipType = affectedShip->getType();
+
+	if (shipType == ShipModel::Type::FRIGATE || shipType == ShipModel::Type::SAILBOAT)
+	{
+		//TODO: Change ship sides from one vector to another!!!!
+		event = new RiotModel(affectedShip);
+		eventLog << "Ship " << affectedShip->getID() << " turned enemy during the riot!";
+		game.changeShipOwner(affectedShip, Navigation::AUTO);
+		return true;
+	}
+	else {
+		eventLog << "Ship " << affectedShip->getID() << " sank during the riot!";
+		game.removeFriendlyShip(affectedShip);
+		logger.addLineToInfoLog(infoLog.str());
+		logger.addLineToEventLog(eventLog.str());
+		return false;
+	}
+	
 }
 
 bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int probability)

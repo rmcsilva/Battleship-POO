@@ -199,7 +199,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 	switch (stringToGameCommand(command))
 	{
 		case GameCommands::EXEC: break;
-		case GameCommands::PROX:
+		case GameCommands::PROX: {
 			gameController->flushLogs();
 			//TODO:Perform commands
 			//TODO: Implement ships auto movement
@@ -207,15 +207,15 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			updateAllSeaCells(gameController->getSeaCells());
 			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
 			updateEventInformation(gameController);
-			break;
-		case GameCommands::COMPRANAV:
+			break; }
+		case GameCommands::COMPRANAV: {
 			char type;
 			line >> type;
 			if (!gameController->buyShip(type))
 				std::cout << COMMAND_EXECUTE_ERROR;
 			else
 				updatePortCell(gameController->getFriendlyPorts().at(0));
-			break; 
+			break; }
 		case GameCommands::MOVE: {
 			int id;
 			line >> id;
@@ -233,18 +233,60 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			if (!gameController->moveCommand(id, position)) { std::cout << COMMAND_EXECUTE_ERROR; Consola::getch(); }
 			updateAllSeaCells(gameController->getSeaCells());
 			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
+			updateEventInformation(gameController);
+			break;
 		}
-		case GameCommands::MOEDAS:
+		case GameCommands::MOEDAS: {
 			double amount;
 			line >> amount;
 			//TODO: Add restrictions 
-			if (amount < 0) {break;}
+			if (amount < 0) { break; }
 			gameController->addCoins(amount);
+			break; }
+		case GameCommands::PIRATA: {
+			int x, y;
+			line >> x >> y;
+			CellModel* position = gameController->getCellAt(x-1, y-1);
+			//TODO: Verify position
+			char type;
+			line >> type;
+			gameController->spawnEnemyShipAt(position, type);
+			updateAllSeaCells(gameController->getSeaCells());
+			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
+			break; }
+		case GameCommands::EVPOS: {
+			char type;
+			line >> type;
+			int x, y;
+			line >> x >> y;
+			if (gameController->hasEvent()) break;
+			CellModel* startingCell = gameController->getCellAt(x-1, y-1);
+			if (startingCell == nullptr) break;
+			gameController->spawnPositionEvent(type, startingCell);
+			updateEventInformation(gameController);
+			break; }
+		case GameCommands::EVNAV: {
+			char type;
+			line >> type;
+			int id;
+			line >> id;
+			if (gameController->hasEvent())
+				return false;
+			if (gameController->hasEvent()) return false;
+			ShipModel* ship = gameController->getFriendlyShipByID(id);
+			if (ship==nullptr)
+			{
+				std::cout << "Ship does not exist!";
+				Consola::getch();
+				break;
+			}
+			gameController->spawnShipEvent(type, ship);
+			updateAllSeaCells(gameController->getSeaCells());
 			break;
+		}
 		case GameCommands::SAIR:
 			gameController->endGame();
 			return false;
-			break;
 		case GameCommands::INVALID:
 			break;
 	}

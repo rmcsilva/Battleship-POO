@@ -21,4 +21,3 @@ public:
 
 	virtual bool executeEvent() = 0;
 };
-

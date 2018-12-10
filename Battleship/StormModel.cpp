@@ -30,11 +30,12 @@ void StormModel::addShipToSink(ShipModel* shipToSink)
 	sinkShips.push_back(shipToSink);
 }
 
+
 EventModel::Type StormModel::getType() {return Type::STORM;}
 
 bool StormModel::executeEvent()
 {
-	if (isOver())  // NOLINT(readability-simplify-boolean-expr)
+	if (isOver())
 	{
 		for (ShipModel* stormSurvivor : stormSurvivors) {
 			stormSurvivor->refillWater();

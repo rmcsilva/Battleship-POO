@@ -24,12 +24,11 @@ public:
 	int getNumColumns() const;
 	double getPlayerCoins() const;
 	CellModel* getFriendlyShipPositionByID(int id) const;
+	ShipModel* getFriendlyShipByID(int id) const;
 	EventModel* getEvent() const;
 	
 	//Initial Read From file
 	bool readInitialFileConfigs(std::string filename);
-	
-	bool buyShip(char type);
 
 	bool canMoveShip(ShipModel* ship) const;
 	bool moveShip(ShipModel* ship, CellModel* goToPosition);
@@ -37,7 +36,10 @@ public:
 	//Game Comands
 	bool moveCommand(int id, CellModel* goToPosition);
 	void proxCommand();
-
+	bool buyShip(char type);
+	bool spawnEnemyShipAt(CellModel* position, char type);
+	bool spawnPositionEvent(char type, CellModel* startingCell);
+	bool spawnShipEvent(char type,ShipModel* affectedShip);
 	//Game Logic (make private?)
 	//Combat Logic
 	void shipBattles(std::vector<ShipModel*>friendlyShips);
@@ -49,7 +51,7 @@ public:
 	bool spawnRandomEvent();
 	//TODO: make event actions to sink ships and such
 	void endEvent(EventModel::Type type);
-
+	bool spawnRiotEvent(ShipModel* affectedShip);
 	//Enemy Ship Spawn Logic
 	bool spawnRandomEnemyShip(std::vector<SeaModel*>seaCells, int probability);
 

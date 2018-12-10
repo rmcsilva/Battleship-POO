@@ -29,6 +29,7 @@ public:
 	void addSeaCell(SeaModel * cell);
 
 	std::vector<SeaModel*> getRandom2x2ContinuousSeaCells() const;
+	std::vector<SeaModel*> get2x2ContinuousSeaCells(CellModel* startingCell) const;
 	std::vector<SeaModel*> getSurroundingSeaCells(const CellModel* currentCell) const;
 
 	CellModel* getCellAbove(const CellModel* currentCell) const;

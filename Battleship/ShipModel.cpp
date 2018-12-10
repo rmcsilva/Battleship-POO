@@ -43,6 +43,8 @@ void ShipModel::refillWater() {water = maxWater;}
 
 void ShipModel::navigationCost()
 {
+	if (owner == Owner::ENEMY) return;
+
 	//TODO:Test
 	if (water>=soldiers)
 	{
