@@ -1,0 +1,12 @@
+moedas 10000
+compranav f
+move 1 E
+move 1 E
+pirata 8 3 F
+pirata 8 4 F
+pirata 8 2 F
+pirata 9 4 F
+pirata 10 4 F
+pirata 10 3 F
+pirata 10 2 F
+pirata 9 2 F

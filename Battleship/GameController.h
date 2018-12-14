@@ -1,9 +1,10 @@
 #pragma once
 #include "FileManager.h"
 #include "Logger.h"
+#include "EventModel.h"
 
 class GameController {
-	FileManager fileController;
+	FileManager fileManager;
 	Logger logger;
 	MapModel *map = nullptr;
 	EventModel *event = nullptr;
@@ -34,6 +35,7 @@ public:
 	bool moveShip(ShipModel* ship, CellModel* goToPosition);
 
 	//Game Comands
+	bool execCommand(std::string filename);
 	bool moveCommand(int id, CellModel* goToPosition);
 	void proxCommand();
 	bool buyShip(char type);
@@ -43,7 +45,7 @@ public:
 	//Game Logic (make private?)
 	//Combat Logic
 	void shipBattles(std::vector<ShipModel*>friendlyShips);
-	void shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip);
+	bool shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip);
 	bool portCombat(ShipModel* attacker, PortModel* port);
 
 	//Event Logic

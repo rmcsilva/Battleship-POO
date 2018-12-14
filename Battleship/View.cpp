@@ -198,7 +198,14 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 
 	switch (stringToGameCommand(command))
 	{
-		case GameCommands::EXEC: break;
+		case GameCommands::EXEC: {
+			std::string filename;
+			line >> filename;
+			gameController->execCommand(filename);
+			updateAllSeaCells(gameController->getSeaCells());
+			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
+			updateEventInformation(gameController);
+			break; }
 		case GameCommands::PROX: {
 			gameController->flushLogs();
 			//TODO:Perform commands
@@ -247,9 +254,9 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			int x, y;
 			line >> x >> y;
 			CellModel* position = gameController->getCellAt(x-1, y-1);
-			//TODO: Verify position
 			char type;
 			line >> type;
+			//TODO: Verify position
 			gameController->spawnEnemyShipAt(position, type);
 			updateAllSeaCells(gameController->getSeaCells());
 			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
@@ -270,8 +277,6 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			line >> type;
 			int id;
 			line >> id;
-			if (gameController->hasEvent())
-				return false;
 			if (gameController->hasEvent()) return false;
 			ShipModel* ship = gameController->getFriendlyShipByID(id);
 			if (ship==nullptr)
@@ -523,21 +528,21 @@ void View::updateEventInformation(const GameController *gameController) const
 	}
 }
 
-void View::goToMapPosition(int x, int y) const
+void View::goToMapPosition(int x, int y)
 {
 	x = (x + 1) * 2;
 	y = y * 2 + 1;
 	Consola::gotoxy(x, y);
 }
 
-void View::goToMapOffPosition(int x, int y) const
+void View::goToMapOffPosition(int x, int y)
 {
 	x = (x + 1) * 2;
 	y = y * 2 + 2;
 	Consola::gotoxy(x, y);
 }
 
-CellModel* View::convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController) const
+CellModel* View::convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController)
 {
 	if (command.length() == 1)
 	{

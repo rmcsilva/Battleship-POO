@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FileManager.h"
 #include "Logger.h"
+#include "View.h"
 
 
 FileManager::FileManager()
@@ -92,6 +93,105 @@ bool FileManager::readInitialFileConfigs(std::string filename, MapModel *&map, G
 	}
 
 	file.close();
+	return true;
+}
+
+bool FileManager::executeCommandsFromFile(std::string filename, GameController* gameController)
+{
+	std::ifstream file(filename);
+	std::string line;
+
+	if (file.is_open()) {
+		while (std::getline(file, line)) {
+			std::stringstream linestream(line);
+			std::string command;
+
+			linestream >> command;
+
+			switch (View::stringToGameCommand(command)) {
+			case View::GameCommands::EXEC: {
+				std::string filename;
+				linestream >> filename;
+				gameController->execCommand(filename);
+				break; }
+			case View::GameCommands::PROX: {
+				gameController->flushLogs();
+				gameController->proxCommand();
+				break; }
+			case View::GameCommands::COMPRANAV: {
+				char type;
+				linestream >> type;
+				if (!gameController->buyShip(type)) continue;
+				break; }
+			case View::GameCommands::VENDENAV: break;
+			case View::GameCommands::LISTA: break;
+			case View::GameCommands::COMPRA: break;
+			case View::GameCommands::VENDE: break;
+			case View::GameCommands::MOVE: {
+				int id;
+				linestream >> id;
+				std::string pos;
+				linestream >> pos;
+
+				CellModel* oldPosition = gameController->getFriendlyShipPositionByID(id);
+				if (oldPosition == nullptr) continue;
+				CellModel* position = View::convertStringCommandToCell(pos, oldPosition, gameController);
+				if (!gameController->moveCommand(id, position)) continue;
+				break; }
+			case View::GameCommands::AUTO: break;
+			case View::GameCommands::STOP: break;
+			case View::GameCommands::PIRATA: {
+				int x, y;
+				linestream >> x >> y;
+				CellModel* position = gameController->getCellAt(x - 1, y - 1);
+				char type;
+				linestream >> type;
+				gameController->spawnEnemyShipAt(position, type);
+				break; }
+			case View::GameCommands::EVPOS: {
+				char type;
+				linestream >> type;
+				int x, y;
+				linestream >> x >> y;
+				if (gameController->hasEvent()) break;
+				CellModel* startingCell = gameController->getCellAt(x - 1, y - 1);
+				if (startingCell == nullptr) break;
+				gameController->spawnPositionEvent(type, startingCell);
+				break; }
+			case View::GameCommands::EVNAV: {
+				char type;
+				linestream >> type;
+				int id;
+				linestream >> id;
+				if (gameController->hasEvent()) return false;
+				ShipModel* ship = gameController->getFriendlyShipByID(id);
+				if (ship == nullptr) continue;
+				gameController->spawnShipEvent(type, ship);
+				break; }
+			case View::GameCommands::MOEDAS: {
+				double amount;
+				linestream >> amount;
+				if (amount < 0) { break; }
+				gameController->addCoins(amount);
+				break; }
+			case View::GameCommands::VAIPARA: break;
+			case View::GameCommands::COMPRASOLD: break;
+			case View::GameCommands::SAVEG: break;
+			case View::GameCommands::LOADG: break;
+			case View::GameCommands::DELG: break;
+			case View::GameCommands::SAIR: {
+				gameController->endGame();
+				break; }
+			case View::GameCommands::INVALID: return false;
+			default: return false;
+			}
+		}
+	} else {
+		return false;
+	}
+
+	file.close();
+	return true;
 }
 
 FileManager::InitialConfigsCommands FileManager::stringToInitialConfigs(std::string const & inString)

@@ -22,7 +22,16 @@ class View
 
 	const int TEXT_BACKGROUND = Consola::PRETO;
 
-	enum class InitialCommands {CONFIG, INVALID};
+	//TODO: Put in a separate header file with error messages and stuff
+	const char* INITIAL_LAYOUT = "Battleship Setup\n";
+	const char* COMMAND_LINE = "Command Line: ";
+	const char* READ_SUCESS = "File read sucessfully! \nPress any key to start the game...";
+	const char* ERROR_READING_FILE = "Error reading from file: ";
+	const char* COMMAND_EXECUTE_ERROR = "Command could not be executed! Recheck and try again!\n";
+public:
+	View();
+
+	enum class InitialCommands { CONFIG, INVALID };
 	enum class GameCommands
 	{
 		EXEC,
@@ -47,14 +56,6 @@ class View
 		SAIR,
 		INVALID
 	};
-	//TODO: Put in a separate header file with error messages and stuff
-	const char* INITIAL_LAYOUT = "Battleship Setup\n";
-	const char* COMMAND_LINE = "Command Line: ";
-	const char* READ_SUCESS = "File read sucessfully! \nPress any key to start the game...";
-	const char* ERROR_READING_FILE = "Error reading from file: ";
-	const char* COMMAND_EXECUTE_ERROR = "Command could not be executed! Recheck and try again!\n";
-public:
-	View();
 
 	void setupLayout(GameController *gameController);
 	void initialLayout(GameController *gameController) const;
@@ -73,8 +74,8 @@ public:
 	void updateAllPortCells(std::vector<PortModel*> const &friendlyPorts, std::vector<PortModel*> const &enemyPorts) const;
 	void updatePortCell(PortModel* const &portCell) const;
 	void updateEventInformation(const GameController *gameController) const;
-	void goToMapPosition(int x, int y) const;
-	void goToMapOffPosition(int x, int y) const;
-	CellModel* convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController) const;
+	static void goToMapPosition(int x, int y);
+	static void goToMapOffPosition(int x, int y);
+	static CellModel* convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController);
 };
 

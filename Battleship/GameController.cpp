@@ -64,7 +64,7 @@ EventModel* GameController::getEvent() const {return event;}
 
 bool GameController::readInitialFileConfigs(std::string filename)
 {
-	if (fileController.readInitialFileConfigs(filename, map, &game)) {
+	if (fileManager.readInitialFileConfigs(filename, map, &game)) {
 		game.setGameState(GameState::GAME);
 		return true;
 	}
@@ -101,42 +101,45 @@ bool GameController::buyShip(char type)
 			}
 			return true;
 		}
-		else {
-			return false;
-		}
 	}
 	return false;
 }
 
 bool GameController::spawnEnemyShipAt(CellModel* position, char type)
 {
+	if (position->getType() == CellModel::Type::GROUND)
+		return false;
+
+	SeaModel* seaCell = nullptr;
+	PortModel* portCell = nullptr;
+
+	if (position->getType() == CellModel::Type::SEA) {
+		seaCell = (SeaModel*)position;
+		if (seaCell->hasShip()) {
+			return false;
+		}
+	} else if (position->getType() == CellModel::Type::PORT) {
+		portCell = (PortModel*)position;
+		if (portCell->getOwner() == Owner::PLAYER) {
+			return false;
+		}
+	}
+
 	ShipModel* ship = nullptr;
 
 	switch (toupper(type))
 	{
-				case 'V': ship = new SailboatModel(Owner::ENEMY, position); break;
-				case 'F': ship = new FrigateModel(Owner::ENEMY, position); break;
-				default: return false;
+		case 'V': ship = new SailboatModel(Owner::ENEMY, position); break;
+		case 'F': ship = new FrigateModel(Owner::ENEMY, position); break;
+		default: return false;
 	}
 
 	if (ship != nullptr)
 	{
-		
-		if (position->getType()==CellModel::Type::SEA)
-		{
-			SeaModel* seaCell = (SeaModel*)position;
-			if (seaCell->hasShip())
-				return false;
-
+		if (seaCell!=nullptr) {
 			seaCell->setShip(ship);
-			
-		} else if(position->getType() == CellModel::Type::PORT)
-		{
-			PortModel* portCell = (PortModel*)position;
-			if (portCell->getOwner() == Owner::ENEMY)
-				portCell->addShipToPort(ship);
-			else 
-				return false;
+		}else{
+			portCell->addShipToPort(ship);
 		}
 		game.addPirateShip(ship);
 		return true;
@@ -236,6 +239,11 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 	}
 }
 
+bool GameController::execCommand(std::string filename)
+{
+	return fileManager.executeCommandsFromFile(filename, this);
+}
+
 bool GameController::moveCommand(int id, CellModel* goToPosition)
 {
 	try
@@ -312,22 +320,24 @@ void GameController::shipBattles(std::vector<ShipModel*> friendlyShips)
 		{
 			if (surroundingSeaCell->hasShip())
 			{
-				if (surroundingSeaCell->getShipOwner() == Owner::ENEMY)
-					shipCombat(friendlyShip, surroundingSeaCell->getShip());
+				if (surroundingSeaCell->getShipOwner() == Owner::ENEMY) {
+					if(!shipCombat(friendlyShip, surroundingSeaCell->getShip())) 
+						break;
+				}
 			}
 		}
 	}
 }
 
-void GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
+bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 {
 	std::ostringstream infoLog, combatLog;
-
+	//TODO: Check if its still necessary 
 	if (friendlyShip==nullptr || enemyShip==nullptr)
 	{
 		infoLog << "Ship already sank, list update error nullptr!\n";
 		logger.addLineToInfoLog(infoLog.str());
-		return;
+		return false;
 	}
 
 	int friendlyShipSoldiers = friendlyShip->getSoldiers();
@@ -338,11 +348,12 @@ void GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 	{
 		infoLog << "Ship already sank, list update error!\n";
 		logger.addLineToInfoLog(infoLog.str());
-		return;
+		return false;
 	}
 
 	combatLog << "Ship Combat Between Ship: " << friendlyShip->getID() << " and " << enemyShip->getID() << '\n';
 
+	infoLog << "Ship Combat Between Ship: " << friendlyShip->getID() << " and " << enemyShip->getID() << '\n';
 	infoLog << "Friendly Ship Soldiers: " << friendlyShipSoldiers << '\n';
 	infoLog << "Enemy Ship Soldiers: " << enemyShipSoldiers << '\n';
 
@@ -379,12 +390,18 @@ void GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 		game.removeFriendlyShip(friendlyShip);
 		game.removeEnemyShip(enemyShip);
 		combatLog << "Both Ships Sank!!\n";
+		logger.addLineToInfoLog(infoLog.str());
+		logger.addLineToCombatLog(combatLog.str());
+		return false;
 	} else if (friendlyShipSoldiers == 0)
 	{
 		combatLog << "Ship " << friendlyShip->getID() << " Sank!\n";
 		//Enemy Ships gets friendly Ship stuff
 		enemyShip->lootShip(friendlyShip);
 		game.removeFriendlyShip(friendlyShip);
+		logger.addLineToInfoLog(infoLog.str());
+		logger.addLineToCombatLog(combatLog.str());
+		return false;
 	}else if (enemyShipSoldiers == 0)
 	{
 		combatLog << "Ship " << enemyShip->getID() << " Sank!\n";
@@ -395,6 +412,7 @@ void GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 
 	logger.addLineToInfoLog(infoLog.str());
 	logger.addLineToCombatLog(combatLog.str());
+	return true;
 }
 
 bool GameController::portCombat(ShipModel* attacker, PortModel* port)
