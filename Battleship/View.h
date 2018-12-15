@@ -11,6 +11,7 @@ class View
 	const int ENEMY_PORT_COLOR = Consola::AMARELO_CLARO;
 	const int FRIENDLY_SHIP_COLOR = Consola::VERDE_CLARO;
 	const int ENEMY_SHIP_COLOR = Consola::VERMELHO_CLARO;
+	const int LOST_SHIP_COLOR = Consola::CYAN_CLARO;
 	const int EVENT_COLOR = Consola::ROXO;
 
 	//TODO:Add lost ship color

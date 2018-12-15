@@ -67,7 +67,10 @@ void ShipModel::navigationCost()
 void ShipModel::moveShip(CellModel* position)
 {
 	this->position = position;
-	if (goTo==position) {goTo = nullptr;}
+	if (goTo==position) {
+		goTo = nullptr;
+		navigation = Navigation::AUTO;
+	}
 	numOfMoves++;
 }
 

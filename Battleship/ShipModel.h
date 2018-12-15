@@ -52,8 +52,6 @@ public:
 	bool canAddToShipCargo(int amount);
 	void refillWater();
 	void navigationCost();
-	//TODO:Make pure virtual
-	void autoShipMovement();
 	void moveShip(CellModel* position);
 	void resetMoves();
 
@@ -67,6 +65,7 @@ public:
 
 	virtual std::string getAsString() const = 0;
 	bool operator==(ShipModel const &ship) const;
+	//TODO: Overload operator >> to transfer fish
 };
 
 std::ostream& operator<<(std::ostream& os, const ShipModel &ship);

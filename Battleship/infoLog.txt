@@ -1,231 +1,27 @@
-Ship Combat Between Ship: 1 and 9
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 9
-Enemy Ship Random: 26
-Friendly Ship Soldiers After Combat: 30
-Enemy Ship Soldiers After Combat: 40
+Event probability number: 33
 
-Ship Combat Between Ship: 1 and 5
-Friendly Ship Soldiers: 30
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 25
-Enemy Ship Random: 36
-Friendly Ship Soldiers After Combat: 10
-Enemy Ship Soldiers After Combat: 40
+Enemy Ship random number: 70
 
-Ship Combat Between Ship: 1 and 7
-Friendly Ship Soldiers: 10
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 6
-Enemy Ship Random: 2
-Friendly Ship Soldiers After Combat: 8
-Enemy Ship Soldiers After Combat: 46
 
-Ship Combat Between Ship: 1 and 2
-Friendly Ship Soldiers: 8
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 8
-Enemy Ship Random: 34
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 40
+NEXT TURN
 
-Event probability number: 39
+Event probability number: 62
 
-Enemy Ship random number: 91
+Enemy Ship random number: 60
 
 
 NEXT TURN
 
 Event probability number: 59
 
+Enemy Ship random number: 41
+
+
+NEXT TURN
+
+Event probability number: 38
+
 Enemy Ship random number: 29
-
-
-NEXT TURN
-
-Event probability number: 94
-
-Enemy Ship random number: 2
-Spawning random V at x: 19 y: 10
-
-NEXT TURN
-
-Event probability number: 20
-Event type random number: 53
-
-Enemy Ship random number: 56
-
-
-NEXT TURN
-
-Event probability number: 34
-
-Enemy Ship random number: 30
-
-
-NEXT TURN
-
-Ship Combat Between Ship: 11 and 7
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 46
-Friendly Ship Random: 41
-Enemy Ship Random: 4
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 26
-
-Ship Combat Between Ship: 11 and 8
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 32
-Enemy Ship Random: 32
-Friendly Ship Soldiers After Combat: 20
-Enemy Ship Soldiers After Combat: 40
-
-Ship Combat Between Ship: 11 and 6
-Friendly Ship Soldiers: 20
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 16
-Enemy Ship Random: 5
-Friendly Ship Soldiers After Combat: 16
-Enemy Ship Soldiers After Combat: 42
-
-Ship Combat Between Ship: 12 and 7
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 26
-Friendly Ship Random: 36
-Enemy Ship Random: 3
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 6
-
-Ship Combat Between Ship: 12 and 8
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 35
-Enemy Ship Random: 17
-Friendly Ship Soldiers After Combat: 32
-Enemy Ship Soldiers After Combat: 24
-
-Ship Combat Between Ship: 12 and 6
-Friendly Ship Soldiers: 32
-Enemy Ship Soldiers: 42
-Friendly Ship Random: 25
-Enemy Ship Random: 37
-Friendly Ship Soldiers After Combat: 16
-Enemy Ship Soldiers After Combat: 34
-
-Ship Combat Between Ship: 13 and 7
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 6
-Friendly Ship Random: 35
-Enemy Ship Random: 3
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
-
-Ship Combat Between Ship: 13 and 8
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 24
-Friendly Ship Random: 22
-Enemy Ship Random: 21
-Friendly Ship Soldiers After Combat: 32
-Enemy Ship Soldiers After Combat: 8
-
-Ship Combat Between Ship: 13 and 6
-Friendly Ship Soldiers: 32
-Enemy Ship Soldiers: 34
-Friendly Ship Random: 21
-Enemy Ship Random: 24
-Friendly Ship Soldiers After Combat: 20
-Enemy Ship Soldiers After Combat: 28
-
-Ship Combat Between Ship: 14 and 8
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 8
-Friendly Ship Random: 43
-Enemy Ship Random: 7
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
-
-Ship Combat Between Ship: 14 and 6
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 28
-Friendly Ship Random: 40
-Enemy Ship Random: 17
-Friendly Ship Soldiers After Combat: 32
-Enemy Ship Soldiers After Combat: 12
-
-Ship Combat Between Ship: 15 and 6
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 12
-Friendly Ship Random: 1
-Enemy Ship Random: 1
-Friendly Ship Soldiers After Combat: 46
-Enemy Ship Soldiers After Combat: 10
-
-Ship Combat Between Ship: 16 and 6
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 10
-Friendly Ship Random: 25
-Enemy Ship Random: 9
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
-
-Event probability number: 18
-Event type random number: 39
-Affected Ship: 14
-
-Enemy Ship random number: 57
-
-
-NEXT TURN
-
-Ship Combat Between Ship: 11 and 9
-Friendly Ship Soldiers: 16
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 13
-Enemy Ship Random: 38
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 32
-
-Enemy Ship random number: 21
-
-
-NEXT TURN
-
-Ship Combat Between Ship: 21 and 9
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 32
-Friendly Ship Random: 36
-Enemy Ship Random: 12
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 12
-
-Ship Combat Between Ship: 21 and 5
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 5
-Enemy Ship Random: 26
-Friendly Ship Soldiers After Combat: 24
-Enemy Ship Soldiers After Combat: 32
-
-Ship Combat Between Ship: 21 and 2
-Friendly Ship Soldiers: 24
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 15
-Enemy Ship Random: 29
-Friendly Ship Soldiers After Combat: 8
-Enemy Ship Soldiers After Combat: 32
-
-Ship Combat Between Ship: 21 and 4
-Friendly Ship Soldiers: 8
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 5
-Enemy Ship Random: 35
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 40
-
-Event ended!
-Enemy Ship random number: 81
 
 
 NEXT TURN
