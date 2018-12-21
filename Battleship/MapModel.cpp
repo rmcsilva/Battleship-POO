@@ -3,6 +3,7 @@
 #include "SeaModel.h"
 #include "PortModel.h"
 #include "GroundModel.h"
+#include "Logger.h"
 
 MapModel::MapModel(const int numLines, const int numColumns) : numLines(numLines), numColumns(numColumns) {
 	if (numLines < MIN_LINES || numColumns < MIN_COLUMNS)
@@ -57,12 +58,12 @@ std::vector<SeaModel*> MapModel::getRandom2x2ContinuousSeaCells() const
 {
 	std::vector<SeaModel*> continuousCells;
 
-	int randomCell = rand() % seaCells.size();
 	bool isValid = false;
 
 
 	do
 	{
+		int randomCell = rand() % seaCells.size();
 		SeaModel* startingCell = seaCells.at(randomCell);
 		continuousCells.push_back(startingCell);
 

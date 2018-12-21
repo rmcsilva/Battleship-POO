@@ -225,5 +225,6 @@
   <ItemGroup>
     <Text Include="initialConfig.txt" />
     <Text Include="combatTest.txt" />
+    <Text Include="proxBug.txt" />
   </ItemGroup>
 </Project>

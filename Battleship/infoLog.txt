@@ -1,232 +1,452 @@
-Ship Combat Between Ship: 1 and 9
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 9
-Enemy Ship Random: 26
-Friendly Ship Soldiers After Combat: 30
-Enemy Ship Soldiers After Combat: 40
+Random Movement Ship -> F ID: 1 Position: x 10 y: 2
+6
+Cell Above Left
+Teste 2
+4
+Cell Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 73
 
-Ship Combat Between Ship: 1 and 5
-Friendly Ship Soldiers: 30
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 25
-Enemy Ship Random: 36
-Friendly Ship Soldiers After Combat: 10
-Enemy Ship Soldiers After Combat: 40
+Event probability number: 73
 
-Ship Combat Between Ship: 1 and 7
-Friendly Ship Soldiers: 10
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 6
-Enemy Ship Random: 2
-Friendly Ship Soldiers After Combat: 8
-Enemy Ship Soldiers After Combat: 46
+Spawn Inicio
+Enemy Ship random number: 79
 
-Ship Combat Between Ship: 1 and 2
-Friendly Ship Soldiers: 8
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 8
-Enemy Ship Random: 34
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 40
-
-Event probability number: 39
-
-Enemy Ship random number: 91
-
+Spawn fim
 
 NEXT TURN
 
-Event probability number: 59
+Random Movement Ship -> F ID: 1 Position: x 8 y: 1
+3
+Cell Right
+Teste 2
+1
+Cell Above
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 83
 
-Enemy Ship random number: 29
+Event probability number: 83
 
+Spawn Inicio
+Enemy Ship random number: 54
 
-NEXT TURN
-
-Event probability number: 94
-
-Enemy Ship random number: 2
-Spawning random V at x: 19 y: 10
-
-NEXT TURN
-
-Event probability number: 20
-Event type random number: 53
-
-Enemy Ship random number: 56
-
-
-NEXT TURN
-
-Event probability number: 34
-
-Enemy Ship random number: 30
-
+Spawn fim
 
 NEXT TURN
 
-Ship Combat Between Ship: 11 and 7
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 46
-Friendly Ship Random: 41
-Enemy Ship Random: 4
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 26
+Random Movement Ship -> F ID: 1 Position: x 9 y: 0
+5
+Cell Above Right
+Teste 2
+8
+Cell Below Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 97
 
-Ship Combat Between Ship: 11 and 8
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 32
-Enemy Ship Random: 32
-Friendly Ship Soldiers After Combat: 20
-Enemy Ship Soldiers After Combat: 40
+Event probability number: 97
 
-Ship Combat Between Ship: 11 and 6
-Friendly Ship Soldiers: 20
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 16
-Enemy Ship Random: 5
-Friendly Ship Soldiers After Combat: 16
-Enemy Ship Soldiers After Combat: 42
+Spawn Inicio
+Enemy Ship random number: 39
 
-Ship Combat Between Ship: 12 and 7
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 26
-Friendly Ship Random: 36
-Enemy Ship Random: 3
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 6
+Spawn fim
 
-Ship Combat Between Ship: 12 and 8
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 35
-Enemy Ship Random: 17
-Friendly Ship Soldiers After Combat: 32
-Enemy Ship Soldiers After Combat: 24
+NEXT TURN
 
-Ship Combat Between Ship: 12 and 6
-Friendly Ship Soldiers: 32
-Enemy Ship Soldiers: 42
-Friendly Ship Random: 25
-Enemy Ship Random: 37
-Friendly Ship Soldiers After Combat: 16
-Enemy Ship Soldiers After Combat: 34
+Random Movement Ship -> F ID: 1 Position: x 9 y: 0
+8
+Cell Below Left
+Teste 2
+5
+Cell Above Right
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 63
 
-Ship Combat Between Ship: 13 and 7
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 6
-Friendly Ship Random: 35
-Enemy Ship Random: 3
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
+Event probability number: 63
 
-Ship Combat Between Ship: 13 and 8
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 24
-Friendly Ship Random: 22
-Enemy Ship Random: 21
-Friendly Ship Soldiers After Combat: 32
-Enemy Ship Soldiers After Combat: 8
+Spawn Inicio
+Enemy Ship random number: 41
 
-Ship Combat Between Ship: 13 and 6
-Friendly Ship Soldiers: 32
-Enemy Ship Soldiers: 34
-Friendly Ship Random: 21
-Enemy Ship Random: 24
-Friendly Ship Soldiers After Combat: 20
-Enemy Ship Soldiers After Combat: 28
+Spawn fim
 
-Ship Combat Between Ship: 14 and 8
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 8
-Friendly Ship Random: 43
-Enemy Ship Random: 7
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
+NEXT TURN
 
-Ship Combat Between Ship: 14 and 6
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 28
-Friendly Ship Random: 40
-Enemy Ship Random: 17
-Friendly Ship Soldiers After Combat: 32
-Enemy Ship Soldiers After Combat: 12
+Random Movement Ship -> F ID: 1 Position: x 9 y: 0
+5
+Cell Above Right
+Teste 2
+4
+Cell Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 58
 
-Ship Combat Between Ship: 15 and 6
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 12
-Friendly Ship Random: 1
-Enemy Ship Random: 1
-Friendly Ship Soldiers After Combat: 46
-Enemy Ship Soldiers After Combat: 10
+Event probability number: 58
 
-Ship Combat Between Ship: 16 and 6
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 10
-Friendly Ship Random: 25
-Enemy Ship Random: 9
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
+Spawn Inicio
+Enemy Ship random number: 55
 
-Event probability number: 18
-Event type random number: 39
-Affected Ship: 14
+Spawn fim
 
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 9 y: 9
+1
+Cell Above
+Teste 2
+8
+Cell Below Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 53
+
+Event probability number: 53
+
+Spawn Inicio
+Enemy Ship random number: 38
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 8 y: 9
+6
+Cell Above Left
+Teste 2
+3
+Cell Right
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 16
+
+Mermaid event
+Event probability number: 16
+Event type random number: 43
+Affected Ship: 1
+
+Spawn Inicio
 Enemy Ship random number: 57
 
+Spawn fim
 
 NEXT TURN
 
-Ship Combat Between Ship: 11 and 9
-Friendly Ship Soldiers: 16
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 13
-Enemy Ship Random: 38
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 32
+Random Movement Ship -> F ID: 1 Position: x 8 y: 8
+6
+Cell Above Left
+Teste 2
+8
+Cell Below Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Inicio
+Spawn Inicio
+Enemy Ship random number: 29
 
-Enemy Ship random number: 21
-
+Spawn fim
 
 NEXT TURN
 
-Ship Combat Between Ship: 21 and 9
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 32
-Friendly Ship Random: 36
-Enemy Ship Random: 12
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 12
-
-Ship Combat Between Ship: 21 and 5
-Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 5
-Enemy Ship Random: 26
-Friendly Ship Soldiers After Combat: 24
-Enemy Ship Soldiers After Combat: 32
-
-Ship Combat Between Ship: 21 and 2
-Friendly Ship Soldiers: 24
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 15
-Enemy Ship Random: 29
-Friendly Ship Soldiers After Combat: 8
-Enemy Ship Soldiers After Combat: 32
-
-Ship Combat Between Ship: 21 and 4
-Friendly Ship Soldiers: 8
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 5
-Enemy Ship Random: 35
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 40
-
+Random Movement Ship -> F ID: 1 Position: x 6 y: 8
+1
+Cell Above
+Teste 2
+4
+Cell Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Inicio
 Event ended!
-Enemy Ship random number: 81
+Spawn Inicio
+Enemy Ship random number: 50
 
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 5 y: 7
+2
+Cell Bellow
+Teste 2
+5
+Cell Above Right
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 60
+
+Event probability number: 60
+
+Spawn Inicio
+Enemy Ship random number: 74
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 6 y: 7
+3
+Cell Right
+Teste 2
+8
+Cell Below Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 69
+
+Event probability number: 69
+
+Spawn Inicio
+Enemy Ship random number: 98
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 6 y: 8
+2
+Cell Bellow
+Teste 2
+1
+Cell Above
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 17
+
+Mermaid event
+Event probability number: 17
+Event type random number: 30
+Affected Ship: 1
+
+Spawn Inicio
+Enemy Ship random number: 71
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 6 y: 8
+3
+Cell Right
+Teste 2
+1
+Cell Above
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Inicio
+Spawn Inicio
+Enemy Ship random number: 31
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 7 y: 7
+8
+Cell Below Left
+Teste 2
+8
+Cell Below Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Inicio
+Event ended!
+Spawn Inicio
+Enemy Ship random number: 96
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 5 y: 9
+2
+Cell Bellow
+Teste 2
+7
+Cell Below Right
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 50
+
+Event probability number: 50
+
+Spawn Inicio
+Enemy Ship random number: 49
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 6 y: 1
+3
+Cell Right
+Teste 2
+6
+Cell Above Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 12
+
+Mermaid event
+Event probability number: 12
+Event type random number: 24
+Affected Ship: 1
+
+Spawn Inicio
+Enemy Ship random number: 65
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 6 y: 0
+4
+Cell Left
+Teste 2
+5
+Cell Above Right
+Teste 2
+Navegacao
+Passou
+Nao passou
+Batalhas fim
+Eventos Inicio
+Spawn Inicio
+Enemy Ship random number: 19
+Spawning random V at x: 14 y: 8
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 6 y: 9
+7
+Cell Below Right
+Teste 2
+8
+Cell Below Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Random Movement Ship -> V ID: 2 Position: x 13 y: 7
+3
+Cell Right
+Teste 2
+6
+Cell Above Left
+Teste 2
+Passou
+Nao passou
+Batalhas fim
+Eventos Inicio
+Event ended!
+Spawn Inicio
+Enemy Ship random number: 25
+
+Spawn fim
+
+NEXT TURN
+
+Random Movement Ship -> F ID: 1 Position: x 6 y: 1
+8
+Cell Below Left
+Teste 2
+8
+Cell Below Left
+Teste 2
+Navegacao
+Passou
+Nao passou
+Random Movement Ship -> V ID: 2 Position: x 13 y: 6
+4
+Cell Left
+Teste 2
+6
+Cell Above Left
+Teste 2
+Passou
+Nao passou
+Batalhas fim
+Eventos Spawn
+Event probability number: 21
+
+Storm event
+Get cells
+Comeca cells
+Saiu cells
+Event probability number: 21
+Event type random number: 76
+Affected cell x: 14 y: 6
+Affected cell x: 14 y: 7
+Affected cell x: 15 y: 6
+Affected cell x: 15 y: 7
+
+Spawn Inicio
+Enemy Ship random number: 1
+Spawning random F at x: 3 y: 1
+Spawn fim
 
 NEXT TURN
 
