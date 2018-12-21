@@ -24,7 +24,12 @@ bool FrigateModel::stormAttack()
 {
 	int soldiersLost = (soldiers * STORM_SOLDIERS_AFFECTED_PERCENTAGE) / 100;
 	soldiers -= soldiersLost;
-	return false;
+
+	int random = rand() % 100;
+
+	if(random < 20) return false;
+
+	return true;
 }
 
 std::string FrigateModel::getAsString() const {return "F";}

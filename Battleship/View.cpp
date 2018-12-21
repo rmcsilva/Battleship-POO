@@ -253,10 +253,16 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 		case GameCommands::PIRATA: {
 			int x, y;
 			line >> x >> y;
-			CellModel* position = gameController->getCellAt(x-1, y-1);
+			CellModel* position;
+			try {
+				position = gameController->getCellAt(x - 1, y - 1);
+			} catch (std::out_of_range e) {
+				std::cout << "Position does not exist!";
+				Consola::getch();
+				break;
+			}
 			char type;
 			line >> type;
-			//TODO: Verify position
 			gameController->spawnEnemyShipAt(position, type);
 			updateAllSeaCells(gameController->getSeaCells());
 			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
@@ -289,6 +295,53 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			updateAllSeaCells(gameController->getSeaCells());
 			break;
 		}
+		case GameCommands::VAIPARA: {
+			int id;
+			line >> id;
+
+			ShipModel* ship = gameController->getFriendlyShipByID(id);
+			if (ship == nullptr)
+			{
+				std::cout << "Ship does not exist!";
+				Consola::getch();
+				break;
+			}
+
+			std::string position;
+			line >> position;
+
+			int x, y;
+			char port;
+
+			try {
+				x = std::stoi(position);
+				line >> y;
+
+			} catch (std::invalid_argument e) {
+				char id = position.at(0);
+				CellModel* tmp = gameController->getFriendlyPortPositionByID(id);
+				if (tmp == nullptr)
+				{
+					std::cout << "Port does not exist!";
+					Consola::getch();
+					break;
+				}
+				x = tmp->getX();
+				y = tmp->getY();
+			}
+
+			CellModel* cell;
+			try {
+				cell = gameController->getCellAt(x - 1, y - 1);
+			}
+			catch (std::out_of_range e) {
+				std::cout << "Position does not exist!";
+				Consola::getch();
+				break;
+			}
+
+			gameController->orderShipCommand(ship, cell);			
+			break; }
 		case GameCommands::SAIR:
 			gameController->endGame();
 			return false;
@@ -373,8 +426,10 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 		//TODO: Identify ship type
 		if (seaCell->getShipOwner() == Owner::PLAYER)
 			Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
-		else
+		else if (seaCell->getShipOwner() == Owner::ENEMY)
 			Consola::setBackgroundColor(ENEMY_SHIP_COLOR);
+		else
+			Consola::setBackgroundColor(LOST_SHIP_COLOR);
 
 		std::cout << std::setw(2) << seaCell->getShip()->getID();
 		

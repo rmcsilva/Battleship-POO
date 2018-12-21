@@ -1,4 +1,4 @@
-﻿  GameController.cpp
+﻿﻿  GameController.cpp
 \\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(519): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
 \\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(519): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
 \\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(543): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
@@ -6,3 +6,4 @@
 \\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(285): warning C4715: 'GameController::moveCommand': not all control paths return a value
 \\mac\home\documents\github\battleship-poo\battleship\gamecontroller.cpp(788): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
   Battleship.vcxproj -> \\Mac\Home\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe
+

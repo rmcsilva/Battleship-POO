@@ -21,10 +21,15 @@ ShipModel::Type SchoonerModel::getType() const {return ShipModel::Type::SCHOONER
 
 bool SchoonerModel::stormAttack()
 {
-	//TODO: Complete, generete two random numbers check conditions for each
-	//STORM_LOSE_CARGO_PROB
-	//STORM_SINK_PROB
-	return false;
+	int random = rand() % 100;
+
+	if (random < 20) capacity = merch = fish = 0;
+
+	random = rand() % 100;
+
+	if (random < 35) return false;
+
+	return true;
 }
 
 std::string SchoonerModel::getAsString() const {return "E";}

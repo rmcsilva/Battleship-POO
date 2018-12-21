@@ -48,6 +48,20 @@ CellModel* GameController::getFriendlyShipPositionByID(int id) const
 	return nullptr;
 }
 
+CellModel* GameController::getFriendlyPortPositionByID(char id) const
+{
+	for(auto friendlyPort : game.getFriendlyPorts())
+	{
+		if (friendlyPort->getID()==id)
+		{
+			int x = friendlyPort->getX();
+			int y = friendlyPort->getY();
+			return getCellAt(x, y);
+		}
+	}
+	return nullptr;
+}
+
 ShipModel* GameController::getFriendlyShipByID(int id) const
 {
 	for (auto friendlyShip : game.getFriendlyShips())
@@ -177,6 +191,15 @@ bool GameController::spawnShipEvent(char type, ShipModel* affectedShip)
 	return true;
 }
 
+bool GameController::orderShipCommand(ShipModel* ship, CellModel* goTo)
+{
+	if (goTo->getType() == CellModel::Type::GROUND) return false;
+
+	ship->setGoTo(goTo);
+	ship->setNavigation(Navigation::ORDER);
+	return true;
+}
+
 bool GameController::canMoveShip(ShipModel* ship) const {return ship->getNumOfMoves() < ship->getMaxMoves();}
 
 bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
@@ -197,6 +220,14 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 			if (sea->hasShip()) return false;
 			//Only moves if cell is empty
 			sea->setShip(ship);
+
+			if (ship->getType()==ShipModel::Type::SCHOONER && ship->getOwner()!=Owner::LOST)
+			{
+				if (sea->hasFish()) {
+					sea->catchFish();
+				}
+				
+			}
 
 		}
 		else //Other option left is to go to a port
@@ -441,8 +472,7 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 			game.removeFriendlyShip(attacker);
 		else
 			game.removeEnemyShip(attacker);
-
-		
+	
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToCombatLog(combatLog.str());
 		return false;
@@ -681,9 +711,13 @@ void GameController::friendlyFleetMovement(std::vector<ShipModel*> friendlyShips
 		{
 			switch (friendlyShip->getNavigation())
 			{
-				//TODO: Implement 
+				//TODO: Implement
+				case Navigation::USER: 
+					friendlyShip->blockShipMovement();
+					//TODO: Check type and check surrounding
+					break;
 				case Navigation::AUTO: break;
-				case Navigation::ORDER: break;
+				case Navigation::ORDER: orderShipMovement(friendlyShip); break;
 				case Navigation::LOST: lostShipMovement(friendlyShip); break;
 			default: break;
 			}
@@ -725,6 +759,92 @@ void GameController::lostShipMovement(ShipModel* ship)
 	do {
 		while (!moveShip(ship, generateRandomMove(ship->getPosition())));
 	} while (canMoveShip(ship));
+}
+
+void GameController::autoShipMovement(ShipModel* ship)
+{
+	switch (ship->getType())
+	{
+		case ShipModel::Type::FRIGATE: break;
+		case ShipModel::Type::GALLEON:
+			//TODO: Check surrounding for schooner fish transfer
+			ship->blockShipMovement();
+			break;
+		case ShipModel::Type::GHOST: break;
+		case ShipModel::Type::SAILBOAT: break;
+		case ShipModel::Type::SCHOONER: break;
+		default: ;
+	}
+}
+
+void GameController::orderShipMovement(ShipModel* ship)
+{
+	CellModel* goTo = ship->getGoTo();
+	do {
+		moveShip(ship, goToCell(ship->getPosition(), goTo));
+	} while (canMoveShip(ship));
+}
+
+CellModel* GameController::goToCell(CellModel* current, CellModel* goTo)
+{
+	CellModel* tmp = current;
+
+	int xPosition = current->getX() - goTo->getX();
+	int yPosition = current->getY() - goTo->getY();
+
+	//TODO: verify is cell is valid
+
+	//Check if cell is on the same column
+	if (xPosition == 0) {
+		//Check if go to is up
+		if (yPosition > 0) {
+			tmp = getCellAbove(current);
+			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+		} else {
+			//Go to is down
+			tmp = getCellBelow(current);
+			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+		}	
+	}
+
+	//Check if cell is on the same line
+	if (yPosition == 0)
+	{
+		//Check if go to cell is at right 
+		if (xPosition < 0) {
+			tmp = getCellRight(current);
+			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+		} else {
+			//cell is at left
+			tmp = getCellLeft(current);
+			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+		}	
+	}
+
+	//Check if go to cell is at right 
+	if (xPosition < 0) {
+		//Check if go to is up
+		if (yPosition > 0) {
+			tmp = getCellAboveRight(current);
+			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+		} else {
+			//Go to is down
+			tmp = getCellBelowRight(current);
+			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+		}
+
+	} else {
+		//Go to is at left
+		if (yPosition > 0) {
+			tmp = getCellAboveLeft(current);
+			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+		} else {
+			tmp = getCellBelowLeft(current);
+			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+		}
+	}
+
+	return current;
 }
 
 CellModel* GameController::generateRandomMove(const CellModel* currentCell)

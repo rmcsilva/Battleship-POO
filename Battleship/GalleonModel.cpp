@@ -25,7 +25,11 @@ bool GalleonModel::stormAttack()
 	soldiers -= soldiersLost;
 
 	//TODO: Sink probability
-	return false;
+	int random = rand() % 100;
+
+	if (random < 40) return false;
+
+	return true;
 }
 
 std::string GalleonModel::getAsString() const {return "G";}
