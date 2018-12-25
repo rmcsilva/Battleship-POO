@@ -16,6 +16,8 @@ MermaidModel::~MermaidModel()
 
 ShipModel* MermaidModel::getAffectedShip() {return affectedShip;}
 
+void MermaidModel::setAffectedShip(ShipModel* affectedShip) {this->affectedShip = affectedShip;}
+
 EventModel::Type MermaidModel::getType() {return Type::MERMAID;}
 
 bool MermaidModel::executeEvent()
@@ -27,4 +29,8 @@ bool MermaidModel::executeEvent()
 	affectedShip->mermaidAttack(SOLDIERS_LOST_PERCENTAGE);
 	incrementTurn();
 	return true;
+}
+
+MermaidModel* MermaidModel::clone() {
+	return new MermaidModel(*this);
 }

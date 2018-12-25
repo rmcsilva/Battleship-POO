@@ -14,6 +14,7 @@ class GameController {
 	GameModel *game = nullptr;
 	std::string name = UNSAVED;
 	std::map<std::string, GameController*> savedGames;
+	bool onEvent = false;
 	//TODO: Adicionar nome para saber que jogo guardado estamos a jogar?
 
 public:
@@ -68,6 +69,10 @@ public:
 	//TODO: make event actions to sink ships and such
 	void endEvent(EventModel::Type type);
 	bool spawnRiotEvent(ShipModel* affectedShip);
+	void updateEvent(EventModel* event, GameModel* game, MapModel* map);
+	std::vector<SeaModel*> updateAffectedPositions(std::vector<SeaModel*> affectedPositions, MapModel* map);
+	ShipModel* updateAffectedShip(ShipModel* affectedShip, GameModel* game);
+	std::vector<ShipModel*> updateAffectedShips(std::vector<ShipModel*> affectedShips, GameModel* game);
 	//Enemy Ship Spawn Logic
 	bool spawnRandomEnemyShip(std::vector<SeaModel*>seaCells, int probability);
 

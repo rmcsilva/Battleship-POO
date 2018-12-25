@@ -16,7 +16,11 @@ public:
 
 	ShipModel* getAffectedShip();
 
+	void setAffectedShip(ShipModel* affectedShip);
+
 	Type getType() override;
 	bool executeEvent() override;
+
+	MermaidModel* clone() override;
 };
 

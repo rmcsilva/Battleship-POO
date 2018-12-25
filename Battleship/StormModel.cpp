@@ -13,7 +13,21 @@ StormModel::~StormModel()
 }
 
 std::vector<SeaModel*> StormModel::getAffectedPositions() {return affectedPositions;}
-std::vector<ShipModel*> StormModel::getSinkShips() const {return sinkShips;}
+std::vector<ShipModel*> StormModel::getSinkShips() {return sinkShips;}
+std::vector<ShipModel*> StormModel::getStormSurvivors() { return stormSurvivors;}
+
+void StormModel::setAffectedPositions(std::vector<SeaModel*> affectedPositions) {
+	this->affectedPositions = affectedPositions;
+}
+
+void StormModel::setSinkShips(std::vector<ShipModel*> sinkShips) {
+	this->sinkShips = sinkShips;
+}
+
+void StormModel::setStormSurvivors(std::vector<ShipModel*> stormSurvivors) {
+	this->stormSurvivors = stormSurvivors;
+}
+
 
 void StormModel::addShipToSink(ShipModel* shipToSink)
 {
@@ -58,4 +72,8 @@ bool StormModel::executeEvent()
 
 	incrementTurn();
 	return true;
+}
+
+StormModel* StormModel::clone(){
+	return new StormModel(*this);
 }

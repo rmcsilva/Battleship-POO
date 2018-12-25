@@ -13,7 +13,20 @@ LullModel::~LullModel()
 {
 }
 
-std::vector<SeaModel*> LullModel::getAffectedPositions() const {return affectedPositions;}
+std::vector<SeaModel*> LullModel::getAffectedPositions() {return affectedPositions;}
+
+std::vector<ShipModel*> LullModel::getAffectedShips() {
+	return affectedShips;
+}
+
+void LullModel::setAffectedPositions(std::vector<SeaModel*> affectedPositions)
+{
+	this->affectedPositions = affectedPositions;
+}
+
+void LullModel::setAffectedShips(std::vector<ShipModel*> affectedShips) {
+	this->affectedShips = affectedShips;
+}
 
 int LullModel::getTotalGoldBonus() {return affectedShips.size() * GOLD_BONUS;}
 
@@ -56,4 +69,8 @@ bool LullModel::executeEvent()
 
 	incrementTurn();
 	return true;
+}
+
+LullModel* LullModel::clone(){
+	return new LullModel(*this);
 }

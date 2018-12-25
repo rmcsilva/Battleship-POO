@@ -17,6 +17,8 @@ ShipModel* RiotModel::getAffectedShip() {return affectedShip;}
 
 Navigation RiotModel::getShipsOldNavigation() {return shipsNavigation;}
 
+void RiotModel::setAffectedShip(ShipModel* affectedShip) {this->affectedShip = affectedShip;}
+
 EventModel::Type RiotModel::getType() {return Type::RIOT;}
 
 bool RiotModel::executeEvent()
@@ -28,4 +30,8 @@ bool RiotModel::executeEvent()
 
 	incrementTurn();
 	return true;
+}
+
+RiotModel* RiotModel::clone() {
+	return new RiotModel(*this);
 }

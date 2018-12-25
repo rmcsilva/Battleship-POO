@@ -293,6 +293,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			}
 			gameController->spawnShipEvent(type, ship);
 			updateAllSeaCells(gameController->getSeaCells());
+			updateEventInformation(gameController);
 			break;
 		}
 		case GameCommands::VAIPARA: {
@@ -363,6 +364,17 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 				gameController->flushLogs();
 			} else {
 				std::cout << "Saved game not found!";
+				Consola::getch();
+			}
+			break; }
+		case GameCommands::DELG: {
+			std::string name;
+			line >> name;
+			if (gameController->deleteGameCommand(name)) {
+				std::cout << "Game deleted successfully!";
+				Consola::getch();
+			} else {
+				std::cout << "Could not delete the game!";
 				Consola::getch();
 			}
 			break; }

@@ -17,7 +17,11 @@ public:
 	ShipModel* getAffectedShip();
 	Navigation getShipsOldNavigation();
 
+	void setAffectedShip(ShipModel* affectedShip);
+
 	Type getType() override;
 	bool executeEvent() override;
+
+	RiotModel* clone() override;
 };
 

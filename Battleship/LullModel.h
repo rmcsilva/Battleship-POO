@@ -13,12 +13,18 @@ public:
 	LullModel(std::vector<SeaModel*> affectedPositions);
 	~LullModel();
 
-	std::vector<SeaModel*> getAffectedPositions() const;
+	std::vector<SeaModel*> getAffectedPositions();
+	std::vector<ShipModel*> getAffectedShips();
+
+	void setAffectedPositions(std::vector<SeaModel*> affectedPositions);
+	void setAffectedShips(std::vector<ShipModel*> affectedShips);
 
 	int getTotalGoldBonus();
 
 	void addAffectedShip(ShipModel* ship);
 	Type getType() override;
 	bool executeEvent() override;
+
+	LullModel* clone() override;
 };
 

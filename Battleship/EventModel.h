@@ -20,4 +20,6 @@ public:
 	bool isOver();
 
 	virtual bool executeEvent() = 0;
+
+	virtual EventModel* clone() = 0;
 };
