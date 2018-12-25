@@ -15,45 +15,50 @@
 
 GameController::GameController()
 {
+	game = new GameModel();
 }
 
 GameController::~GameController()
 {
+	if (map != nullptr)  delete(map);
+	if (event != nullptr) delete(event);
+	delete game;
+
 	for (auto savedGame : savedGames) {
-		delete(savedGame.second);
+		if (savedGame.first != name) {
+			delete(savedGame.second);
+		}
 	}
-	//TODO: Check if your are playing on a saved game
-	//if (map != nullptr) {
-	//	delete(map);
-	//}
-	//TODO: Delete ships and all that was allocated with new
+	//TODO: Update Ships to correct map position
 }
 
-GameController::GameController(const GameController& game)
+GameController::GameController(const GameController& gameController)
 {
-	map = new MapModel(*game.map);
+	map = new MapModel(*gameController.map);
 	//TODO: Add friendly ports and enemy ports to game
 	//if (event!=nullptr) {
 	//	event = event.clone();
 	//}
-	//game = game.game;
+	game = new GameModel(*gameController.game);
+	setShipsToMap(map, game->getFriendlyShips());
+	setShipsToMap(map, game->getEnemyShips());
 }
 
 CellModel* GameController::getCellAt(int x, int y) const { return map->getCellAt(x, y); }
-GameState GameController::getGameState() const { return game.getGameState(); }
+GameState GameController::getGameState() const { return game->getGameState(); }
 std::vector<PortModel*> GameController::getFriendlyPorts() const { return map->getFriendlyPorts(); }
 std::vector<PortModel*> GameController::getEnemyPorts() const {return map->getEnemyPorts();}
-std::vector<ShipModel*> GameController::getFriendlyShips() const { return game.getFriendlyShips(); }
+std::vector<ShipModel*> GameController::getFriendlyShips() const { return game->getFriendlyShips(); }
 std::vector<SeaModel*> GameController::getSeaCells() const {return map->getSeaCells();}
 
 int GameController::getNumLines() const { return map->getNumLines(); }
 int GameController::getNumColumns() const { return map->getNumColumns(); }
-double GameController::getPlayerCoins() const { return game.getPlayerCoins(); }
+double GameController::getPlayerCoins() const { return game->getPlayerCoins(); }
 
 CellModel* GameController::getFriendlyShipPositionByID(int id) const
 {
 	// game.getFriendlyShips().at(id-1)->getPosition() Dynamic
-	for (auto friendlyShip : game.getFriendlyShips())
+	for (auto friendlyShip : game->getFriendlyShips())
 	{
 		if (friendlyShip->getID()==id)
 		{
@@ -79,7 +84,7 @@ CellModel* GameController::getFriendlyPortPositionByID(char id) const
 
 ShipModel* GameController::getFriendlyShipByID(int id) const
 {
-	for (auto friendlyShip : game.getFriendlyShips())
+	for (auto friendlyShip : game->getFriendlyShips())
 	{
 		if (friendlyShip->getID() == id)
 		{
@@ -93,8 +98,8 @@ EventModel* GameController::getEvent() const {return event;}
 
 bool GameController::readInitialFileConfigs(std::string filename)
 {
-	if (fileManager.readInitialFileConfigs(filename, map, &game)) {
-		game.setGameState(GameState::GAME);
+	if (fileManager.readInitialFileConfigs(filename, map, game)) {
+		game->setGameState(GameState::GAME);
 		return true;
 	}
 	return false;
@@ -104,7 +109,7 @@ bool GameController::buyShip(char type)
 {
 	if (map->getFriendlyPorts().size()>0)
 	{
-		if (game.canRemoveCoins(game.getShipPrice()))
+		if (game->canRemoveCoins(game->getShipPrice()))
 		{
 			ShipModel* ship = nullptr;
 			PortModel* position = map->getFriendlyPorts().at(0);
@@ -119,8 +124,8 @@ bool GameController::buyShip(char type)
 			}
 			if (ship!=nullptr)
 			{
-				game.removeCoins(game.getShipPrice());
-				game.addFriendlyShip(ship);
+				game->removeCoins(game->getShipPrice());
+				game->addFriendlyShip(ship);
 				if (map->getFriendlyPorts().size()>0) {
 					map->getFriendlyPorts().at(0)->addShipToPort(ship);
 				} else {
@@ -170,7 +175,7 @@ bool GameController::spawnEnemyShipAt(CellModel* position, char type)
 		}else{
 			portCell->addShipToPort(ship);
 		}
-		game.addPirateShip(ship);
+		game->addPirateShip(ship);
 		return true;
 	}
 
@@ -221,6 +226,7 @@ bool GameController::saveGameCommand(std::string name)
 		return false;
 	} else {
 		GameController* save = new GameController(*this);
+		save->name = name;
 		savedGames.insert(std::pair<std::string, GameController*>(name, save));
 		return true;
 	}	
@@ -231,15 +237,64 @@ bool GameController::loadGameCommand(std::string name)
 	if (savedGames.count(name)) {
 		for (auto save : savedGames) {
 			if (save.first == name) {
+				MapModel* oldMap = map;
+				EventModel* oldEvent = event;
+				GameModel* oldGame = game;
 				GameController* game = save.second;
 				this->map = game->map;
 				this->game = game->game;
 				this->event = game->event;
+
+				if (this->name == UNSAVED) {
+					if (map != nullptr) delete(oldMap);
+					if (event != nullptr) delete(oldEvent);
+					delete(oldGame);
+				}
+				this->name = game->name;
+				
 				return true;
 			}
 		}	
 	}
 	return false;
+}
+
+bool GameController::deleteGameCommand(std::string name)
+{
+	if (this->name == name) return false;
+
+	if (savedGames.count(name)) {
+		auto it = savedGames.find(name);
+		savedGames.erase(it);
+		return true;
+	}
+
+	return false;
+}
+
+void GameController::setShipsToMap(MapModel* map, std::vector<ShipModel*> ships)
+{
+	for (auto ship : ships)
+	{
+		CellModel* position = ship->getPosition();
+		//Checks if ship is at sea
+		if (position->getType()==CellModel::Type::SEA) {
+			int x = position->getX();
+			int y = position->getY();
+			CellModel* cell = map->getCellAt(x, y);
+			ship->setPosition(cell);
+			SeaModel* sea = (SeaModel*)cell;
+			sea->setShip(ship);	
+		} else {
+			//Ship is at a port
+			int x = position->getX();
+			int y = position->getY();
+			CellModel* cell = map->getCellAt(x, y);
+			ship->setPosition(cell);
+			PortModel* port = (PortModel*)cell;
+			port->addShipToPort(ship);
+		}
+	}
 }
 
 bool GameController::canMoveShip(ShipModel* ship) const {return ship->getNumOfMoves() < ship->getMaxMoves();}
@@ -325,7 +380,7 @@ bool GameController::moveCommand(int id, CellModel* goToPosition)
 
 		ShipModel* ship = nullptr;
 
-		for (auto friendlyShip : game.getFriendlyShips())
+		for (auto friendlyShip : game->getFriendlyShips())
 		{
 			if (friendlyShip->getID() == id)
 			{
@@ -358,9 +413,9 @@ bool GameController::moveCommand(int id, CellModel* goToPosition)
 
 void GameController::proxCommand()
 {
-	friendlyFleetMovement(game.getFriendlyShips());
-	enemyFleetMovement(game.getEnemyShips());
-	shipBattles(game.getFriendlyShips());
+	friendlyFleetMovement(game->getFriendlyShips());
+	enemyFleetMovement(game->getEnemyShips());
+	shipBattles(game->getFriendlyShips());
 	if (hasEvent()) {
 		if (!event->executeEvent())
 		{
@@ -481,8 +536,8 @@ bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 	if (friendlyShipSoldiers==0 && enemyShipSoldiers==0)
 	{
 		//Remove both ships from game
-		game.removeFriendlyShip(friendlyShip);
-		game.removeEnemyShip(enemyShip);
+		game->removeFriendlyShip(friendlyShip);
+		game->removeEnemyShip(enemyShip);
 		combatLog << "Both Ships Sank!!\n";
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToCombatLog(combatLog.str());
@@ -492,7 +547,7 @@ bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 		combatLog << "Ship " << friendlyShip->getID() << " Sank!\n";
 		//Enemy Ships gets friendly Ship stuff
 		enemyShip->lootShip(friendlyShip);
-		game.removeFriendlyShip(friendlyShip);
+		game->removeFriendlyShip(friendlyShip);
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToCombatLog(combatLog.str());
 		return false;
@@ -501,7 +556,7 @@ bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 		combatLog << "Ship " << enemyShip->getID() << " Sank!\n";
 		//Friendly Ships gets enemy Ship stuff
 		friendlyShip->lootShip(enemyShip);
-		game.removeEnemyShip(enemyShip);
+		game->removeEnemyShip(enemyShip);
 	}
 
 	logger.addLineToInfoLog(infoLog.str());
@@ -532,9 +587,9 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 		combatLog << "Port won the battle! Ship " << attacker->getID() << " down! \n";
 
 		if (attacker->getOwner()==Owner::PLAYER)
-			game.removeFriendlyShip(attacker);
+			game->removeFriendlyShip(attacker);
 		else
-			game.removeEnemyShip(attacker);
+			game->removeEnemyShip(attacker);
 	
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToCombatLog(combatLog.str());
@@ -546,9 +601,9 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 	if (attacker->getSoldiers()==0)
 	{
 		if (attacker->getOwner() == Owner::PLAYER)
-			game.removeFriendlyShip(attacker);
+			game->removeFriendlyShip(attacker);
 		else
-			game.removeEnemyShip(attacker);
+			game->removeEnemyShip(attacker);
 		logger.addLineToCombatLog(combatLog.str());
 		return false;
 	}
@@ -568,12 +623,12 @@ bool GameController::spawnRandomEvent()
 	int random = rand() % 100;
 	infoLog << "Event probability number: " << random << '\n';
 
-	if (random < game.getEventProbability())
+	if (random < game->getEventProbability())
 	{
-		int lullProb = game.getLullEventProbability();
-		int mermaidProb = game.getMermaidEventProbability() + lullProb;
-		int riotProb = game.getRiotEventProbability() + mermaidProb;
-		int stormProb = game.getStormEventProbability() + riotProb;
+		int lullProb = game->getLullEventProbability();
+		int mermaidProb = game->getMermaidEventProbability() + lullProb;
+		int riotProb = game->getRiotEventProbability() + mermaidProb;
+		int stormProb = game->getStormEventProbability() + riotProb;
 
 		int probabilitySum = stormProb;
 
@@ -596,7 +651,7 @@ bool GameController::spawnRandomEvent()
 		{
 			eventLog << "A mermaid event appeared!\n";
 
-			const int totalOfFriendlyShips = game.getFriendlyShips().size();
+			const int totalOfFriendlyShips = game->getFriendlyShips().size();
 
 			if (totalOfFriendlyShips==0)
 			{
@@ -608,7 +663,7 @@ bool GameController::spawnRandomEvent()
 
 			const int randomPosition = rand() % totalOfFriendlyShips;
 
-			ShipModel* affectedShip = game.getFriendlyShips().at(randomPosition);
+			ShipModel* affectedShip = game->getFriendlyShips().at(randomPosition);
 
 			eventLog << "Mermaids are singing  for ship " << affectedShip->getID();
 			infoLog << "Affected Ship: " << affectedShip->getID() << '\n';
@@ -619,7 +674,7 @@ bool GameController::spawnRandomEvent()
 		{
 			eventLog << "A riot event appeared!";
 
-			const int totalOfFriendlyShips = game.getFriendlyShips().size();
+			const int totalOfFriendlyShips = game->getFriendlyShips().size();
 
 			if (totalOfFriendlyShips == 0)
 			{
@@ -631,7 +686,7 @@ bool GameController::spawnRandomEvent()
 
 			const int randomPosition = rand() % totalOfFriendlyShips;
 
-			ShipModel* affectedShip = game.getFriendlyShips().at(randomPosition);
+			ShipModel* affectedShip = game->getFriendlyShips().at(randomPosition);
 
 			return spawnRiotEvent(affectedShip);
 		} 
@@ -665,22 +720,22 @@ void GameController::endEvent(EventModel::Type type)
 	{
 		case EventModel::Type::LULL: {
 			LullModel* lull = (LullModel*)event;
-			game.addCoins(lull->getTotalGoldBonus());
+			game->addCoins(lull->getTotalGoldBonus());
 			break; }
 		case EventModel::Type::RIOT: {
 			RiotModel* riot = (RiotModel*)event;
 			ShipModel* affectedShip = riot->getAffectedShip();
 			if (affectedShip != nullptr)
-				game.changeShipOwner(affectedShip, riot->getShipsOldNavigation());
+				game->changeShipOwner(affectedShip, riot->getShipsOldNavigation());
 			break; }
 		case EventModel::Type::STORM: {
 			StormModel* storm = (StormModel*)event;
 			for (ShipModel* sinkShip : storm->getSinkShips())
 			{
 				if (sinkShip->getOwner() == Owner::PLAYER)
-					game.removeFriendlyShip(sinkShip);
+					game->removeFriendlyShip(sinkShip);
 				else
-					game.removeEnemyShip(sinkShip);
+					game->removeEnemyShip(sinkShip);
 			}
 			break; }
 		default: break;
@@ -698,12 +753,12 @@ bool GameController::spawnRiotEvent(ShipModel* affectedShip)
 		//TODO: Change ship sides from one vector to another!!!!
 		event = new RiotModel(affectedShip);
 		eventLog << "Ship " << affectedShip->getID() << " turned enemy during the riot!";
-		game.changeShipOwner(affectedShip, Navigation::AUTO);
+		game->changeShipOwner(affectedShip, Navigation::AUTO);
 		return true;
 	}
 	else {
 		eventLog << "Ship " << affectedShip->getID() << " sank during the riot!";
-		game.removeFriendlyShip(affectedShip);
+		game->removeFriendlyShip(affectedShip);
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToEventLog(eventLog.str());
 		return false;
@@ -744,7 +799,7 @@ bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int p
 			enemyShip = new SailboatModel(Owner::ENEMY, cell);
 
 		//Add ship to vector and sets ship position
-		game.addPirateShip(enemyShip);
+		game->addPirateShip(enemyShip);
 		seaCells.at(position)->setShip(enemyShip);
 
 		log << "Spawning random " << enemyShip->getAsString() << " at x: ";
@@ -954,9 +1009,9 @@ CellModel* GameController::getCellAboveLeft(const CellModel* currentCell) const 
 CellModel* GameController::getCellBelowRight(const CellModel* currentCell) const {return map->getCellBelowRight(currentCell);}
 CellModel* GameController::getCellBelowLeft(const CellModel* currentCell) const {return map->getCellBelowLeft(currentCell);}
 
-void GameController::addCoins(double amount) {game.addCoins(amount);}
+void GameController::addCoins(double amount) {game->addCoins(amount);}
 
-void GameController::endGame() {game.setGameState(GameState::END);}
+void GameController::endGame() {game->setGameState(GameState::END);}
 
 void GameController::addLineToInfoLog(std::string line) {logger.addLineToInfoLog(line);}
 void GameController::addLineToCombatLog(std::string line) {logger.addLineToCombatLog(line);}

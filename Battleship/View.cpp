@@ -360,6 +360,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 				updateAllSeaCells(gameController->getSeaCells());
 				updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
 				updateEventInformation(gameController);
+				gameController->flushLogs();
 			} else {
 				std::cout << "Saved game not found!";
 				Consola::getch();

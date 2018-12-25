@@ -39,3 +39,7 @@ bool SailboatModel::stormAttack()
 }
 
 std::string SailboatModel::getAsString() const {return "V";}
+
+SailboatModel* SailboatModel::clone() {
+	return new SailboatModel(*this);
+}

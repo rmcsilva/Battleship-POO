@@ -16,5 +16,7 @@ public:
 	bool stormAttack() override;
 
 	std::string getAsString() const override;
+
+	SchoonerModel* clone() override;
 };
 

@@ -30,6 +30,7 @@ class GameModel
 public:
 	GameModel();
 	~GameModel();
+	GameModel(const GameModel &game);
 
 	GameState getGameState() const;
 	double getPlayerCoins() const;
@@ -45,6 +46,7 @@ public:
 	int getMermaidEventProbability() const;
 	int getLullEventProbability() const;
 	int getRiotEventProbability() const;
+	double getPlayerScore() const;
 
 	void setGameState(GameState state);
 	void setPlayerCoins(int amount);

@@ -24,8 +24,8 @@ public:
 
 	void changeOwner();
 
-
 	PortModel* clone() override;
+	void emptyPort();
 };
 
 std::ostream& operator<<(std::ostream& os, const PortModel &port);

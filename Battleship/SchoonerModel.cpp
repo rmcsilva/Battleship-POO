@@ -33,3 +33,7 @@ bool SchoonerModel::stormAttack()
 }
 
 std::string SchoonerModel::getAsString() const {return "E";}
+
+SchoonerModel* SchoonerModel::clone() {
+	return new SchoonerModel(*this);
+}

@@ -16,5 +16,7 @@ public:
 	Type getType() const override;
 	bool stormAttack() override;
 	std::string getAsString() const override;
+
+	SailboatModel* clone() override;
 };
 

@@ -27,7 +27,7 @@ public:
 	enum class Type { FRIGATE, GALLEON, GHOST, SAILBOAT, SCHOONER };
 	
 	virtual Type getType() const = 0;
-	//virtual ShipModel* clone() = 0;
+	virtual ShipModel* clone() = 0;
 	int getID() const;
 	int getNumOfMoves() const;
 	int getMaxMoves() const;

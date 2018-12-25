@@ -15,5 +15,7 @@ public:
 	Type getType() const override;
 	bool stormAttack() override;
 	std::string getAsString() const override;
+
+	FrigateModel* clone() override;
 };
 

@@ -39,6 +39,10 @@ PortModel* PortModel::clone() {
 	return new PortModel(*this);
 }
 
+void PortModel::emptyPort() {
+	ships.clear();
+}
+
 std::ostream& operator<<(std::ostream& os, const PortModel& port)
 {
 	if (port.getShips().size()>0)

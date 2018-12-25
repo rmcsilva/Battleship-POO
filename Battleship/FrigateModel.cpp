@@ -33,3 +33,7 @@ bool FrigateModel::stormAttack()
 }
 
 std::string FrigateModel::getAsString() const {return "F";}
+
+FrigateModel* FrigateModel::clone() {
+	return new FrigateModel(*this);
+}

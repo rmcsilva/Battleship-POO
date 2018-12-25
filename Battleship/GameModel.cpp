@@ -32,6 +32,32 @@ GameModel::~GameModel()
 		delete(enemyShip);
 }
 
+GameModel::GameModel(const GameModel& game)
+{
+	for (auto friendlyShip : game.getFriendlyShips())
+		friendlyShips.push_back(friendlyShip->clone());
+	
+	for (auto enemyShip : game.getEnemyShips())
+		enemyShips.push_back(enemyShip->clone());
+
+	eventProb = game.getEventProbability();
+	stormProb = game.getStormEventProbability();
+	mermaidProb = game.getMermaidEventProbability();
+	lullProb = game.getLullEventProbability();
+	riotProb = game.getRiotEventProbability();
+
+	shipPrice = game.getShipPrice();
+	soldierPrice = game.getSoldierPrice();
+	fishSellPrice = game.getFishSellPrice();
+	merchSellPrice = game.getMerchSellPrice();
+	merchBuyPrice = game.getMerchBuyPrice();
+
+	coins = game.getPlayerCoins();
+	score = game.getPlayerScore();
+
+	state = game.getGameState();
+}
+
 //Gets
 GameState GameModel::getGameState() const {return state;}
 double GameModel::getPlayerCoins() const {return coins;}
@@ -48,6 +74,7 @@ int GameModel::getStormEventProbability() const { return stormProb; }
 int GameModel::getMermaidEventProbability() const { return mermaidProb; }
 int GameModel::getLullEventProbability() const { return lullProb; }
 int GameModel::getRiotEventProbability() const { return riotProb; }
+double GameModel::getPlayerScore() const { return score; }
 
 //Sets
 void GameModel::setGameState(GameState state) {this->state = state;}

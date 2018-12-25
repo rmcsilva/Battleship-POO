@@ -33,3 +33,7 @@ bool GalleonModel::stormAttack()
 }
 
 std::string GalleonModel::getAsString() const {return "G";}
+
+GalleonModel* GalleonModel::clone() {
+	return new GalleonModel(*this);
+}

@@ -5,17 +5,21 @@
 #include <map>
 
 class GameController {
+	const char* UNSAVED = "Game Not Saved";
+
 	FileManager fileManager;
 	Logger logger;
 	MapModel *map = nullptr;
 	EventModel *event = nullptr;
-	GameModel game;
+	GameModel *game = nullptr;
+	std::string name = UNSAVED;
 	std::map<std::string, GameController*> savedGames;
+	//TODO: Adicionar nome para saber que jogo guardado estamos a jogar?
 
 public:
 	GameController();
 	~GameController();
-	GameController(const GameController &game);
+	GameController(const GameController &gameController);
 
 	//Gets
 	CellModel* getCellAt(int x, int y) const;
@@ -50,6 +54,8 @@ public:
 	bool orderShipCommand(ShipModel* ship, CellModel* goTo);
 	bool saveGameCommand(std::string name);
 	bool loadGameCommand(std::string name);
+	bool deleteGameCommand(std::string name);
+	void setShipsToMap(MapModel* map, std::vector<ShipModel*>ships);
 	//Game Logic (make private?)
 	//Combat Logic
 	void shipBattles(std::vector<ShipModel*>friendlyShips);

@@ -31,12 +31,13 @@ MapModel::MapModel(const MapModel& map)
 
 		//Check if its a sea cell if it is adds to vector
 		//If its a port adds to corresponding vector
-		CellModel::Type cellType = this->map.at(i)->getType();
+		CellModel::Type cellType = cell->getType();
 
 		if (cellType==CellModel::Type::SEA) {
 			this->seaCells.push_back((SeaModel*)this->map.at(i));
 		} else if (cellType==CellModel::Type::PORT) {
 			PortModel* port = (PortModel*)cell;
+			port->emptyPort();
 			if (port->getOwner()==Owner::PLAYER) {
 				addFriendlyPort(port);
 			} else {
@@ -44,8 +45,6 @@ MapModel::MapModel(const MapModel& map)
 			}
 		}
 	}
-
-
 }
 
 int MapModel::getNumLines() const { return numLines; }
