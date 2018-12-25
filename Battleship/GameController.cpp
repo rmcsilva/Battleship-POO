@@ -309,6 +309,7 @@ bool GameController::moveCommand(int id, CellModel* goToPosition)
 	catch (std::out_of_range e)
 	{
 		//TODO: Add to log ship doesn't exist
+		logger.addLineToInfoLog("Ship does not exist!!");
 		return false;
 	}
 }
@@ -323,13 +324,33 @@ void GameController::proxCommand()
 		{
 			logger.addLineToInfoLog("Event ended!");
 			endEvent(event->getType());
-			logger.addLineToEventLog("Event ended!");
 			delete event;
 			event = nullptr;
 		}
 		else
 		{
-			logger.addLineToEventLog("Event still going!");
+			//Check if events that affect ships can continue
+			if (event->getType()==EventModel::Type::RIOT)
+			{
+				RiotModel* riot = (RiotModel*)event;
+				if (riot->getAffectedShip()==nullptr) {
+					logger.addLineToInfoLog("Riot Event ended Ship Sank!");
+					endEvent(EventModel::Type::RIOT);
+					delete event;
+					event = nullptr;
+				}
+			} else if(event->getType()==EventModel::Type::MERMAID) {
+				MermaidModel* mermaid = (MermaidModel*)event;
+				if (mermaid->getAffectedShip()==nullptr) {
+					logger.addLineToInfoLog("Mermaid Event ended Ship Sank!");
+					endEvent(EventModel::Type::MERMAID);
+					delete event;
+					event = nullptr;
+				}
+			}else {
+				logger.addLineToEventLog("Event still going!");
+			}
+			
 		}
 		
 	} else {
@@ -782,6 +803,9 @@ void GameController::orderShipMovement(ShipModel* ship)
 	CellModel* goTo = ship->getGoTo();
 	do {
 		moveShip(ship, goToCell(ship->getPosition(), goTo));
+		if (goTo == ship->getPosition()) {
+			break;
+		}
 	} while (canMoveShip(ship));
 }
 
@@ -791,8 +815,6 @@ CellModel* GameController::goToCell(CellModel* current, CellModel* goTo)
 
 	int xPosition = current->getX() - goTo->getX();
 	int yPosition = current->getY() - goTo->getY();
-
-	//TODO: verify is cell is valid
 
 	//Check if cell is on the same column
 	if (xPosition == 0) {
@@ -844,7 +866,7 @@ CellModel* GameController::goToCell(CellModel* current, CellModel* goTo)
 		}
 	}
 
-	return current;
+	return generateRandomMove(current);
 }
 
 CellModel* GameController::generateRandomMove(const CellModel* currentCell)

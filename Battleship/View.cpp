@@ -316,7 +316,6 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			try {
 				x = std::stoi(position);
 				line >> y;
-
 			} catch (std::invalid_argument e) {
 				char id = position.at(0);
 				CellModel* tmp = gameController->getFriendlyPortPositionByID(id);
@@ -326,15 +325,14 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 					Consola::getch();
 					break;
 				}
-				x = tmp->getX();
-				y = tmp->getY();
+				x = tmp->getX() + 1;
+				y = tmp->getY() + 1;
 			}
 
 			CellModel* cell;
 			try {
 				cell = gameController->getCellAt(x - 1, y - 1);
-			}
-			catch (std::out_of_range e) {
+			} catch (std::out_of_range e) {
 				std::cout << "Position does not exist!";
 				Consola::getch();
 				break;
