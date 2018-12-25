@@ -14,6 +14,7 @@ class MapModel {
 public:
     MapModel(const int numLines, const int numColumns);
 	~MapModel();
+	MapModel(const MapModel &map);
 
 	int getNumLines() const;
 	int getNumColumns() const;

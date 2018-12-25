@@ -22,4 +22,7 @@ public:
 	bool hasFish();
 	void catchFish();
 	void updateCountdown();
+
+
+	SeaModel* clone() override;
 };

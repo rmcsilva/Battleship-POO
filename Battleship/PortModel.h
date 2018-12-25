@@ -23,6 +23,9 @@ public:
 	bool removeShipFromPort(ShipModel* ship);
 
 	void changeOwner();
+
+
+	PortModel* clone() override;
 };
 
 std::ostream& operator<<(std::ostream& os, const PortModel &port);

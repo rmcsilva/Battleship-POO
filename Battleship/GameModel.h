@@ -21,7 +21,7 @@ class GameModel
 	int merchBuyPrice;
 	double coins;
 	double score=0;
-	//TODO: Main port is the first one
+	//Main port is the first one
 	std::vector<PortModel*> friendlyPorts;
 	std::vector<PortModel*> enemyPorts;
 

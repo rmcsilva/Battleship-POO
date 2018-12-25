@@ -3,6 +3,12 @@
 
 CellModel::CellModel(int x, int y) : x(x), y(y) {}
 
+CellModel::CellModel(const CellModel& cell)
+{
+	x = cell.getX();
+	y = cell.getY();
+}
+
 CellModel::~CellModel()
 {
 }

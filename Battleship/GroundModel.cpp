@@ -4,3 +4,7 @@
 GroundModel::GroundModel(int x, int y) : CellModel(x, y) {}
 
 CellModel::Type GroundModel::getType() {return Type::GROUND;}
+
+GroundModel* GroundModel::clone() {
+	return new GroundModel(*this);
+}

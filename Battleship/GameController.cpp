@@ -19,9 +19,24 @@ GameController::GameController()
 
 GameController::~GameController()
 {
-	if (map != nullptr)
-		delete(map);
+	for (auto savedGame : savedGames) {
+		delete(savedGame.second);
+	}
+	//TODO: Check if your are playing on a saved game
+	//if (map != nullptr) {
+	//	delete(map);
+	//}
 	//TODO: Delete ships and all that was allocated with new
+}
+
+GameController::GameController(const GameController& game)
+{
+	map = new MapModel(*game.map);
+	//TODO: Add friendly ports and enemy ports to game
+	//if (event!=nullptr) {
+	//	event = event.clone();
+	//}
+	//game = game.game;
 }
 
 CellModel* GameController::getCellAt(int x, int y) const { return map->getCellAt(x, y); }
@@ -198,6 +213,33 @@ bool GameController::orderShipCommand(ShipModel* ship, CellModel* goTo)
 	ship->setGoTo(goTo);
 	ship->setNavigation(Navigation::ORDER);
 	return true;
+}
+
+bool GameController::saveGameCommand(std::string name)
+{
+	if (savedGames.count(name)) {
+		return false;
+	} else {
+		GameController* save = new GameController(*this);
+		savedGames.insert(std::pair<std::string, GameController*>(name, save));
+		return true;
+	}	
+}
+
+bool GameController::loadGameCommand(std::string name)
+{
+	if (savedGames.count(name)) {
+		for (auto save : savedGames) {
+			if (save.first == name) {
+				GameController* game = save.second;
+				this->map = game->map;
+				this->game = game->game;
+				this->event = game->event;
+				return true;
+			}
+		}	
+	}
+	return false;
 }
 
 bool GameController::canMoveShip(ShipModel* ship) const {return ship->getNumOfMoves() < ship->getMaxMoves();}

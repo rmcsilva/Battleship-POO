@@ -24,3 +24,7 @@ void SeaModel::removeShip() {ship = nullptr;}
 bool SeaModel::hasFish() {return fish.hasFish();}
 void SeaModel::catchFish() {return fish.catchFish();}
 void SeaModel::updateCountdown() {return fish.updateCountdown();}
+
+SeaModel* SeaModel::clone() {
+	return new SeaModel(*this);
+}

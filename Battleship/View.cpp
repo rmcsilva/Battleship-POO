@@ -340,6 +340,31 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 
 			gameController->orderShipCommand(ship, cell);			
 			break; }
+		case GameCommands::SAVEG: {
+			std::string name;
+			line >> name;
+			if(gameController->saveGameCommand(name)) {
+				std::cout << "Game saved successfully!";
+				Consola::getch();
+			} else {
+				std::cout << "Could not save the game!";
+				Consola::getch();
+			}
+			break; }
+		case GameCommands::LOADG: {
+			std::string name;
+			line >> name;
+			if(gameController->loadGameCommand(name)) {
+				std::cout << "Loading saved game!";
+				Consola::getch();
+				updateAllSeaCells(gameController->getSeaCells());
+				updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
+				updateEventInformation(gameController);
+			} else {
+				std::cout << "Saved game not found!";
+				Consola::getch();
+			}
+			break; }
 		case GameCommands::SAIR:
 			gameController->endGame();
 			return false;
@@ -385,7 +410,7 @@ void View::showFriendlyPortsInfo(std::vector<PortModel*> const& ports) const
 	}
 	else
 	{
-		std::cout << "Player has no friendly ports!";
+		std::cout << "Player has no friendly ports!\n";
 	}	
 }
 

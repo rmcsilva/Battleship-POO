@@ -21,14 +21,13 @@ protected:
 	Owner owner;
 	Navigation navigation;
 	CellModel* position;
-	//TODO: Value when ship is on a order 
 	CellModel* goTo;
 public:
 	virtual ~ShipModel();
 	enum class Type { FRIGATE, GALLEON, GHOST, SAILBOAT, SCHOONER };
 	
-	//TODO: Expand ships
 	virtual Type getType() const = 0;
+	//virtual ShipModel* clone() = 0;
 	int getID() const;
 	int getNumOfMoves() const;
 	int getMaxMoves() const;

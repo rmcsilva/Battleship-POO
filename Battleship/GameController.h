@@ -2,6 +2,7 @@
 #include "FileManager.h"
 #include "Logger.h"
 #include "EventModel.h"
+#include <map>
 
 class GameController {
 	FileManager fileManager;
@@ -9,10 +10,12 @@ class GameController {
 	MapModel *map = nullptr;
 	EventModel *event = nullptr;
 	GameModel game;
+	std::map<std::string, GameController*> savedGames;
 
 public:
 	GameController();
 	~GameController();
+	GameController(const GameController &game);
 
 	//Gets
 	CellModel* getCellAt(int x, int y) const;
@@ -45,6 +48,8 @@ public:
 	bool spawnPositionEvent(char type, CellModel* startingCell);
 	bool spawnShipEvent(char type,ShipModel* affectedShip);
 	bool orderShipCommand(ShipModel* ship, CellModel* goTo);
+	bool saveGameCommand(std::string name);
+	bool loadGameCommand(std::string name);
 	//Game Logic (make private?)
 	//Combat Logic
 	void shipBattles(std::vector<ShipModel*>friendlyShips);

@@ -1,8 +1,8 @@
 ﻿  GameController.cpp
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(556): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(556): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(579): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(579): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(314): warning C4715: 'GameController::moveCommand': not all control paths return a value
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(903): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(598): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(598): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(621): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(621): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(356): warning C4715: 'GameController::moveCommand': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(945): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
   Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

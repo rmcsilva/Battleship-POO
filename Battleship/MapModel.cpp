@@ -17,6 +17,25 @@ MapModel::~MapModel()
 			delete(getCellAt(j, i));
 }
 
+MapModel::MapModel(const MapModel& map)
+{
+	numLines = map.getNumLines();
+	numColumns = map.getNumColumns();
+	pirateProb = map.getPirateProb();
+
+	for (int i=0; i<numColumns*numLines; i++)
+	{
+		//Clone cells to new map
+		this->map.push_back(map.map.at(i)->clone());
+		//Check if its a sea cell if it is adds to vector
+		if (this->map.at(i)->getType()==CellModel::Type::SEA) {
+			this->seaCells.push_back((SeaModel*)this->map.at(i));
+		}
+	}
+
+
+}
+
 int MapModel::getNumLines() const { return numLines; }
 int MapModel::getNumColumns() const { return numColumns; }
 int MapModel::getPirateProb() const { return pirateProb; }

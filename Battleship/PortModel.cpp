@@ -35,6 +35,10 @@ void PortModel::changeOwner()
 		owner = Owner::PLAYER;
 }
 
+PortModel* PortModel::clone() {
+	return new PortModel(*this);
+}
+
 std::ostream& operator<<(std::ostream& os, const PortModel& port)
 {
 	if (port.getShips().size()>0)
