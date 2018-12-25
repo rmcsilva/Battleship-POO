@@ -41,8 +41,8 @@ GameController::GameController(const GameController& game)
 
 CellModel* GameController::getCellAt(int x, int y) const { return map->getCellAt(x, y); }
 GameState GameController::getGameState() const { return game.getGameState(); }
-std::vector<PortModel*> GameController::getFriendlyPorts() const { return game.getFriendlyPorts(); }
-std::vector<PortModel*> GameController::getEnemyPorts() const {return game.getEnemyPorts();}
+std::vector<PortModel*> GameController::getFriendlyPorts() const { return map->getFriendlyPorts(); }
+std::vector<PortModel*> GameController::getEnemyPorts() const {return map->getEnemyPorts();}
 std::vector<ShipModel*> GameController::getFriendlyShips() const { return game.getFriendlyShips(); }
 std::vector<SeaModel*> GameController::getSeaCells() const {return map->getSeaCells();}
 
@@ -65,7 +65,7 @@ CellModel* GameController::getFriendlyShipPositionByID(int id) const
 
 CellModel* GameController::getFriendlyPortPositionByID(char id) const
 {
-	for(auto friendlyPort : game.getFriendlyPorts())
+	for(auto friendlyPort : map->getFriendlyPorts())
 	{
 		if (friendlyPort->getID()==id)
 		{
@@ -102,12 +102,12 @@ bool GameController::readInitialFileConfigs(std::string filename)
 
 bool GameController::buyShip(char type)
 {
-	if (game.getFriendlyPorts().size()>0)
+	if (map->getFriendlyPorts().size()>0)
 	{
 		if (game.canRemoveCoins(game.getShipPrice()))
 		{
 			ShipModel* ship = nullptr;
-			PortModel* position = game.getFriendlyPorts().at(0);
+			PortModel* position = map->getFriendlyPorts().at(0);
 			switch (toupper(type))
 			{
 				case 'V': ship = new SailboatModel(Owner::PLAYER, position); break;
@@ -121,8 +121,8 @@ bool GameController::buyShip(char type)
 			{
 				game.removeCoins(game.getShipPrice());
 				game.addFriendlyShip(ship);
-				if (game.getFriendlyPorts().size()>0) {
-					game.getFriendlyPorts().at(0)->addShipToPort(ship);
+				if (map->getFriendlyPorts().size()>0) {
+					map->getFriendlyPorts().at(0)->addShipToPort(ship);
 				} else {
 					return false;
 				}
@@ -522,7 +522,7 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 	if(random <= attacker->getSoldiers())
 	{
 		//Change port owners
-		game.changePortOwner(port);
+		map->changePortOwner(port);
 		combatLog << "Ship won the battle! \n";
 	}
 	else

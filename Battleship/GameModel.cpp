@@ -40,9 +40,7 @@ int GameModel::getSoldierPrice() const {return soldierPrice;}
 int GameModel::getFishSellPrice() const {return fishSellPrice;}
 int GameModel::getMerchSellPrice() const {return merchSellPrice;}
 int GameModel::getMerchBuyPrice() const {return merchBuyPrice;}
-std::vector<PortModel*> GameModel::getFriendlyPorts() const {return friendlyPorts;}
 std::vector<ShipModel*> GameModel::getFriendlyShips() const {return friendlyShips;}
-std::vector<PortModel*> GameModel::getEnemyPorts() const {return enemyPorts;}
 std::vector<ShipModel*> GameModel::getEnemyShips() const {return enemyShips;}
 
 int GameModel::getEventProbability() const { return eventProb; }
@@ -64,10 +62,6 @@ void GameModel::setStormEventProbability(int prob) { this->stormProb = prob; }
 void GameModel::setMermaidEventProbability(int prob) { this->mermaidProb = prob; }
 void GameModel::setCalmEventProbability(int prob) { this->lullProb = prob; }
 void GameModel::setRiotEventProbability(int prob) { this->riotProb = prob; }
-
-//Add Ports
-void GameModel::addFriendlyPort(PortModel *port) {friendlyPorts.push_back(port);}
-void GameModel::addPiratePort(PortModel* port) {enemyPorts.push_back(port);}
 
 //Add Ships
 void GameModel::addFriendlyShip(ShipModel* ship)
@@ -118,36 +112,6 @@ bool GameModel::removeEnemyShip(ShipModel* ship)
 		}
 	}
 	return false;
-}
-
-void GameModel::changePortOwner(PortModel* port)
-{
-	if (port->getOwner() == Owner::PLAYER)
-	{
-		for (int i = 0; i < friendlyPorts.size(); i++)
-		{
-			if (friendlyPorts.at(i)==port)
-			{
-				//Removes from player puts in pirate vector
-				friendlyPorts.erase(friendlyPorts.begin() + i);
-				enemyPorts.push_back(port);
-			}
-		}
-	}
-	else
-	{
-		for (int i = 0; i < enemyPorts.size(); i++)
-		{
-			if (enemyPorts.at(i) == port)
-			{
-				//Removes from pirate puts in player vector
-				enemyPorts.erase(enemyPorts.begin() + i);
-				friendlyPorts.push_back(port);
-			}
-		}
-	}
-
-	port->changeOwner();
 }
 
 void GameModel::changeShipOwner(ShipModel* ship, Navigation navigation)

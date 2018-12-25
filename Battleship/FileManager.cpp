@@ -88,7 +88,7 @@ bool FileManager::readInitialFileConfigs(std::string filename, MapModel *&map, G
 
 	if (portSoldiers != -1)
 	{
-		for (auto port : game->getFriendlyPorts())
+		for (auto port : map->getFriendlyPorts())
 			port->setNumberOfSoldiers(portSoldiers);
 	}
 
@@ -268,11 +268,11 @@ bool FileManager::readMap(std::ifstream & file, int const & lines, int const & c
 				if (isupper(cellType)) 
 				{
 					map->addPortCellAt(j, i, cellType, Owner::PLAYER);
-					game->addFriendlyPort((PortModel*)map->getCellAt(j,i));
+					map->addFriendlyPort((PortModel*)map->getCellAt(j,i));
 				} 
 				else {
 					map->addPortCellAt(j, i, cellType, Owner::ENEMY);
-					game->addPiratePort((PortModel*)map->getCellAt(j, i));
+					map->addPiratePort((PortModel*)map->getCellAt(j, i));
 				}
 			}
 			else if (cellType == '.') {

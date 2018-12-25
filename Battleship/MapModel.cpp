@@ -25,11 +25,23 @@ MapModel::MapModel(const MapModel& map)
 
 	for (int i=0; i<numColumns*numLines; i++)
 	{
+		CellModel* cell = map.map.at(i)->clone();
 		//Clone cells to new map
-		this->map.push_back(map.map.at(i)->clone());
+		this->map.push_back(cell);
+
 		//Check if its a sea cell if it is adds to vector
-		if (this->map.at(i)->getType()==CellModel::Type::SEA) {
+		//If its a port adds to corresponding vector
+		CellModel::Type cellType = this->map.at(i)->getType();
+
+		if (cellType==CellModel::Type::SEA) {
 			this->seaCells.push_back((SeaModel*)this->map.at(i));
+		} else if (cellType==CellModel::Type::PORT) {
+			PortModel* port = (PortModel*)cell;
+			if (port->getOwner()==Owner::PLAYER) {
+				addFriendlyPort(port);
+			} else {
+				addPiratePort(port);
+			}
 		}
 	}
 
@@ -39,11 +51,16 @@ MapModel::MapModel(const MapModel& map)
 int MapModel::getNumLines() const { return numLines; }
 int MapModel::getNumColumns() const { return numColumns; }
 int MapModel::getPirateProb() const { return pirateProb; }
-
+std::vector<PortModel*> MapModel::getFriendlyPorts() const { return friendlyPorts; }
+std::vector<PortModel*> MapModel::getEnemyPorts() const { return enemyPorts; }
 void MapModel::setPirateProb(int prob) { pirateProb = prob; }
 
 CellModel* MapModel::getCellAt(int x, int y) const {return map.at(x + (numColumns * y));}
 std::vector<SeaModel*> MapModel::getSeaCells() const {return seaCells;}
+
+//Add Ports
+void MapModel::addFriendlyPort(PortModel *port) { friendlyPorts.push_back(port); }
+void MapModel::addPiratePort(PortModel* port) { enemyPorts.push_back(port); }
 
 void MapModel::addCellAt(int x, int y, CellModel::Type type)
 {
@@ -141,6 +158,36 @@ std::vector<SeaModel*> MapModel::getRandom2x2ContinuousSeaCells() const
 	} while (!isValid);
 
 	return continuousCells;
+}
+
+void MapModel::changePortOwner(PortModel* port)
+{
+	if (port->getOwner() == Owner::PLAYER)
+	{
+		for (int i = 0; i < friendlyPorts.size(); i++)
+		{
+			if (friendlyPorts.at(i) == port)
+			{
+				//Removes from player puts in pirate vector
+				friendlyPorts.erase(friendlyPorts.begin() + i);
+				enemyPorts.push_back(port);
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < enemyPorts.size(); i++)
+		{
+			if (enemyPorts.at(i) == port)
+			{
+				//Removes from pirate puts in player vector
+				enemyPorts.erase(enemyPorts.begin() + i);
+				friendlyPorts.push_back(port);
+			}
+		}
+	}
+
+	port->changeOwner();
 }
 
 std::vector<SeaModel*> MapModel::get2x2ContinuousSeaCells(CellModel* startingCell) const
