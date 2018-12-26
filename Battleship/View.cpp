@@ -223,6 +223,39 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			else
 				updatePortCell(gameController->getFriendlyPorts().at(0));
 			break; }
+
+		case GameCommands::VENDENAV: {
+			char type;
+			line >> type;
+			if (!gameController->sellShip(type))
+				std::cout << COMMAND_EXECUTE_ERROR;
+			else
+				updatePortCell(gameController->getFriendlyPorts().at(0));
+			break; }
+
+		case GameCommands::LISTA: {
+			int id;
+			line >> id;
+			ShipModel* ship = gameController->getFriendlyShipByID(id);
+			if (ship == nullptr)
+			{
+				std::cout << "Ship does not exist!";
+				Consola::getch();
+				break;
+			}
+			std::ostringstream ss;
+			ss << "ID: " << ship->getID() << '\n';
+			ss << "Type: " << ship->getAsString() << '\n';
+			ss << "Water: " << ship->getWater() << '\n';
+			ss << "Soldiers: " << ship->getSoldiers() << '\n';
+			ss << "Capacity " << ship->getCapacity() << '\n';
+			ss << "Merch " << ship->getMerch() << '\n';
+			ss << "Fish: " << ship->getFish() << '\n';
+			ss << "Max Moves: " << ship->getMaxMoves() << '\n';
+			ss << "Number of moves: " << ship->getNumOfMoves() << '\n';
+			std::cout << ss.str();
+			Consola::getch();
+			break; }
 		case GameCommands::MOVE: {
 			int id;
 			line >> id;
@@ -363,7 +396,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 				updateEventInformation(gameController);
 				gameController->flushLogs();
 			} else {
-				std::cout << "Saved game not found!";
+				std::cout << "Could not load the game!";
 				Consola::getch();
 			}
 			break; }

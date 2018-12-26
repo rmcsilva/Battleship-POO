@@ -20,6 +20,7 @@ ShipModel::~ShipModel()
 int ShipModel::getID() const {return id;}
 int ShipModel::getNumOfMoves() const {return numOfMoves;}
 int ShipModel::getMaxMoves() const {return maxMoves;}
+int ShipModel::getCapacity() const {return capacity;}
 int ShipModel::getWater() const {return water;}
 int ShipModel::getFish() const{return fish;}
 int ShipModel::getMerch() const {return merch;}
@@ -38,6 +39,12 @@ void ShipModel::setGoTo(CellModel* goTo) {this->goTo = goTo;}
 void ShipModel::blockShipMovement() {numOfMoves = maxMoves;}
 
 bool ShipModel::canAddToShipCargo(int amount) {return capacity + amount > maxCapacity;}
+
+void ShipModel::empyShipCargo()
+{
+	merch = 0;
+	fish = 0;
+}
 
 void ShipModel::refillWater() {water = maxWater;}
 

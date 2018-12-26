@@ -146,6 +146,40 @@ bool GameController::buyShip(char type)
 	return false;
 }
 
+bool GameController::sellShip(char type)
+{
+	if (map->getFriendlyPorts().size() > 0)
+	{
+		ShipModel::Type shipType;
+		switch (toupper(type))
+		{
+			case 'V': shipType = ShipModel::Type::SAILBOAT; break;
+			case 'G': shipType = ShipModel::Type::GALLEON; break;
+			case 'E': shipType = ShipModel::Type::SCHOONER; break;
+			case 'F': shipType = ShipModel::Type::FRIGATE; break;
+			case 'S': shipType = ShipModel::Type::GHOST; break;
+			default: return false;
+		}
+
+		for (auto friendlyPort : map->getFriendlyPorts())
+		{
+			std::vector<ShipModel*> ships = friendlyPort->getShips();
+			for (int i = 0;  i < ships.size(); i++)
+			{
+				if (ships.at(i)->getType()==shipType) {
+					ShipModel* ship = ships.at(i);
+					game->addCoins(calculateShipValue(ship));
+					friendlyPort->removeShipFromPort(ship);
+					game->removeFriendlyShip(ship);
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	return false;
+}
+
 bool GameController::spawnEnemyShipAt(CellModel* position, char type)
 {
 	if (position->getType() == CellModel::Type::GROUND)
@@ -1113,6 +1147,24 @@ CellModel* GameController::getCellBelowRight(const CellModel* currentCell) const
 CellModel* GameController::getCellBelowLeft(const CellModel* currentCell) const {return map->getCellBelowLeft(currentCell);}
 
 void GameController::addCoins(double amount) {game->addCoins(amount);}
+
+double GameController::calculateShipValue(ShipModel* ship)
+{
+	double value = 0;
+	value += game->getShipPrice();
+	value += calculateShipContentValue(ship);
+	return value;
+}
+
+double GameController::calculateShipContentValue(ShipModel* ship)
+{
+	double value = 0;
+	if (ship->getCapacity() > 0) {
+		value += ship->getMerch() * game->getMerchSellPrice();
+		value += ship->getFish() * game->getFishSellPrice();
+	}
+	return value;
+}
 
 void GameController::endGame() {game->setGameState(GameState::END);}
 

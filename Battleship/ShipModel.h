@@ -31,6 +31,7 @@ public:
 	int getID() const;
 	int getNumOfMoves() const;
 	int getMaxMoves() const;
+	int getCapacity() const;
 	int getWater() const;
 	int getFish() const;
 	int getMerch() const;
@@ -49,6 +50,7 @@ public:
 	void blockShipMovement();
 
 	bool canAddToShipCargo(int amount);
+	void empyShipCargo();
 	void refillWater();
 	void navigationCost();
 	void moveShip(CellModel* position);

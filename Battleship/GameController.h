@@ -48,10 +48,15 @@ public:
 	bool moveCommand(int id, CellModel* goToPosition);
 	void proxCommand();
 	bool buyShip(char type);
+	bool sellShip(char type);
+	bool buyMerchCommand(ShipModel* ship, int amount);
+	bool sellShipMerchCommand(ShipModel* ship);
 	bool spawnEnemyShipAt(CellModel* position, char type);
 	bool spawnPositionEvent(char type, CellModel* startingCell);
 	bool spawnShipEvent(char type,ShipModel* affectedShip);
 	bool orderShipCommand(ShipModel* ship, CellModel* goTo);
+	//TODO: Implement
+	bool buySoldiersCommand(ShipModel* ship);
 	bool saveGameCommand(std::string name);
 	bool loadGameCommand(std::string name);
 	bool deleteGameCommand(std::string name);
@@ -99,6 +104,8 @@ public:
 
 	//Player coins
 	void addCoins(double amount);
+	double calculateShipValue(ShipModel* ship);
+	double calculateShipContentValue(ShipModel* ship);
 	
 	void endGame();
 
