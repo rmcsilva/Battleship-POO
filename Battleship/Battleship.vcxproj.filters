@@ -144,6 +144,9 @@
     <ClInclude Include="StormModel.h">
       <Filter>Header Files\Model\Event</Filter>
     </ClInclude>
+    <ClInclude Include="GameDifficulty.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

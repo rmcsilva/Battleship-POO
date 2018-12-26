@@ -28,6 +28,8 @@ void View::setupLayout(GameController *gameController)
 				break;
 			case GameState::END:
 				//TODO: Menu with score
+				Consola::clrscr();
+				std::cout << "Final score: " << gameController->getFinalScore() << "\n";
 				std::cout << "Leaving game!";
 				Consola::getch();
 				return;
@@ -76,6 +78,13 @@ bool View::readInitialCommands(std::string const &input, GameController * gameCo
 			return true;
 			break;
 		}
+		case InitialCommands::DIFICULDADE: {
+			std::string difficulty;
+			line >> difficulty;
+			if (gameController->changeGameDifficulty(difficulty)) {
+				return true;
+			}
+			break; }
 		default:
 			return true;
 			break;
@@ -85,6 +94,7 @@ bool View::readInitialCommands(std::string const &input, GameController * gameCo
 View::InitialCommands View::stringToInitialCommand(std::string const & inString)
 {
 	if (inString == "config") return InitialCommands::CONFIG;
+	if (inString == "dificuldade") return InitialCommands::DIFICULDADE;
 	return InitialCommands::INVALID;
 }
 
@@ -256,6 +266,42 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			std::cout << ss.str();
 			Consola::getch();
 			break; }
+
+		case GameCommands::COMPRA: {
+			int id;
+			line >> id;
+			ShipModel* ship = gameController->getFriendlyShipByID(id);
+			if (ship == nullptr)
+			{
+				std::cout << "Ship does not exist!";
+				Consola::getch();
+				break;
+			}
+			int amount;
+			line >> amount;
+			if (!gameController->buyMerchCommand(ship, amount)) {
+				std::cout << COMMAND_EXECUTE_ERROR;
+				Consola::getch();
+			}
+			break; }
+
+		case GameCommands::VENDE: {
+			int id;
+			line >> id;
+			ShipModel* ship = gameController->getFriendlyShipByID(id);
+			if (ship == nullptr)
+			{
+				std::cout << "Ship does not exist!";
+				Consola::getch();
+				break;
+			}
+
+			if (!gameController->sellShipCargoCommand(ship)) {
+				std::cout << COMMAND_EXECUTE_ERROR;
+				Consola::getch();
+			}
+			break; }
+
 		case GameCommands::MOVE: {
 			int id;
 			line >> id;
@@ -374,6 +420,25 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 
 			gameController->orderShipCommand(ship, cell);			
 			break; }
+
+		case GameCommands::COMPRASOLD: {
+			int id;
+			line >> id;
+			ShipModel* ship = gameController->getFriendlyShipByID(id);
+			if (ship == nullptr)
+			{
+				std::cout << "Ship does not exist!";
+				Consola::getch();
+				break;
+			}
+			int amount;
+			line >> amount;
+			if (!gameController->buySoldiersCommand(ship, amount)) {
+				std::cout << COMMAND_EXECUTE_ERROR;
+				Consola::getch();
+			}
+			break; }
+
 		case GameCommands::SAVEG: {
 			std::string name;
 			line >> name;

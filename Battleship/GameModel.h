@@ -60,6 +60,7 @@ public:
 	void setMermaidEventProbability(int prob);
 	void setCalmEventProbability(int prob);
 	void setRiotEventProbability(int prob);
+	void setScore(int score);
 
 	void addFriendlyShip(ShipModel* ship);
 	void addPirateShip(ShipModel* ship);

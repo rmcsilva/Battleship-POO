@@ -32,7 +32,7 @@ class View
 public:
 	View();
 
-	enum class InitialCommands { CONFIG, INVALID };
+	enum class InitialCommands { CONFIG, DIFICULDADE, INVALID };
 	enum class GameCommands
 	{
 		EXEC,

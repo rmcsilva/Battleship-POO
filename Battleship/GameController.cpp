@@ -51,6 +51,7 @@ GameController::GameController(const GameController& gameController)
 	}
 }
 
+double GameController::getFinalScore() const {return game->getPlayerScore();}
 CellModel* GameController::getCellAt(int x, int y) const { return map->getCellAt(x, y); }
 GameState GameController::getGameState() const { return game->getGameState(); }
 std::vector<PortModel*> GameController::getFriendlyPorts() const { return map->getFriendlyPorts(); }
@@ -108,6 +109,22 @@ bool GameController::readInitialFileConfigs(std::string filename)
 	if (fileManager.readInitialFileConfigs(filename, map, game)) {
 		game->setGameState(GameState::GAME);
 		return true;
+	}
+	return false;
+}
+
+bool GameController::changeGameDifficulty(std::string difficulty)
+{
+	//TODO: IMPLEMENT
+	if (difficulty == "facil")
+	{
+		
+	} else if(difficulty == "media")
+	{
+		
+	} else if(difficulty == "dificil")
+	{
+		
 	}
 	return false;
 }
@@ -176,6 +193,52 @@ bool GameController::sellShip(char type)
 			}
 		}
 		return false;
+	}
+	return false;
+}
+
+bool GameController::buyMerchCommand(ShipModel* ship, int amount)
+{
+	double cost = game->getMerchBuyPrice() * amount;
+
+	for (auto friendlyPort : map->getFriendlyPorts())
+	{
+		std::vector<ShipModel*> ships = friendlyPort->getShips();
+		for (int i = 0; i < ships.size(); i++)
+		{
+			if (ships.at(i)->getID() == ship->getID()) {
+				if (game->canRemoveCoins(cost)) {
+					if (ship->canAddToShipCargo(amount)) {
+						ship->addMerchToShip(amount);
+						game->removeCoins(cost);
+						return true;
+					}
+					return false;
+				}
+				return false;
+			}
+		}
+	}
+	return false;
+}
+
+bool GameController::sellShipCargoCommand(ShipModel* ship)
+{
+	for (auto friendlyPort : map->getFriendlyPorts())
+	{
+		std::vector<ShipModel*> ships = friendlyPort->getShips();
+		for (int i = 0; i < ships.size(); i++)
+		{
+			if (ships.at(i)->getID() == ship->getID()) {
+				if (ship->getCapacity() > 0) {
+					double value = calculateShipContentValue(ship);
+					ship->empyShipCargo();
+					game->addCoins(value);
+					return true;
+				}
+				return false;
+			}
+		}
 	}
 	return false;
 }
@@ -270,6 +333,31 @@ bool GameController::orderShipCommand(ShipModel* ship, CellModel* goTo)
 	ship->setGoTo(goTo);
 	ship->setNavigation(Navigation::ORDER);
 	return true;
+}
+
+bool GameController::buySoldiersCommand(ShipModel* ship, int amount)
+{
+	double cost = game->getSoldierPrice() * amount;
+
+	for (auto friendlyPort : map->getFriendlyPorts())
+	{
+		std::vector<ShipModel*> ships = friendlyPort->getShips();
+		for (int i = 0; i < ships.size(); i++)
+		{
+			if (ships.at(i)->getID() == ship->getID()) {
+				if (game->canRemoveCoins(cost)) {
+					if (ship->canAddSoldiersToShip(amount)) {
+						ship->addSoldiersToShip(amount);
+						game->removeCoins(cost);
+						return true;
+					}
+					return false;
+				}
+				return false;
+			}
+		}
+	}
+	return false;
 }
 
 bool GameController::saveGameCommand(std::string name)
@@ -378,7 +466,13 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 			if (ship->getType()==ShipModel::Type::SCHOONER && ship->getOwner()!=Owner::LOST)
 			{
 				if (sea->hasFish()) {
-					sea->catchFish();
+					//TODO: Check if can catch fish
+					if (ship->canAddToShipCargo(1)){
+						sea->catchFish();
+						SchoonerModel* schooner = (SchoonerModel*)ship;
+						schooner->catchFish();
+					}
+					
 				}
 				
 			}
@@ -391,10 +485,7 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 			{
 				port->addShipToPort(ship);
 				ship->refillWater();
-			}
-			else
-			{
-				//TODO: Combat with enemy port
+			} else {
 				//Can only attack empty ports
 				if (port->getNumberOfShips()>0) return false;
 
@@ -1152,6 +1243,7 @@ double GameController::calculateShipValue(ShipModel* ship)
 {
 	double value = 0;
 	value += game->getShipPrice();
+	value += ship->getSoldiers() * game->getSoldierPrice();
 	value += calculateShipContentValue(ship);
 	return value;
 }
@@ -1166,7 +1258,18 @@ double GameController::calculateShipContentValue(ShipModel* ship)
 	return value;
 }
 
-void GameController::endGame() {game->setGameState(GameState::END);}
+void GameController::endGame()
+{
+	game->setGameState(GameState::END);
+
+	double score = 0;
+
+	for (auto friendlyShip : game->getFriendlyShips()) {
+		score += calculateShipValue(friendlyShip);
+	}
+
+	game->setScore(score);
+}
 
 void GameController::addLineToInfoLog(std::string line) {logger.addLineToInfoLog(line);}
 void GameController::addLineToCombatLog(std::string line) {logger.addLineToCombatLog(line);}

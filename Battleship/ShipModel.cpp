@@ -38,12 +38,33 @@ void ShipModel::setGoTo(CellModel* goTo) {this->goTo = goTo;}
 
 void ShipModel::blockShipMovement() {numOfMoves = maxMoves;}
 
-bool ShipModel::canAddToShipCargo(int amount) {return capacity + amount > maxCapacity;}
+bool ShipModel::canAddToShipCargo(int amount) {return capacity + amount <= maxCapacity;}
+
+void ShipModel::addMerchToShip(int amount)
+{
+	if (canAddToShipCargo(amount)) {
+		capacity += amount;
+		merch += amount;
+	}
+}
 
 void ShipModel::empyShipCargo()
 {
+	capacity = 0;
 	merch = 0;
 	fish = 0;
+}
+
+bool ShipModel::canAddSoldiersToShip(int amount)
+{
+	return soldiers + amount <= maxSoldiers;
+}
+
+void ShipModel::addSoldiersToShip(int amount)
+{
+	if (canAddSoldiersToShip(amount)) {
+		soldiers += amount;
+	}
 }
 
 void ShipModel::refillWater() {water = maxWater;}

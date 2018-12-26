@@ -32,6 +32,12 @@ bool SchoonerModel::stormAttack()
 	return true;
 }
 
+void SchoonerModel::catchFish()
+{
+	fish += 1;
+	capacity += 1;
+}
+
 std::string SchoonerModel::getAsString() const {return "E";}
 
 SchoonerModel* SchoonerModel::clone() {

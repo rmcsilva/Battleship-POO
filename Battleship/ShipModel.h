@@ -50,7 +50,10 @@ public:
 	void blockShipMovement();
 
 	bool canAddToShipCargo(int amount);
+	void addMerchToShip(int amount);
 	void empyShipCargo();
+	bool canAddSoldiersToShip(int amount);
+	void addSoldiersToShip(int amount);
 	void refillWater();
 	void navigationCost();
 	void moveShip(CellModel* position);

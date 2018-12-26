@@ -22,6 +22,7 @@ public:
 	GameController(const GameController &gameController);
 
 	//Gets
+	double getFinalScore() const;
 	CellModel* getCellAt(int x, int y) const;
 	GameState getGameState() const;
 	std::vector<PortModel*> getFriendlyPorts() const;
@@ -39,6 +40,7 @@ public:
 	
 	//Initial Read From file
 	bool readInitialFileConfigs(std::string filename);
+	bool changeGameDifficulty(std::string difficulty);
 
 	bool canMoveShip(ShipModel* ship) const;
 	bool moveShip(ShipModel* ship, CellModel* goToPosition);
@@ -50,13 +52,12 @@ public:
 	bool buyShip(char type);
 	bool sellShip(char type);
 	bool buyMerchCommand(ShipModel* ship, int amount);
-	bool sellShipMerchCommand(ShipModel* ship);
+	bool sellShipCargoCommand(ShipModel* ship);
 	bool spawnEnemyShipAt(CellModel* position, char type);
 	bool spawnPositionEvent(char type, CellModel* startingCell);
 	bool spawnShipEvent(char type,ShipModel* affectedShip);
 	bool orderShipCommand(ShipModel* ship, CellModel* goTo);
-	//TODO: Implement
-	bool buySoldiersCommand(ShipModel* ship);
+	bool buySoldiersCommand(ShipModel* ship, int amount);
 	bool saveGameCommand(std::string name);
 	bool loadGameCommand(std::string name);
 	bool deleteGameCommand(std::string name);

@@ -89,6 +89,7 @@ void GameModel::setStormEventProbability(int prob) { this->stormProb = prob; }
 void GameModel::setMermaidEventProbability(int prob) { this->mermaidProb = prob; }
 void GameModel::setCalmEventProbability(int prob) { this->lullProb = prob; }
 void GameModel::setRiotEventProbability(int prob) { this->riotProb = prob; }
+void GameModel::setScore(int score) {this->score = score;}
 
 //Add Ships
 void GameModel::addFriendlyShip(ShipModel* ship)
