@@ -16,20 +16,21 @@
 GameController::GameController()
 {
 	game = new GameModel();
+	onEvent = new bool();
 }
 
 GameController::~GameController()
 {
 	if (map != nullptr)  delete(map);
-	if (onEvent) delete(event);
+	if (*onEvent) delete(event);
 	delete game;
+	delete onEvent;
 
 	for (auto savedGame : savedGames) {
 		if (savedGame.first != name) {
 			delete(savedGame.second);
 		}
 	}
-	//TODO: Update Ships to correct map position
 }
 
 GameController::GameController(const GameController& gameController)
@@ -42,9 +43,10 @@ GameController::GameController(const GameController& gameController)
 	if (gameController.hasEvent()) {
 		event = gameController.event->clone();
 		updateEvent(event, game, map);
-		onEvent = true;
+		onEvent = new bool();
+		*onEvent = gameController.onEvent;
 	} else {
-		onEvent = false;
+		onEvent = new bool();
 		event = nullptr;
 	}
 }
@@ -199,7 +201,7 @@ bool GameController::spawnPositionEvent(char type, CellModel* startingCell)
 	case 'T': event = new StormModel(affectedPositions); break;
 	default: return false;
 	}
-	onEvent = true;
+	*onEvent = true;
 	return true;
 }
 
@@ -210,11 +212,20 @@ bool GameController::spawnShipEvent(char type, ShipModel* affectedShip)
 
 	switch (toupper(type))
 	{
-		case 'M': return spawnRiotEvent(affectedShip);
+		case 'M': 
+		if (spawnRiotEvent(affectedShip)){
+			event = new RiotModel(affectedShip);
+			*onEvent = true;
+			return true;
+		} else {
+			*onEvent = false;
+			event = nullptr;
+			return false;
+		}		
 		case 'S': event = new MermaidModel(affectedShip); break;
 		default: return false;
 	}
-	onEvent = true;
+	*onEvent = true;
 	return true;
 }
 
@@ -241,27 +252,26 @@ bool GameController::saveGameCommand(std::string name)
 
 bool GameController::loadGameCommand(std::string name)
 {
+	if (this->name == name) return false;
+
 	if (savedGames.count(name)) {
 		for (auto save : savedGames) {
 			if (save.first == name) {
 				MapModel* oldMap = map;
 				EventModel* oldEvent = event;
 				GameModel* oldGame = game;
+				bool *oldOnEvent = onEvent;
 				GameController* game = save.second;
 				this->map = game->map;
 				this->game = game->game;
-				if (game->hasEvent()) {
-					this->event = game->event;
-					this->onEvent = true;
-				} else {
-					this->onEvent = false;
-					this->event = nullptr;
-				}			
+				this->event = game->event;
+				this->onEvent = game->onEvent;
 
 				if (this->name == UNSAVED) {
 					if (oldMap != nullptr) delete(oldMap);
 					if (oldEvent != nullptr) delete(oldEvent);
 					delete(oldGame);
+					delete(oldOnEvent);
 				}
 				this->name = game->name;
 				
@@ -434,9 +444,9 @@ void GameController::proxCommand()
 		{
 			logger.addLineToInfoLog("Event ended!");
 			endEvent(event->getType());
-			delete event;
+			delete(event);
 			event = nullptr;
-			onEvent = false;
+			*onEvent = false;
 		}
 		else
 		{
@@ -447,27 +457,27 @@ void GameController::proxCommand()
 				if (riot->getAffectedShip()==nullptr) {
 					logger.addLineToInfoLog("Riot Event ended Ship Sank!");
 					endEvent(EventModel::Type::RIOT);
-					delete event;
+					delete(event);
 					event = nullptr;
-					onEvent = false;
+					*onEvent = false;
 				}
 			} else if(event->getType()==EventModel::Type::MERMAID) {
 				MermaidModel* mermaid = (MermaidModel*)event;
 				if (mermaid->getAffectedShip()==nullptr) {
 					logger.addLineToInfoLog("Mermaid Event ended Ship Sank!");
 					endEvent(EventModel::Type::MERMAID);
-					delete event;
+					delete(event);
 					event = nullptr;
-					onEvent = false;
+					*onEvent = false;
 				}
 			}else {
 				logger.addLineToEventLog("Event still going!");
 			}
 			
-		}
-		
+		}	
 	} else {
-		spawnRandomEvent();
+		if (spawnRandomEvent()) *onEvent = true;
+		else *onEvent = false;
 	}
 	//TODO: Update Fish on all Sea Cells
 	spawnRandomEnemyShip(map->getSeaCells(), map->getPirateProb());
@@ -630,7 +640,7 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 	return true;
 }
 
-bool GameController::hasEvent() const {return onEvent;}
+bool GameController::hasEvent() const {return *onEvent;}
 
 bool GameController::spawnRandomEvent() 
 {
@@ -662,7 +672,6 @@ bool GameController::spawnRandomEvent()
 				infoLog << "Affected cell x: " << affectedPosition->getX() << " y: " << affectedPosition->getY() << '\n';
 
 			event = new LullModel(affectedPositions);
-			onEvent = true;
 		}
 		else if (randomEvent < mermaidProb)
 		{
@@ -686,7 +695,6 @@ bool GameController::spawnRandomEvent()
 			infoLog << "Affected Ship: " << affectedShip->getID() << '\n';
 
 			event = new MermaidModel(affectedShip);
-			onEvent = true;
 		} 
 		else if (randomEvent < riotProb)
 		{
@@ -706,7 +714,17 @@ bool GameController::spawnRandomEvent()
 
 			ShipModel* affectedShip = game->getFriendlyShips().at(randomPosition);
 
-			return spawnRiotEvent(affectedShip);
+			if(spawnRiotEvent(affectedShip))
+			{
+				event = new RiotModel(affectedShip);
+				*onEvent = true;
+				return true;
+			} else
+			{
+				*onEvent = false;
+				event = nullptr;
+				return false;
+			}
 		} 
 		else
 		{
@@ -718,7 +736,6 @@ bool GameController::spawnRandomEvent()
 				infoLog << "Affected cell x: " << affectedPosition->getX() << " y: " << affectedPosition->getY() << '\n';
 
 			event = new StormModel(affectedPositions);
-			onEvent = true;
 		}
 
 		logger.addLineToInfoLog(infoLog.str());
@@ -759,6 +776,7 @@ void GameController::endEvent(EventModel::Type type)
 			break; }
 		default: break;
 	}
+	*onEvent = false;
 }
 
 bool GameController::spawnRiotEvent(ShipModel* affectedShip)
@@ -769,16 +787,16 @@ bool GameController::spawnRiotEvent(ShipModel* affectedShip)
 
 	if (shipType == ShipModel::Type::FRIGATE || shipType == ShipModel::Type::SAILBOAT)
 	{
-		event = new RiotModel(affectedShip);
 		eventLog << "Ship " << affectedShip->getID() << " turned enemy during the riot!";
 		game->changeShipOwner(affectedShip, Navigation::AUTO);
-		onEvent = true;
+		*onEvent = true;
 		return true;
 	} else {
 		eventLog << "Ship " << affectedShip->getID() << " sank during the riot!";
 		game->removeFriendlyShip(affectedShip);
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToEventLog(eventLog.str());
+		*onEvent = false;
 		return false;
 	}
 	

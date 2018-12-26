@@ -14,9 +14,8 @@ class GameController {
 	GameModel *game = nullptr;
 	std::string name = UNSAVED;
 	std::map<std::string, GameController*> savedGames;
-	bool onEvent = false;
-	//TODO: Adicionar nome para saber que jogo guardado estamos a jogar?
-
+	bool *onEvent;
+	
 public:
 	GameController();
 	~GameController();
