@@ -55,6 +55,12 @@ void ShipModel::empyShipCargo()
 	fish = 0;
 }
 
+void ShipModel::emptyFish()
+{
+	capacity -= fish;
+	fish = 0;
+}
+
 bool ShipModel::canAddSoldiersToShip(int amount)
 {
 	return soldiers + amount <= maxSoldiers;
@@ -64,6 +70,14 @@ void ShipModel::addSoldiersToShip(int amount)
 {
 	if (canAddSoldiersToShip(amount)) {
 		soldiers += amount;
+	}
+}
+
+void ShipModel::addWaterToShip(int amount)
+{
+	water += amount;
+	if (water>maxWater) {
+		water = maxWater;
 	}
 }
 
@@ -155,6 +169,27 @@ void ShipModel::lootShip(ShipModel* ship)
 				capacity += shipFish;
 			}
 		}
+	}
+}
+
+void ShipModel::conquerShip(ShipModel* lostShip)
+{
+	water /= 2;
+	soldiers /= 2;
+
+	lostShip->addSoldiersToShip(soldiers);
+	lostShip->addWaterToShip(water);
+
+	lostShip->setNavigation(Navigation::AUTO);
+}
+
+void ShipModel::transferFish(ShipModel* schooner)
+{
+	int schoonersFish = schooner->getFish();
+
+	if (canAddToShipCargo(schoonersFish)) {
+		fish += schoonersFish;
+		schooner->emptyFish();
 	}
 }
 

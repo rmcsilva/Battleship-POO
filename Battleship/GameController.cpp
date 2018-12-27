@@ -335,6 +335,20 @@ bool GameController::orderShipCommand(ShipModel* ship, CellModel* goTo)
 	return true;
 }
 
+bool GameController::autoShipCommand(ShipModel* ship)
+{
+	ship->setNavigation(Navigation::AUTO);
+	ship->setGoTo(nullptr);
+	return true;
+}
+
+bool GameController::stopShipCommand(ShipModel* ship)
+{
+	ship->setNavigation(Navigation::USER);
+	ship->setGoTo(nullptr);
+	return true;
+}
+
 bool GameController::buySoldiersCommand(ShipModel* ship, int amount)
 {
 	double cost = game->getSoldierPrice() * amount;
@@ -442,6 +456,15 @@ void GameController::setShipsToMap(MapModel* map, std::vector<ShipModel*> ships)
 	}
 }
 
+void GameController::updateFish()
+{
+	for (auto seaCell : map->getSeaCells()) {
+		if (!seaCell->hasFish()) {
+			seaCell->updateCountdown();
+		}
+	}
+}
+
 bool GameController::canMoveShip(ShipModel* ship) const {return ship->getNumOfMoves() < ship->getMaxMoves();}
 
 bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
@@ -511,6 +534,8 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 		}
 
 		ship->moveShip(goToPosition);
+		//Checks surroundings
+		checkSurroundings(ship);
 		return true;
 	}
 }
@@ -564,6 +589,7 @@ void GameController::proxCommand()
 	friendlyFleetMovement(game->getFriendlyShips());
 	enemyFleetMovement(game->getEnemyShips());
 	shipBattles(game->getFriendlyShips());
+	updateFish();
 	if (hasEvent()) {
 		if (!event->executeEvent())
 		{
@@ -763,6 +789,60 @@ bool GameController::portCombat(ShipModel* attacker, PortModel* port)
 	logger.addLineToCombatLog(combatLog.str());
 
 	return true;
+}
+
+void GameController::checkSurroundings(ShipModel* ship)
+{
+
+	std::vector<SeaModel*>surroudingSeaCells = map->getSurroundingSeaCells(ship->getPosition());
+
+	if (ship->getOwner()==Owner::PLAYER)
+	{
+		for (auto surroundingSeaCell : surroudingSeaCells)
+		{
+			if (surroundingSeaCell->hasShip()) {
+				ShipModel* surroundingShip = surroundingSeaCell->getShip();
+				//Checks if ship is lost
+				if (surroundingShip->getOwner() == Owner::LOST) {
+					boardShip(ship, surroundingShip);
+				}
+
+				//Checks if there is any schooner to trasnfer fish from
+				if (surroundingShip->getType()==ShipModel::Type::SCHOONER) {
+					if (ship->getType()==ShipModel::Type::SAILBOAT || ship->getType() == ShipModel::Type::GALLEON) {
+						ship->transferFish(surroundingShip);
+					}	
+				}
+			}
+		}
+	} else {
+		//Enemy check
+		for (auto surroundingSeaCell : surroudingSeaCells)
+		{
+			if (surroundingSeaCell->hasShip()) {
+				ShipModel* surroundingShip = surroundingSeaCell->getShip();
+				//Checks if ship is lost
+				if (surroundingShip->getOwner() == Owner::LOST) {
+					boardShip(ship, surroundingShip);
+				}
+			}
+		}
+	}
+	
+}
+
+void GameController::boardShip(ShipModel* attacker, ShipModel* lostShip)
+{
+	if (attacker->getOwner()==Owner::PLAYER) {
+		attacker->conquerShip(lostShip);
+	} else {
+		if (lostShip->getType() == ShipModel::Type::FRIGATE || lostShip->getType()==ShipModel::Type::SAILBOAT) {
+			attacker->conquerShip(lostShip);
+			game->changeShipOwner(lostShip, Navigation::AUTO);
+		} else {
+			game->removeFriendlyShip(lostShip);
+		}
+	}
 }
 
 bool GameController::hasEvent() const {return *onEvent;}
@@ -1058,9 +1138,10 @@ void GameController::friendlyFleetMovement(std::vector<ShipModel*> friendlyShips
 			switch (friendlyShip->getNavigation())
 			{
 				//TODO: Implement
-				case Navigation::USER: 
+				case Navigation::USER:
+					//TODO: Check if schooner to catch fish
+					checkSurroundings(friendlyShip);
 					friendlyShip->blockShipMovement();
-					//TODO: Check type and check surrounding
 					break;
 				case Navigation::AUTO: break;
 				case Navigation::ORDER: orderShipMovement(friendlyShip); break;
@@ -1085,7 +1166,7 @@ void GameController::enemyFleetMovement(std::vector<ShipModel*> enemyShips)
 			switch (enemyShip->getNavigation())
 			{
 				//TODO: Implement 
-				case Navigation::AUTO: break;
+				case Navigation::AUTO: autoShipMovement(enemyShip); break;
 				//TODO: Enemy ships will only use auto movement
 				case Navigation::LOST: lostShipMovement(enemyShip); break;
 				default: break;
@@ -1111,16 +1192,21 @@ void GameController::autoShipMovement(ShipModel* ship)
 {
 	switch (ship->getType())
 	{
-		case ShipModel::Type::FRIGATE: break;
+		case ShipModel::Type::FRIGATE:
+			frigateAutoMovement(ship); 
+			break;
 		case ShipModel::Type::GALLEON:
-			//TODO: Check surrounding for schooner fish transfer
+			checkSurroundings(ship);
 			ship->blockShipMovement();
 			break;
 		case ShipModel::Type::GHOST: break;
-		case ShipModel::Type::SAILBOAT: break;
+		case ShipModel::Type::SAILBOAT:
+			sailboatAutoMovement(ship);
+			break;
 		case ShipModel::Type::SCHOONER: break;
 		default: ;
 	}
+	
 }
 
 void GameController::orderShipMovement(ShipModel* ship)
@@ -1132,6 +1218,35 @@ void GameController::orderShipMovement(ShipModel* ship)
 			break;
 		}
 	} while (canMoveShip(ship));
+}
+
+bool GameController::canMoveToCell(CellModel* cell)
+{
+	if (cell->getType() == CellModel::Type::GROUND) return false;
+
+	if (cell->getType() == CellModel::Type::SEA) {
+		SeaModel* sea = (SeaModel*)cell;
+		if (sea->hasShip()) return false;
+	}
+
+	return true;
+}
+
+void GameController::frigateAutoMovement(ShipModel* frigate)
+{
+	
+}
+
+void GameController::sailboatAutoMovement(ShipModel* sailboat)
+{
+	for (auto friendlyShip : game->getFriendlyShips()) {
+		if (friendlyShip->getType() == ShipModel::Type::SCHOONER) {
+			sailboat->setGoTo(friendlyShip->getPosition());
+			orderShipMovement(sailboat);
+			return;
+		}
+	}
+	lostShipMovement(sailboat);
 }
 
 CellModel* GameController::goToCell(CellModel* current, CellModel* goTo)
@@ -1146,11 +1261,11 @@ CellModel* GameController::goToCell(CellModel* current, CellModel* goTo)
 		//Check if go to is up
 		if (yPosition > 0) {
 			tmp = getCellAbove(current);
-			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+			if (canMoveToCell(tmp)) return tmp;
 		} else {
 			//Go to is down
 			tmp = getCellBelow(current);
-			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+			if (canMoveToCell(tmp)) return tmp;
 		}	
 	}
 
@@ -1160,11 +1275,11 @@ CellModel* GameController::goToCell(CellModel* current, CellModel* goTo)
 		//Check if go to cell is at right 
 		if (xPosition < 0) {
 			tmp = getCellRight(current);
-			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+			if (canMoveToCell(tmp)) return tmp;
 		} else {
 			//cell is at left
 			tmp = getCellLeft(current);
-			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+			if (canMoveToCell(tmp)) return tmp;
 		}	
 	}
 
@@ -1173,21 +1288,21 @@ CellModel* GameController::goToCell(CellModel* current, CellModel* goTo)
 		//Check if go to is up
 		if (yPosition > 0) {
 			tmp = getCellAboveRight(current);
-			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+			if (canMoveToCell(tmp)) return tmp;
 		} else {
 			//Go to is down
 			tmp = getCellBelowRight(current);
-			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+			if (canMoveToCell(tmp)) return tmp;
 		}
 
 	} else {
 		//Go to is at left
 		if (yPosition > 0) {
 			tmp = getCellAboveLeft(current);
-			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+			if (canMoveToCell(tmp)) return tmp;
 		} else {
 			tmp = getCellBelowLeft(current);
-			if (tmp->getType() != CellModel::Type::GROUND) return tmp;
+			if (canMoveToCell(tmp)) return tmp;
 		}
 	}
 

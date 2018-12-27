@@ -1,0 +1,27 @@
+Event probability number: 61
+
+Enemy Ship random number: 41
+
+
+NEXT TURN
+
+
+Enemy Ship random number: 85
+
+
+NEXT TURN
+
+Event probability number: 95
+
+Enemy Ship random number: 74
+
+
+NEXT TURN
+
+Event probability number: 64
+
+Enemy Ship random number: 24
+
+
+NEXT TURN
+

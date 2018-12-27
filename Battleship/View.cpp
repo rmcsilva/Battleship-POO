@@ -322,6 +322,34 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			updateEventInformation(gameController);
 			break;
 		}
+
+		case GameCommands::AUTO: {
+			int id;
+			line >> id;
+
+			ShipModel* ship = gameController->getFriendlyShipByID(id);
+			if (ship == nullptr)
+			{
+				std::cout << "Ship does not exist!";
+				Consola::getch();
+				break;
+			}
+			gameController->autoShipCommand(ship);
+			break; }
+
+		case GameCommands::STOP: {
+			int id;
+			line >> id;
+
+			ShipModel* ship = gameController->getFriendlyShipByID(id);
+			if (ship == nullptr)
+			{
+				std::cout << "Ship does not exist!";
+				Consola::getch();
+				break;
+			}
+			gameController->stopShipCommand(ship);
+			break; }
 		case GameCommands::MOEDAS: {
 			double amount;
 			line >> amount;

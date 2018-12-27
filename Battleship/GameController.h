@@ -57,16 +57,22 @@ public:
 	bool spawnPositionEvent(char type, CellModel* startingCell);
 	bool spawnShipEvent(char type,ShipModel* affectedShip);
 	bool orderShipCommand(ShipModel* ship, CellModel* goTo);
+	bool autoShipCommand(ShipModel* ship);
+	bool stopShipCommand(ShipModel* ship);
 	bool buySoldiersCommand(ShipModel* ship, int amount);
 	bool saveGameCommand(std::string name);
 	bool loadGameCommand(std::string name);
 	bool deleteGameCommand(std::string name);
 	void setShipsToMap(MapModel* map, std::vector<ShipModel*>ships);
 	//Game Logic (make private?)
+	void updateFish();
+
 	//Combat Logic
 	void shipBattles(std::vector<ShipModel*>friendlyShips);
 	bool shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip);
 	bool portCombat(ShipModel* attacker, PortModel* port);
+	void checkSurroundings(ShipModel* ship);
+	void boardShip(ShipModel* attacker, ShipModel* lostShip);
 
 	//Event Logic
 	bool hasEvent() const;
@@ -88,6 +94,12 @@ public:
 	void lostShipMovement(ShipModel* ship);
 	void autoShipMovement(ShipModel* ship);
 	void orderShipMovement(ShipModel* ship);
+
+	bool canMoveToCell(CellModel* cell);
+
+	void frigateAutoMovement(ShipModel* frigate);
+	void sailboatAutoMovement(ShipModel* sailboat);
+	void schoonerAutoMovement(ShipModel* schooner);
 
 	CellModel* goToCell(CellModel* current, CellModel* goTo);
 

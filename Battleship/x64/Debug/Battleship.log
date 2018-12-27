@@ -1,3 +1,22 @@
-﻿  View.cpp
-c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(386): warning C4101: 'port': unreferenced local variable
+﻿  Battleship.cpp
+c:\users\ricardo\documents\github\battleship-poo\battleship\battleship.cpp(14): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  FileManager.cpp
+  GameController.cpp
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(210): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(213): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(362): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(365): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(885): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(885): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(908): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(908): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1386): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  GameModel.cpp
+  View.cpp
+c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(422): warning C4101: 'port': unreferenced local variable
+  Generating Code...
+c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(92): warning C4715: 'View::readInitialCommands': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(585): warning C4715: 'GameController::moveCommand': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1064): warning C4715: 'GameController::updateAffectedShip': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1344): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
   Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

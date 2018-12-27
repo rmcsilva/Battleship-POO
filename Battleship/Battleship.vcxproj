@@ -157,7 +157,6 @@
     <ClInclude Include="FrigateModel.h" />
     <ClInclude Include="GalleonModel.h" />
     <ClInclude Include="GameController.h" />
-    <ClInclude Include="GameDifficulty.h" />
     <ClInclude Include="GameModel.h" />
     <ClInclude Include="GhostShipModel.h" />
     <ClInclude Include="GroundModel.h" />

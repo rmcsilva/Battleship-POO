@@ -52,8 +52,10 @@ public:
 	bool canAddToShipCargo(int amount);
 	void addMerchToShip(int amount);
 	void empyShipCargo();
+	void emptyFish();
 	bool canAddSoldiersToShip(int amount);
 	void addSoldiersToShip(int amount);
+	void addWaterToShip(int amount);
 	void refillWater();
 	void navigationCost();
 	void moveShip(CellModel* position);
@@ -63,6 +65,8 @@ public:
 	void combatDefeat(int damage);
 	void portCombat();
 	void lootShip(ShipModel* ship);
+	void conquerShip(ShipModel* lostShip);
+	void transferFish(ShipModel* schooner);
 
 	void mermaidAttack(int percentage);
 	virtual bool stormAttack() = 0;
