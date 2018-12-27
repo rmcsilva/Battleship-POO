@@ -288,6 +288,22 @@ std::vector<SeaModel*> MapModel::getSurroundingSeaCells(const CellModel* current
 	return seaCells;
 }
 
+std::vector<SeaModel*> MapModel::getSurroundingSeaCellsInRange2(const CellModel* currentCell) const
+{
+	std::vector<SeaModel*> seaCells = getSurroundingSeaCells(currentCell);
+	int size = seaCells.size();
+
+	for (int i = 0; i < size; i++)
+	{
+		std::vector<SeaModel*> tmp = getSurroundingSeaCells((CellModel*)seaCells.at(i));
+		for (auto seaCell : tmp)
+			seaCells.push_back(seaCell);
+	}
+
+	return seaCells;
+}
+
+
 CellModel* MapModel::getCellAbove(const CellModel* currentCell) const
 {
 	int x = currentCell->getX();

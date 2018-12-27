@@ -11,7 +11,6 @@ class SchoonerModel : public ShipModel
 public:
 	SchoonerModel(CellModel* position);
 	~SchoonerModel();
-	//TODO: Get Fish from Map cells
 	Type getType() const override;
 	bool stormAttack() override;
 

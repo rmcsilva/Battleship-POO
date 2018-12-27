@@ -42,9 +42,6 @@ public:
 	bool readInitialFileConfigs(std::string filename);
 	bool changeGameDifficulty(std::string difficulty);
 
-	bool canMoveShip(ShipModel* ship) const;
-	bool moveShip(ShipModel* ship, CellModel* goToPosition);
-
 	//Game Comands
 	bool execCommand(std::string filename);
 	bool moveCommand(int id, CellModel* goToPosition);
@@ -91,6 +88,10 @@ public:
 	void friendlyFleetMovement(std::vector<ShipModel*> friendlyShips);
 	void enemyFleetMovement(std::vector<ShipModel*> enemyShips);
 
+	bool canMoveShip(ShipModel* ship) const;
+	bool moveShip(ShipModel* ship, CellModel* goToPosition);
+	void watchingWaves(ShipModel* ship);
+
 	void lostShipMovement(ShipModel* ship);
 	void autoShipMovement(ShipModel* ship);
 	void orderShipMovement(ShipModel* ship);
@@ -100,6 +101,7 @@ public:
 	void frigateAutoMovement(ShipModel* frigate);
 	void sailboatAutoMovement(ShipModel* sailboat);
 	void schoonerAutoMovement(ShipModel* schooner);
+	void ghostShipAutoMovement(ShipModel* ghost);
 
 	CellModel* goToCell(CellModel* current, CellModel* goTo);
 

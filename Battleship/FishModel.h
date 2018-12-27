@@ -1,7 +1,7 @@
 #pragma once
 class FishModel
 {
-	static const int cooldownTime = 2;
+	static const int cooldownTime = 3;
 	bool onCooldown = false;
 	int countdown = cooldownTime;
 public:

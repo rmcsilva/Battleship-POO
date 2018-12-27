@@ -6,7 +6,7 @@ int ShipModel::shipCount = 1;
 ShipModel::ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMoves, Owner owner, CellModel* position) : maxCapacity(maxCapacity), maxSoldiers(maxSoldiers), maxWater(maxWater), maxMoves(maxMoves), owner(owner), position(position)
 {
 	//TODO: Change navigation to auto later
-	navigation = Navigation::LOST;
+	navigation = Navigation::AUTO;
 	water = maxWater;
 	soldiers = maxSoldiers;
 	capacity = merch = fish = 0;
@@ -20,6 +20,7 @@ ShipModel::~ShipModel()
 int ShipModel::getID() const {return id;}
 int ShipModel::getNumOfMoves() const {return numOfMoves;}
 int ShipModel::getMaxMoves() const {return maxMoves;}
+int ShipModel::getMaxWater() const {return maxWater;}
 int ShipModel::getCapacity() const {return capacity;}
 int ShipModel::getWater() const {return water;}
 int ShipModel::getFish() const{return fish;}
@@ -85,21 +86,25 @@ void ShipModel::refillWater() {water = maxWater;}
 
 void ShipModel::navigationCost()
 {
-	if (owner == Owner::ENEMY) return;
+	if (owner == Owner::ENEMY || owner == Owner::LOST) return;
 
-	//TODO:Test
-	if (water>=soldiers)
+	if (soldiers > 0)
 	{
-		water -= soldiers;
-		return;
-	} 
-	
-	water = 0;
-
-	if (soldiers>0)
-	{
+		if (water >= soldiers)
+		{
+			water -= soldiers;
+			return;
+		} 
+		
+		water = 0;
+		
 		soldiers--;
-		return;
+
+		if (soldiers==0) {
+			owner = Owner::LOST;
+			navigation = Navigation::LOST;
+			return;
+		}
 	}
 
 	owner = Owner::LOST;

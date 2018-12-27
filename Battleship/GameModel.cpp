@@ -144,7 +144,7 @@ bool GameModel::removeEnemyShip(ShipModel* ship)
 
 void GameModel::changeShipOwner(ShipModel* ship, Navigation navigation)
 {
-	if (ship->getOwner() == Owner::PLAYER)
+	if (ship->getOwner() == Owner::PLAYER || ship->getOwner()==Owner::LOST)
 	{
 		ship->setOwner(Owner::ENEMY);
 		ship->setNavigation(navigation);

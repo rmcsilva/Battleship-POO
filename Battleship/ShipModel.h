@@ -12,7 +12,7 @@ class ShipModel
 	static int shipCount;
 	int price; //value TODO: Check if its still valid
 	const int maxCapacity, maxSoldiers, maxWater, maxMoves;
-	int id; //Unique id generated according to the the amount of ships in game
+	int id; //TODO:Unique id generated according to the the amount of ships in game
 protected:
 	ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMoves, Owner owner, CellModel* position);
 	
@@ -31,6 +31,7 @@ public:
 	int getID() const;
 	int getNumOfMoves() const;
 	int getMaxMoves() const;
+	int getMaxWater() const;
 	int getCapacity() const;
 	int getWater() const;
 	int getFish() const;
@@ -73,7 +74,6 @@ public:
 
 	virtual std::string getAsString() const = 0;
 	bool operator==(ShipModel const &ship) const;
-	//TODO: Overload operator >> to transfer fish
 };
 
 std::ostream& operator<<(std::ostream& os, const ShipModel &ship);

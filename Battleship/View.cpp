@@ -218,8 +218,6 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			break; }
 		case GameCommands::PROX: {
 			gameController->flushLogs();
-			//TODO:Perform commands
-			//TODO: Implement ships auto movement
 			gameController->proxCommand();
 			updateAllSeaCells(gameController->getSeaCells());
 			updateAllPortCells(gameController->getFriendlyPorts(), gameController->getEnemyPorts());
@@ -279,6 +277,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			}
 			int amount;
 			line >> amount;
+			if (amount < 0) { break; }
 			if (!gameController->buyMerchCommand(ship, amount)) {
 				std::cout << COMMAND_EXECUTE_ERROR;
 				Consola::getch();
@@ -353,7 +352,6 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 		case GameCommands::MOEDAS: {
 			double amount;
 			line >> amount;
-			//TODO: Add restrictions 
 			if (amount < 0) { break; }
 			gameController->addCoins(amount);
 			break; }
@@ -461,6 +459,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			}
 			int amount;
 			line >> amount;
+			if (amount < 0) { break; }
 			if (!gameController->buySoldiersCommand(ship, amount)) {
 				std::cout << COMMAND_EXECUTE_ERROR;
 				Consola::getch();
