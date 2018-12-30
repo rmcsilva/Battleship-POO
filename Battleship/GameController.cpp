@@ -632,7 +632,6 @@ void GameController::shipBattles(std::vector<ShipModel*> friendlyShips)
 bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 {
 	std::ostringstream infoLog, combatLog;
-	//TODO: Check if its still necessary 
 	if (friendlyShip==nullptr || enemyShip==nullptr)
 	{
 		infoLog << "Ship already sank, list update error nullptr!\n";
@@ -982,15 +981,16 @@ bool GameController::spawnRiotEvent(ShipModel* affectedShip)
 
 	ShipModel::Type shipType = affectedShip->getType();
 
+	if (affectedShip->getPosition()->getType() == CellModel::Type::PORT) {
+		eventLog << "Ship " << affectedShip->getID() << " is at port and wasn't affected by the riot!";
+		logger.addLineToInfoLog(eventLog.str());
+		logger.addLineToEventLog(eventLog.str());
+		*onEvent = false;
+		return false;
+	}
+
 	if (shipType == ShipModel::Type::FRIGATE || shipType == ShipModel::Type::SAILBOAT)
 	{
-		if (affectedShip->getPosition()->getType()==CellModel::Type::PORT) {
-			eventLog << "Ship " << affectedShip->getID() << " is at port and wasn't affected by the riot!";
-			logger.addLineToInfoLog(eventLog.str());
-			logger.addLineToEventLog(eventLog.str());
-			*onEvent = false;
-			return false;
-		}
 		eventLog << "Ship " << affectedShip->getID() << " turned enemy during the riot!";
 		game->changeShipOwner(affectedShip, Navigation::AUTO);
 		*onEvent = true;
