@@ -1180,6 +1180,7 @@ bool GameController::canMoveShip(ShipModel* ship) const { return ship->getNumOfM
 
 bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 {
+
 	if (goToPosition->getType() == CellModel::Type::GROUND)
 	{
 		return false;
@@ -1321,6 +1322,10 @@ void GameController::orderShipMovement(ShipModel* ship)
 {
 	CellModel* goTo = ship->getGoTo();
 	do {
+		if (map->getSurroundingEmptySeaCells(ship->getPosition()).empty()) {
+			ship->blockShipMovement();
+			break;
+		}
 		moveShip(ship, goToCell(ship->getPosition(), goTo));
 		if (goTo == ship->getPosition()) {
 			break;

@@ -3,7 +3,7 @@
 #include "SeaModel.h"
 #include "PortModel.h"
 #include "GroundModel.h"
-#include "Logger.h"
+#include <algorithm>
 
 MapModel::MapModel(const int numLines, const int numColumns) : numLines(numLines), numColumns(numColumns) {
 	if (numLines < MIN_LINES || numColumns < MIN_COLUMNS)
@@ -286,6 +286,21 @@ std::vector<SeaModel*> MapModel::getSurroundingSeaCells(const CellModel* current
 	if (cellTmp->getType() == CellModel::Type::SEA) seaCells.push_back((SeaModel*)cellTmp);
 
 	return seaCells;
+}
+
+std::vector<SeaModel*> MapModel::getSurroundingEmptySeaCells(const CellModel* currentCell) const
+{
+	std::vector<SeaModel*>surroudingSeaCells = getSurroundingSeaCells(currentCell);
+
+	//Removes ships that confirm the lambda condition
+	surroudingSeaCells.erase(std::remove_if(surroudingSeaCells.begin(),
+			surroudingSeaCells.end(),
+			[](decltype(surroudingSeaCells)::value_type const& elem) {
+				return elem->hasShip();
+			}),
+			surroudingSeaCells.end());
+
+	return surroudingSeaCells;
 }
 
 std::vector<SeaModel*> MapModel::getSurroundingSeaCellsInRange2(const CellModel* currentCell) const

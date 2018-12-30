@@ -1,16 +1,3 @@
-﻿  GameController.cpp
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(241): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(244): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(393): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(396): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(876): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(876): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(899): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(899): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1412): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1427): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1586): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(561): warning C4715: 'GameController::moveCommand': not all control paths return a value
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1064): warning C4715: 'GameController::updateAffectedShip': not all control paths return a value
-c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1536): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
+﻿  MapModel.cpp
+c:\users\ricardo\documents\github\battleship-poo\battleship\mapmodel.cpp(308): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

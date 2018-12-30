@@ -1,1049 +1,172 @@
-Event probability number: 90
+Event probability number: 86
 
-Enemy Ship random number: 9
-Spawning random F at x: 7 y: 6
+Enemy Ship random number: 66
+
 
 NEXT TURN
 
-Cell Below Left
-Cell Right
 Cell Bellow
+Cell Below Right
 Cell Left
-Ship Combat Between Ship: 1 and 5
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 26
-Enemy Ship Random: 40
-Friendly Ship Soldiers After Combat: 30
-Enemy Ship Soldiers After Combat: 40
-
-Ship Combat Between Ship: 3 and 5
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 38
-Enemy Ship Random: 35
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 20
-
-Event probability number: 93
-
-Enemy Ship random number: 82
-
-
-NEXT TURN
-
-Cell Above Left
-Cell Right
-Cell Left
-Cell Above Right
-Ship Combat Between Ship: 1 and 5
-Friendly Ship Soldiers: 30
-Enemy Ship Soldiers: 20
-Friendly Ship Random: 17
-Enemy Ship Random: 8
-Friendly Ship Soldiers After Combat: 24
-Enemy Ship Soldiers After Combat: 8
-
-Event probability number: 7
-Event type random number: 20
-Affected Ship: 3
+Event probability number: 20
+Event type random number: 73
+Affected cell x: 16 y: 5
+Affected cell x: 16 y: 6
+Affected cell x: 15 y: 5
+Affected cell x: 15 y: 6
 
 Enemy Ship random number: 69
 
 
 NEXT TURN
 
+Cell Left
+Cell Below Left
+Cell Bellow
+Cell Above Right
 Cell Right
-Cell Below Right
-Ship Combat Between Ship: 1 and 5
-Friendly Ship Soldiers: 24
-Enemy Ship Soldiers: 8
-Friendly Ship Random: 5
-Enemy Ship Random: 7
-Friendly Ship Soldiers After Combat: 22
-Enemy Ship Soldiers After Combat: 7
-
-Enemy Ship random number: 16
-Spawning random V at x: 10 y: 3
+Enemy Ship random number: 15
+Spawning random V at x: 2 y: 8
 
 NEXT TURN
 
-Random Movement Ship -> V ID: 6 Position: x 9 y: 2
-Cell Above
-Cell Above
-Ship Combat Between Ship: 1 and 6
-Friendly Ship Soldiers: 22
-Enemy Ship Soldiers: 20
-Friendly Ship Random: 22
-Enemy Ship Random: 20
-Friendly Ship Soldiers After Combat: 18
-Enemy Ship Soldiers After Combat: 12
+Event ended!
+Enemy Ship random number: 49
 
-Ship Combat Between Ship: 2 and 5
+
+NEXT TURN
+
+Cell Bellow
+Cell Above Right
+Cell Above Left
+Event probability number: 63
+
+Enemy Ship random number: 3
+Spawning random V at x: 4 y: 6
+
+NEXT TURN
+
+Cell Above Right
+Cell Below Right
+Cell Above
+Cell Above Right
+Ship Combat Between Ship: 6 and 11
+Friendly Ship Soldiers: 10
+Enemy Ship Soldiers: 20
+Friendly Ship Random: 10
+Enemy Ship Random: 6
+Friendly Ship Soldiers After Combat: 8
+Enemy Ship Soldiers After Combat: 16
+
+Event probability number: 49
+
+Enemy Ship random number: 15
+Spawning random F at x: 14 y: 8
+
+NEXT TURN
+
+Ship Combat Between Ship: 2 and 11
+Friendly Ship Soldiers: 10
+Enemy Ship Soldiers: 16
+Friendly Ship Random: 5
+Enemy Ship Random: 8
+Friendly Ship Soldiers After Combat: 4
+Enemy Ship Soldiers After Combat: 13
+
+Ship Combat Between Ship: 3 and 11
+Friendly Ship Soldiers: 10
+Enemy Ship Soldiers: 13
+Friendly Ship Random: 7
+Enemy Ship Random: 1
+Friendly Ship Soldiers After Combat: 8
+Enemy Ship Soldiers After Combat: 9
+
+Ship Combat Between Ship: 4 and 13
+Friendly Ship Soldiers: 10
+Enemy Ship Soldiers: 50
+Friendly Ship Random: 9
+Enemy Ship Random: 37
+Friendly Ship Soldiers After Combat: 0
+Enemy Ship Soldiers After Combat: 40
+
+Ship Combat Between Ship: 5 and 13
+Friendly Ship Soldiers: 10
+Enemy Ship Soldiers: 40
+Friendly Ship Random: 10
+Enemy Ship Random: 29
+Friendly Ship Soldiers After Combat: 0
+Enemy Ship Soldiers After Combat: 32
+
+Ship Combat Between Ship: 7 and 11
+Friendly Ship Soldiers: 10
+Enemy Ship Soldiers: 9
+Friendly Ship Random: 6
+Enemy Ship Random: 7
+Friendly Ship Soldiers After Combat: 8
+Enemy Ship Soldiers After Combat: 8
+
+Ship Combat Between Ship: 8 and 13
+Friendly Ship Soldiers: 10
+Enemy Ship Soldiers: 32
+Friendly Ship Random: 10
+Enemy Ship Random: 18
+Friendly Ship Soldiers After Combat: 0
+Enemy Ship Soldiers After Combat: 26
+
+Ship Combat Between Ship: 10 and 13
+Friendly Ship Soldiers: 10
+Enemy Ship Soldiers: 26
+Friendly Ship Random: 6
+Enemy Ship Random: 23
+Friendly Ship Soldiers After Combat: 0
+Enemy Ship Soldiers After Combat: 21
+
+Event probability number: 55
+
+Enemy Ship random number: 58
+
+
+NEXT TURN
+
+Cell Left
+Cell Above Left
+Ship Combat Between Ship: 1 and 12
 Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 7
-Friendly Ship Random: 11
-Enemy Ship Random: 2
+Enemy Ship Soldiers: 20
+Friendly Ship Random: 27
+Enemy Ship Random: 10
 Friendly Ship Soldiers After Combat: 40
 Enemy Ship Soldiers After Combat: 0
 
-Event ended!
-Enemy Ship random number: 47
+Ship Combat Between Ship: 6 and 13
+Friendly Ship Soldiers: 8
+Enemy Ship Soldiers: 21
+Friendly Ship Random: 6
+Enemy Ship Random: 10
+Friendly Ship Soldiers After Combat: 0
+Enemy Ship Soldiers After Combat: 17
 
+Event probability number: 92
 
-NEXT TURN
-
-Random Movement Ship -> V ID: 6 Position: x 9 y: 0
-Cell Above
-Cell Bellow
-Ship Combat Between Ship: 1 and 6
-Friendly Ship Soldiers: 18
-Enemy Ship Soldiers: 12
-Friendly Ship Random: 10
-Enemy Ship Random: 5
-Friendly Ship Soldiers After Combat: 15
-Enemy Ship Soldiers After Combat: 6
-
-Event probability number: 31
-
-Enemy Ship random number: 5
-Spawning random V at x: 16 y: 7
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 6 Position: x 9 y: 0
-Cell Below Right
-Cell Below Right
-Cell Left
-Cell Above Right
-Cell Below Left
-Random Movement Ship -> V ID: 7 Position: x 15 y: 6
-Cell Above
-Cell Bellow
-Ship Combat Between Ship: 1 and 6
-Friendly Ship Soldiers: 15
-Enemy Ship Soldiers: 6
-Friendly Ship Random: 15
-Enemy Ship Random: 5
-Friendly Ship Soldiers After Combat: 12
-Enemy Ship Soldiers After Combat: 0
-
-Event probability number: 97
-
-Enemy Ship random number: 2
-Spawning random V at x: 3 y: 10
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 7 Position: x 15 y: 6
-Cell Above Left
-Cell Below Left
-Random Movement Ship -> V ID: 8 Position: x 2 y: 9
-Cell Below Right
-Cell Right
-Event probability number: 16
-Event type random number: 12
-Affected cell x: 2 y: 1
-Affected cell x: 2 y: 2
-Affected cell x: 3 y: 1
-Affected cell x: 3 y: 2
-
-Enemy Ship random number: 57
-
-
-NEXT TURN
-
-Cell Left
-Cell Above Right
-Cell Below Right
-Cell Above Right
-Cell Bellow
-Random Movement Ship -> V ID: 7 Position: x 13 y: 6
-Cell Above Right
-Cell Above
-Cell Right
-Random Movement Ship -> V ID: 8 Position: x 4 y: 0
-Cell Left
-Cell Left
-Enemy Ship random number: 14
+Enemy Ship random number: 1
 Spawning random V at x: 1 y: 4
 
 NEXT TURN
 
-Cell Above Right
-Cell Above Left
-Cell Right
-Cell Below Right
-Random Movement Ship -> V ID: 7 Position: x 15 y: 5
-Cell Bellow
-Cell Above Right
-Random Movement Ship -> V ID: 8 Position: x 2 y: 0
-Cell Bellow
-Cell Below Left
-Random Movement Ship -> V ID: 9 Position: x 0 y: 3
-Cell Bellow
-Cell Bellow
-Enemy Ship random number: 38
-
-
-NEXT TURN
-
-Cell Above Left
-Cell Bellow
-Random Movement Ship -> V ID: 7 Position: x 16 y: 5
-Cell Below Right
-Cell Below Left
-Cell Below Left
-Random Movement Ship -> V ID: 8 Position: x 1 y: 2
-Cell Below Left
-Cell Above Left
-Cell Above Right
-Random Movement Ship -> V ID: 9 Position: x 0 y: 5
-Cell Right
-Cell Left
-Ship Combat Between Ship: 4 and 7
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 20
-Friendly Ship Random: 15
-Enemy Ship Random: 13
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
-
-Enemy Ship random number: 27
-
-
-NEXT TURN
-
-Cell Below Right
-Cell Above
-Cell Above Left
-Cell Above Right
-Cell Below Left
-Cell Below Left
-Cell Right
-Random Movement Ship -> V ID: 8 Position: x 1 y: 2
-Cell Left
-Cell Above Right
-Random Movement Ship -> V ID: 9 Position: x 0 y: 5
-Cell Above Left
-Cell Above
-Cell Below Left
-Cell Below Right
-Event ended!
-Enemy Ship random number: 90
-
-
-NEXT TURN
-
-Cell Left
-Cell Above Left
-Cell Bellow
 Cell Above
 Cell Bellow
-Random Movement Ship -> V ID: 8 Position: x 1 y: 1
-Cell Right
-Cell Right
-Random Movement Ship -> V ID: 9 Position: x 1 y: 5
-Cell Right
-Cell Below Left
-Event probability number: 69
-
-Enemy Ship random number: 97
-
-
-NEXT TURN
-
-Cell Above Right
-Cell Left
-Cell Below Left
-Random Movement Ship -> V ID: 8 Position: x 3 y: 1
-Cell Bellow
-Cell Above Right
-Cell Right
-Random Movement Ship -> V ID: 9 Position: x 1 y: 6
-Cell Below Right
-Cell Below Right
-Ship Combat Between Ship: 10 and 8
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 20
-Friendly Ship Random: 21
-Enemy Ship Random: 3
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
-
-Event probability number: 75
-
-Enemy Ship random number: 10
-Spawning random V at x: 9 y: 10
-
-NEXT TURN
-
-Cell Left
-Random Movement Ship -> V ID: 9 Position: x 3 y: 8
-Cell Left
-Cell Above Left
-Random Movement Ship -> V ID: 13 Position: x 8 y: 9
-Cell Right
-Cell Above Right
-Event probability number: 92
-
-Enemy Ship random number: 71
-
-
-NEXT TURN
-
-Random number for Port Combat: 28
-Cell Below Left
-Cell Right
-Random Movement Ship -> V ID: 9 Position: x 1 y: 7
-Cell Right
-Cell Below Right
-Random Movement Ship -> V ID: 13 Position: x 10 y: 8
-Cell Above Left
-Cell Bellow
-Ship Combat Between Ship: 1 and 13
-Friendly Ship Soldiers: 12
-Enemy Ship Soldiers: 20
-Friendly Ship Random: 8
-Enemy Ship Random: 7
-Friendly Ship Soldiers After Combat: 10
-Enemy Ship Soldiers After Combat: 16
-
-Event probability number: 38
-
-Enemy Ship random number: 75
-
-
-NEXT TURN
-
-Cell Bellow
-Cell Right
-Cell Above Left
-Cell Above
-Cell Above Left
-Random Movement Ship -> V ID: 9 Position: x 3 y: 8
-Cell Above Right
-Cell Right
-Random Movement Ship -> V ID: 13 Position: x 9 y: 8
-Cell Left
-Cell Below Left
-Ship Combat Between Ship: 1 and 9
-Friendly Ship Soldiers: 10
-Enemy Ship Soldiers: 20
-Friendly Ship Random: 5
-Enemy Ship Random: 1
-Friendly Ship Soldiers After Combat: 8
-Enemy Ship Soldiers After Combat: 16
-
-Ship Combat Between Ship: 1 and 13
-Friendly Ship Soldiers: 8
-Enemy Ship Soldiers: 16
-Friendly Ship Random: 1
-Enemy Ship Random: 11
-Friendly Ship Soldiers After Combat: 2
-Enemy Ship Soldiers After Combat: 13
-
-Ship Combat Between Ship: 3 and 9
-Friendly Ship Soldiers: 33
-Enemy Ship Soldiers: 16
-Friendly Ship Random: 6
-Enemy Ship Random: 16
-Friendly Ship Soldiers After Combat: 27
-Enemy Ship Soldiers After Combat: 13
-
-Ship Combat Between Ship: 4 and 9
-Friendly Ship Soldiers: 39
-Enemy Ship Soldiers: 13
-Friendly Ship Random: 12
-Enemy Ship Random: 2
-Friendly Ship Soldiers After Combat: 32
-Enemy Ship Soldiers After Combat: 0
-
-Event probability number: 44
-
-Enemy Ship random number: 17
-Spawning random V at x: 6 y: 2
-
-NEXT TURN
-
-Cell Bellow
-Cell Below Right
-Cell Above Left
-Cell Above
-Cell Bellow
-Random Movement Ship -> V ID: 13 Position: x 7 y: 9
-Cell Below Right
-Cell Below Left
-Random Movement Ship -> V ID: 14 Position: x 5 y: 1
-Cell Below Left
-Cell Above
-Ship Combat Between Ship: 1 and 13
-Friendly Ship Soldiers: 2
-Enemy Ship Soldiers: 13
-Friendly Ship Random: 1
-Enemy Ship Random: 11
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 11
-
-Ship 12 turned enemy during the riot!
-Enemy Ship random number: 76
-
-
-NEXT TURN
-
-Cell Above Right
-Cell Left
-Random Movement Ship -> V ID: 13 Position: x 7 y: 1
-Cell Below Right
-Cell Below Right
-Random Movement Ship -> V ID: 14 Position: x 4 y: 1
-Cell Below Right
-Cell Left
-Cell Left
-Cell Above Right
-Cell Above Right
-Cell Bellow
-Ship Combat Between Ship: 10 and 12
+Ship Combat Between Ship: 1 and 11
 Friendly Ship Soldiers: 40
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 6
-Enemy Ship Random: 7
-Friendly Ship Soldiers After Combat: 20
-Enemy Ship Soldiers After Combat: 40
-
-Enemy Ship random number: 91
-
-
-NEXT TURN
-
-Cell Right
-Cell Bellow
-Random Movement Ship -> V ID: 13 Position: x 9 y: 3
-Cell Right
-Cell Left
-Random Movement Ship -> V ID: 14 Position: x 2 y: 1
-Cell Below Right
-Cell Right
-Cell Right
-Cell Bellow
-Ship Combat Between Ship: 2 and 13
-Friendly Ship Soldiers: 32
-Enemy Ship Soldiers: 11
-Friendly Ship Random: 4
-Enemy Ship Random: 11
-Friendly Ship Soldiers After Combat: 28
-Enemy Ship Soldiers After Combat: 9
-
-Enemy Ship random number: 96
-
-
-NEXT TURN
-
-Cell Above
-Cell Right
-Cell Above
-Cell Below Right
-Cell Right
-Random Movement Ship -> V ID: 13 Position: x 9 y: 3
-Cell Above
-Cell Above
-Random Movement Ship -> V ID: 14 Position: x 4 y: 2
-Cell Bellow
-Cell Right
-Ship Combat Between Ship: 11 and 13
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 9
-Friendly Ship Random: 41
-Enemy Ship Random: 1
-Friendly Ship Soldiers After Combat: 40
-Enemy Ship Soldiers After Combat: 0
-
-Event ended!
-Enemy Ship random number: 26
-
-
-NEXT TURN
-
-Cell Left
-Cell Below Right
-Cell Left
-Cell Left
-Random Movement Ship -> V ID: 14 Position: x 5 y: 3
-Cell Below Right
-Cell Below Left
-Cell Below Right
-Random number for Port Combat: 87
-Cell Above
-Ship Combat Between Ship: 2 and 12
-Friendly Ship Soldiers: 28
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 17
-Enemy Ship Random: 2
-Friendly Ship Soldiers After Combat: 23
-Enemy Ship Soldiers After Combat: 30
-
-Ship Combat Between Ship: 10 and 12
-Friendly Ship Soldiers: 20
-Enemy Ship Soldiers: 30
-Friendly Ship Random: 15
-Enemy Ship Random: 15
-Friendly Ship Soldiers After Combat: 8
-Enemy Ship Soldiers After Combat: 24
-
-Event probability number: 84
-
-Enemy Ship random number: 15
-Spawning random F at x: 12 y: 1
-
-NEXT TURN
-
-Cell Right
-Cell Bellow
-Cell Below Left
-Cell Below Right
-Cell Below Right
-Cell Below Right
-Cell Below Right
-Cell Below Right
-Cell Below Left
-Cell Above Left
-Cell Right
-Cell Above Left
-Ship Combat Between Ship: 2 and 12
-Friendly Ship Soldiers: 23
-Enemy Ship Soldiers: 24
-Friendly Ship Random: 13
-Enemy Ship Random: 11
-Friendly Ship Soldiers After Combat: 19
-Enemy Ship Soldiers After Combat: 16
-
-Ship Combat Between Ship: 10 and 12
-Friendly Ship Soldiers: 8
-Enemy Ship Soldiers: 16
-Friendly Ship Random: 5
-Enemy Ship Random: 1
-Friendly Ship Soldiers After Combat: 7
-Enemy Ship Soldiers After Combat: 14
-
-Event probability number: 20
-Event type random number: 34
-Affected Ship: 11
-
-Enemy Ship random number: 85
-
-
-NEXT TURN
-
-Cell Above Right
-Cell Bellow
-Cell Above Right
-Cell Below Right
-Cell Right
-Cell Above Left
-Cell Below Right
-Cell Above Right
-Cell Left
-Cell Bellow
-Cell Below Left
-Cell Above Left
-Cell Above
-Ship Combat Between Ship: 2 and 12
-Friendly Ship Soldiers: 19
-Enemy Ship Soldiers: 14
-Friendly Ship Random: 3
-Enemy Ship Random: 1
-Friendly Ship Soldiers After Combat: 16
-Enemy Ship Soldiers After Combat: 8
-
-Ship Combat Between Ship: 3 and 15
-Friendly Ship Soldiers: 20
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 13
-Enemy Ship Random: 13
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 40
-
-Ship Combat Between Ship: 10 and 12
-Friendly Ship Soldiers: 7
 Enemy Ship Soldiers: 8
-Friendly Ship Random: 6
-Enemy Ship Random: 4
-Friendly Ship Soldiers After Combat: 6
-Enemy Ship Soldiers After Combat: 6
-
-Event ended!
-Enemy Ship random number: 72
-
-
-NEXT TURN
-
-Cell Below Right
-Cell Right
-Cell Left
-Cell Below Left
-Random number for Port Combat: 55
-Ship Combat Between Ship: 2 and 15
-Friendly Ship Soldiers: 16
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 10
-Enemy Ship Random: 8
-Friendly Ship Soldiers After Combat: 13
-Enemy Ship Soldiers After Combat: 34
-
-Ship Combat Between Ship: 4 and 15
-Friendly Ship Soldiers: 30
-Enemy Ship Soldiers: 34
-Friendly Ship Random: 2
-Enemy Ship Random: 12
-Friendly Ship Soldiers After Combat: 18
-Enemy Ship Soldiers After Combat: 28
-
-Event probability number: 94
-
-Enemy Ship random number: 40
-
-
-NEXT TURN
-
-Cell Left
-Cell Above
-Cell Above
-Cell Bellow
-Cell Above Left
-Cell Above
-Cell Above Left
-Cell Below Left
-Cell Above
-Cell Left
-Random number for Port Combat: 93
-Event probability number: 56
-
-Enemy Ship random number: 92
-
-
-NEXT TURN
-
-Event probability number: 71
-
-Enemy Ship random number: 63
-
-
-NEXT TURN
-
-Event probability number: 13
-Event type random number: 34
-Affected Ship: 2
-
-Enemy Ship random number: 97
-
-
-NEXT TURN
-
-Enemy Ship random number: 7
-Spawning random V at x: 4 y: 5
-
-NEXT TURN
-
-Cell Below Left
-Cell Above Left
-Cell Above
-Cell Left
-Cell Bellow
-Random Movement Ship -> V ID: 16 Position: x 3 y: 4
-Cell Above
-Cell Above
-Ship Combat Between Ship: 10 and 16
-Friendly Ship Soldiers: 6
-Enemy Ship Soldiers: 20
-Friendly Ship Random: 1
-Enemy Ship Random: 17
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 16
-
-Event ended!
-Enemy Ship random number: 43
-
-
-NEXT TURN
-
-Cell Below Left
-Random Movement Ship -> V ID: 16 Position: x 3 y: 2
-Cell Left
-Cell Bellow
-Cell Above Left
-Cell Below Right
-Ship Combat Between Ship: 2 and 16
-Friendly Ship Soldiers: 12
-Enemy Ship Soldiers: 16
-Friendly Ship Random: 7
-Enemy Ship Random: 10
-Friendly Ship Soldiers After Combat: 6
-Enemy Ship Soldiers After Combat: 13
-
-Ship Combat Between Ship: 4 and 16
-Friendly Ship Soldiers: 14
-Enemy Ship Soldiers: 13
-Friendly Ship Random: 13
-Enemy Ship Random: 5
-Friendly Ship Soldiers After Combat: 12
-Enemy Ship Soldiers After Combat: 9
-
-Enemy Ship random number: 16
-Spawning random V at x: 2 y: 9
-
-NEXT TURN
-
-Cell Below Left
-Cell Above Right
-Random Movement Ship -> V ID: 16 Position: x 3 y: 2
-Cell Bellow
-Cell Below Left
-Cell Above
-Cell Below Right
-Random Movement Ship -> V ID: 17 Position: x 1 y: 8
-Cell Below Right
-Cell Below Right
-Ship Combat Between Ship: 4 and 16
-Friendly Ship Soldiers: 12
-Enemy Ship Soldiers: 9
-Friendly Ship Random: 9
-Enemy Ship Random: 2
-Friendly Ship Soldiers After Combat: 10
-Enemy Ship Soldiers After Combat: 5
-
-Event ended!
-Enemy Ship random number: 52
-
-
-NEXT TURN
-
-Cell Above
-Cell Below Right
-Cell Above Right
-Cell Bellow
-Random Movement Ship -> V ID: 16 Position: x 4 y: 2
-Cell Below Right
-Cell Left
-Cell Above
-Random Movement Ship -> V ID: 17 Position: x 3 y: 0
-Cell Above
-Cell Above
-Ship Combat Between Ship: 2 and 16
-Friendly Ship Soldiers: 6
-Enemy Ship Soldiers: 5
-Friendly Ship Random: 3
-Enemy Ship Random: 5
-Friendly Ship Soldiers After Combat: 4
-Enemy Ship Soldiers After Combat: 4
-
-Ship Combat Between Ship: 4 and 16
-Friendly Ship Soldiers: 10
-Enemy Ship Soldiers: 4
-Friendly Ship Random: 4
-Enemy Ship Random: 2
-Friendly Ship Soldiers After Combat: 8
-Enemy Ship Soldiers After Combat: 0
-
-Event probability number: 48
-
-Enemy Ship random number: 57
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 3 y: 8
-Cell Bellow
-Cell Below Right
-Event probability number: 43
-
-Enemy Ship random number: 46
-
-
-NEXT TURN
-
-Cell Below Left
-Random Movement Ship -> V ID: 17 Position: x 4 y: 0
-Cell Below Left
-Cell Above
-Ship Combat Between Ship: 4 and 17
-Friendly Ship Soldiers: 8
-Enemy Ship Soldiers: 20
-Friendly Ship Random: 5
-Enemy Ship Random: 14
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 16
-
-Event probability number: 21
-Event type random number: 74
-Affected cell x: 12 y: 7
-Affected cell x: 12 y: 8
-Affected cell x: 13 y: 7
-Affected cell x: 13 y: 8
-
-Enemy Ship random number: 97
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 3 y: 0
-Cell Above Left
-Cell Above Right
-Enemy Ship random number: 96
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 3 y: 8
-Cell Left
-Cell Left
-Event ended!
-Enemy Ship random number: 33
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 1 y: 8
-Cell Left
-Cell Left
-Event probability number: 94
-
-Enemy Ship random number: 42
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 19 y: 8
-Cell Right
-Cell Left
-Event probability number: 42
-
-Enemy Ship random number: 82
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 19 y: 8
-Cell Above Right
-Cell Above Left
-Cell Above Right
-Event probability number: 87
-
-Enemy Ship random number: 72
-
-
-NEXT TURN
-
-Cell Above Right
-Cell Left
-Cell Bellow
-Random Movement Ship -> V ID: 17 Position: x 1 y: 6
-Cell Below Left
-Cell Above Left
-Cell Above Left
-Cell Right
-Event probability number: 67
-
-Enemy Ship random number: 93
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 1 y: 7
-Cell Bellow
-Cell Right
-Cell Below Right
-Cell Below Left
-Ship Combat Between Ship: 2 and 17
-Friendly Ship Soldiers: 4
-Enemy Ship Soldiers: 16
-Friendly Ship Random: 1
-Enemy Ship Random: 4
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 13
-
-Event probability number: 8
-Event type random number: 43
-Affected Ship: 11
-
-Enemy Ship random number: 36
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 1 y: 9
-Cell Above Left
-Cell Above Right
-Enemy Ship random number: 15
-Spawning random V at x: 13 y: 9
-
-NEXT TURN
-
-Cell Bellow
-Cell Right
-Random Movement Ship -> V ID: 17 Position: x 1 y: 7
-Cell Below Left
-Cell Below Right
-Random Movement Ship -> V ID: 18 Position: x 12 y: 8
-Cell Above
-Cell Above
-Event ended!
-Enemy Ship random number: 78
-
-
-NEXT TURN
-
-Cell Left
-Random Movement Ship -> V ID: 17 Position: x 1 y: 9
-Cell Below Left
-Cell Above
-Cell Below Right
-Random Movement Ship -> V ID: 18 Position: x 12 y: 6
-Cell Above Left
-Cell Above Left
-Ship 20 turned enemy during the riot!
-Enemy Ship random number: 99
-
-
-NEXT TURN
-
-Random Movement Ship -> V ID: 17 Position: x 1 y: 1
-Cell Bellow
-Cell Bellow
-Random Movement Ship -> V ID: 18 Position: x 10 y: 4
-Cell Above Right
-Cell Above Left
-Random number for Port Combat: 98
-Enemy Ship random number: 15
-Spawning random V at x: 9 y: 3
-
-NEXT TURN
-
-Cell Above
-Random Movement Ship -> V ID: 17 Position: x 1 y: 3
-Cell Above Right
-Cell Above
-Cell Left
-Cell Above
-Cell Below Left
-Random Movement Ship -> V ID: 22 Position: x 8 y: 2
-Cell Right
-Cell Right
-Cell Below Right
-Cell Below Right
-Enemy Ship random number: 2
-Spawning random F at x: 11 y: 7
-
-NEXT TURN
-
-Cell Above Right
-Random Movement Ship -> V ID: 17 Position: x 2 y: 1
-Cell Below Right
-Cell Below Left
-Random Movement Ship -> V ID: 22 Position: x 10 y: 4
-Cell Above
-Cell Left
-Ship Combat Between Ship: 11 and 17
-Friendly Ship Soldiers: 29
-Enemy Ship Soldiers: 13
-Friendly Ship Random: 7
-Enemy Ship Random: 12
-Friendly Ship Soldiers After Combat: 25
-Enemy Ship Soldiers After Combat: 11
-
-Enemy Ship random number: 61
-
-
-NEXT TURN
-
-Cell Below Left
-Cell Left
-Cell Above Right
-Random Movement Ship -> V ID: 17 Position: x 2 y: 3
-Cell Above Right
-Cell Left
-Random Movement Ship -> V ID: 22 Position: x 9 y: 3
-Cell Bellow
-Cell Below Left
-Ship Combat Between Ship: 11 and 19
-Friendly Ship Soldiers: 25
-Enemy Ship Soldiers: 12
-Friendly Ship Random: 21
+Friendly Ship Random: 26
 Enemy Ship Random: 3
-Friendly Ship Soldiers After Combat: 20
-Enemy Ship Soldiers After Combat: 2
-
-Ship Combat Between Ship: 11 and 20
-Friendly Ship Soldiers: 20
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 1
-Enemy Ship Random: 15
-Friendly Ship Soldiers After Combat: 0
-Enemy Ship Soldiers After Combat: 40
-
-Ship Combat Between Ship: 25 and 26
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 50
-Friendly Ship Random: 35
-Enemy Ship Random: 44
-Friendly Ship Soldiers After Combat: 30
-Enemy Ship Soldiers After Combat: 40
-
-Enemy Ship random number: 28
-
-
-NEXT TURN
-
-Cell Above
-Cell Bellow
-Random Movement Ship -> V ID: 17 Position: x 2 y: 2
-Cell Left
-Cell Bellow
-Cell Above Left
-Cell Left
-Cell Above Right
-Cell Right
-Random Movement Ship -> V ID: 22 Position: x 8 y: 5
-Cell Below Right
-Cell Below Right
-Cell Left
-Cell Above Left
-Cell Left
-Cell Right
-Ship Combat Between Ship: 21 and 20
-Friendly Ship Soldiers: 50
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 4
-Enemy Ship Random: 40
-Friendly Ship Soldiers After Combat: 34
-Enemy Ship Soldiers After Combat: 32
-
-Ship Combat Between Ship: 21 and 19
-Friendly Ship Soldiers: 34
-Enemy Ship Soldiers: 2
-Friendly Ship Random: 31
-Enemy Ship Random: 1
-Friendly Ship Soldiers After Combat: 28
+Friendly Ship Soldiers After Combat: 32
 Enemy Ship Soldiers After Combat: 0
 
-Ship Combat Between Ship: 24 and 26
-Friendly Ship Soldiers: 48
-Enemy Ship Soldiers: 40
-Friendly Ship Random: 32
-Enemy Ship Random: 39
-Friendly Ship Soldiers After Combat: 32
-Enemy Ship Soldiers After Combat: 32
+Event probability number: 63
 
-Ship Combat Between Ship: 25 and 26
-Friendly Ship Soldiers: 30
-Enemy Ship Soldiers: 32
-Friendly Ship Random: 10
-Enemy Ship Random: 21
-Friendly Ship Soldiers After Combat: 18
-Enemy Ship Soldiers After Combat: 26
-
-Event ended!
-Enemy Ship random number: 80
-
+Enemy Ship random number: 2
+Spawning random F at x: 1 y: 10
 
 NEXT TURN
 
