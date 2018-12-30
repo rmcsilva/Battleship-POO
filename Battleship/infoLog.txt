@@ -1,24 +1,60 @@
-Event probability number: 28
-Event type random number: 20
-Affected Ship: 1
+Ship 1 is at port and wasn't affected by the riot!
+Event probability number: 83
+
+Enemy Ship random number: 20
+
+
+NEXT TURN
+
+Event probability number: 86
+
+Enemy Ship random number: 58
+
+
+NEXT TURN
+
+Event probability number: 59
+
+Enemy Ship random number: 17
+Spawning random V at x: 4 y: 2
+
+NEXT TURN
+
+Random Movement Ship -> V ID: 2 Position: x 3 y: 1
+Cell Above Left
+Cell Right
+Event probability number: 0
+Event type random number: 15
+Affected cell x: 9 y: 3
+Affected cell x: 9 y: 4
+Affected cell x: 10 y: 3
+Affected cell x: 10 y: 4
+
+Enemy Ship random number: 61
+
+
+NEXT TURN
+
+Random Movement Ship -> V ID: 2 Position: x 3 y: 0
+Cell Below Right
+Cell Below Right
+Enemy Ship random number: 48
+
+
+NEXT TURN
+
+Random Movement Ship -> V ID: 2 Position: x 5 y: 2
+Cell Above
+Cell Bellow
+Ship Combat Between Ship: 1 and 2
+Friendly Ship Soldiers: 50
+Enemy Ship Soldiers: 20
+Friendly Ship Random: 26
+Enemy Ship Random: 20
+Friendly Ship Soldiers After Combat: 40
+Enemy Ship Soldiers After Combat: 0
 
 Enemy Ship random number: 67
-
-
-NEXT TURN
-
-Enemy Ship random number: 44
-
-
-NEXT TURN
-
-Event ended!
-Enemy Ship random number: 22
-
-
-NEXT TURN
-
-Enemy Ship random number: 52
 
 
 NEXT TURN

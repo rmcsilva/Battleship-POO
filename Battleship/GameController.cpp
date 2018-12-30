@@ -978,20 +978,29 @@ void GameController::endEvent(EventModel::Type type)
 
 bool GameController::spawnRiotEvent(ShipModel* affectedShip)
 {
-	std::ostringstream infoLog, eventLog;
+	std::ostringstream eventLog;
 
 	ShipModel::Type shipType = affectedShip->getType();
 
 	if (shipType == ShipModel::Type::FRIGATE || shipType == ShipModel::Type::SAILBOAT)
 	{
+		if (affectedShip->getPosition()->getType()==CellModel::Type::PORT) {
+			eventLog << "Ship " << affectedShip->getID() << " is at port and wasn't affected by the riot!";
+			logger.addLineToInfoLog(eventLog.str());
+			logger.addLineToEventLog(eventLog.str());
+			*onEvent = false;
+			return false;
+		}
 		eventLog << "Ship " << affectedShip->getID() << " turned enemy during the riot!";
 		game->changeShipOwner(affectedShip, Navigation::AUTO);
 		*onEvent = true;
+		logger.addLineToInfoLog(eventLog.str());
+		logger.addLineToEventLog(eventLog.str());
 		return true;
 	} else {
 		eventLog << "Ship " << affectedShip->getID() << " sank during the riot!";
 		game->removeFriendlyShip(affectedShip);
-		logger.addLineToInfoLog(infoLog.str());
+		logger.addLineToInfoLog(eventLog.str());
 		logger.addLineToEventLog(eventLog.str());
 		*onEvent = false;
 		return false;
