@@ -1,5 +1,21 @@
-﻿  View.cpp
+﻿  GameController.cpp
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(241): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(244): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(393): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(396): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(877): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(877): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(900): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(900): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1404): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1419): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1578): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  View.cpp
 c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(785): warning C4129: ' ': unrecognized character escape sequence
 c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(787): warning C4129: '_': unrecognized character escape sequence
+  Generating Code...
 c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(97): warning C4715: 'View::readInitialCommands': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(561): warning C4715: 'GameController::moveCommand': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1056): warning C4715: 'GameController::updateAffectedShip': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\gamecontroller.cpp(1528): warning C4715: 'GameController::generateRandomMove': not all control paths return a value
   Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

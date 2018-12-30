@@ -1,0 +1,14 @@
+compranav f
+compranav f
+compranav f
+move 1 E
+move 2 CE
+move 3 BE
+evnav 1 M
+saveg ola
+prox
+prox
+prox
+prox
+prox
+saveg ole

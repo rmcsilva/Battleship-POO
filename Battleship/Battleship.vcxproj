@@ -212,6 +212,7 @@
     <Text Include="combatTest.txt" />
     <Text Include="initialConfig.txt" />
     <Text Include="proxBug.txt" />
+    <Text Include="saveGame.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

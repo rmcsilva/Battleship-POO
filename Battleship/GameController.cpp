@@ -103,6 +103,8 @@ ShipModel* GameController::getFriendlyShipByID(int id) const
 
 EventModel* GameController::getEvent() const {return event;}
 
+void GameController::setEvent(EventModel* event) {this->event = event;}
+
 bool GameController::readInitialFileConfigs(std::string filename)
 {
 	if (fileManager.readInitialFileConfigs(filename, map, game)) {
@@ -420,17 +422,35 @@ bool GameController::loadGameCommand(std::string name)
 	if (this->name == name) return false;
 
 	if (savedGames.count(name)) {
+		//Checks if there is an event going to clone it
+		if(hasEvent()) {
+			for (auto savedGame : savedGames) {
+				if(savedGame.first==this->name) {
+					if (savedGame.second->event != event) {
+						savedGame.second->setEvent(this->event->clone());
+					}
+					
+					break;
+				}
+			}
+		}
+
 		for (auto save : savedGames) {
 			if (save.first == name) {
 				MapModel* oldMap = map;
 				EventModel* oldEvent = event;
 				GameModel* oldGame = game;
 				bool *oldOnEvent = onEvent;
+
 				GameController* game = save.second;
 				this->map = game->map;
 				this->game = game->game;
-				this->event = game->event;
 				this->onEvent = game->onEvent;
+				if(game->hasEvent()) {
+					this->event = game->event;
+				} else {
+					this->event = nullptr;
+				}
 
 				if (this->name == UNSAVED) {
 					if (oldMap != nullptr) delete(oldMap);
@@ -669,6 +689,8 @@ bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 		game->removeFriendlyShip(friendlyShip);
 		game->removeEnemyShip(enemyShip);
 		combatLog << "Both Ships Sank!!\n";
+		friendlyShip = nullptr;
+		enemyShip = nullptr;
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToCombatLog(combatLog.str());
 		return false;
@@ -677,7 +699,15 @@ bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 		combatLog << "Ship " << friendlyShip->getID() << " Sank!\n";
 		//Enemy Ships gets friendly Ship stuff
 		enemyShip->lootShip(friendlyShip);
+		//If ship on Mermaid Event Sinks
+		if (hasEvent()) {
+			if (event->getType() == EventModel::Type::MERMAID) {
+				MermaidModel* mermaid = (MermaidModel*)event;
+				mermaid->setAffectedShip(nullptr);
+			}
+		}
 		game->removeFriendlyShip(friendlyShip);
+		friendlyShip = nullptr;
 		logger.addLineToInfoLog(infoLog.str());
 		logger.addLineToCombatLog(combatLog.str());
 		return false;
@@ -686,9 +716,16 @@ bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 		combatLog << "Ship " << enemyShip->getID() << " Sank!\n";
 		//Friendly Ships gets enemy Ship stuff
 		friendlyShip->lootShip(enemyShip);
+		//If ship on Riot Event Sinks
+		if (hasEvent()) {
+			if (event->getType()==EventModel::Type::RIOT) {
+				RiotModel* riot = (RiotModel*)event;
+				riot->setAffectedShip(nullptr);
+			}
+		}
 		game->removeEnemyShip(enemyShip);
+		enemyShip = nullptr;
 	}
-
 	logger.addLineToInfoLog(infoLog.str());
 	logger.addLineToCombatLog(combatLog.str());
 	return true;

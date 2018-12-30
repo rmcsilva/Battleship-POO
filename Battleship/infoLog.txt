@@ -1,0 +1,25 @@
+Event probability number: 28
+Event type random number: 20
+Affected Ship: 1
+
+Enemy Ship random number: 67
+
+
+NEXT TURN
+
+Enemy Ship random number: 44
+
+
+NEXT TURN
+
+Event ended!
+Enemy Ship random number: 22
+
+
+NEXT TURN
+
+Enemy Ship random number: 52
+
+
+NEXT TURN
+

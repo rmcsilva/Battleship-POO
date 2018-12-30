@@ -37,6 +37,8 @@ public:
 	ShipModel* getFriendlyShipByID(int id) const;
 	
 	EventModel* getEvent() const;
+
+	void setEvent(EventModel* event);
 	
 	//Initial Read From file
 	bool readInitialFileConfigs(std::string filename);

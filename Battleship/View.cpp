@@ -18,8 +18,8 @@ void View::setupLayout(GameController *gameController)
 		switch (gameController->getGameState())
 		{
 			case GameState::SETUP:
-				//TODO:Uncomment this is for tests only
 				initialLayout(gameController);
+				//Uncomment this for tests only, it skips to game phase 
 				//gameController->readInitialFileConfigs("initialConfig.txt");
 				break;
 			case GameState::GAME:

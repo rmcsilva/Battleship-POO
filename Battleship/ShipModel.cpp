@@ -103,12 +103,8 @@ void ShipModel::navigationCost()
 		if (soldiers==0) {
 			owner = Owner::LOST;
 			navigation = Navigation::LOST;
-			return;
 		}
 	}
-
-	owner = Owner::LOST;
-	navigation = Navigation::LOST;
 }
 
 void ShipModel::moveShip(CellModel* position)
