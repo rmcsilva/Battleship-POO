@@ -14,8 +14,6 @@ class View
 	const int LOST_SHIP_COLOR = Consola::CYAN_CLARO;
 	const int EVENT_COLOR = Consola::ROXO;
 
-	//TODO:Add lost ship color
-
 	const int ERROR_COLOR = Consola::VERMELHO_CLARO;
 	const int SUCESS_COLOR = Consola::VERDE_CLARO;
 	const int TEXT_COLOR = Consola::BRANCO;
@@ -78,5 +76,6 @@ public:
 	static void goToMapPosition(int x, int y);
 	static void goToMapOffPosition(int x, int y);
 	static CellModel* convertStringCommandToCell(std::string command, CellModel* currentCell, GameController *gameController);
+	void printLogo() const;
 };
 

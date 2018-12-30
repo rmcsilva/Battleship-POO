@@ -29,6 +29,7 @@ void View::setupLayout(GameController *gameController)
 			case GameState::END:
 				//TODO: Menu with score
 				Consola::clrscr();
+				printLogo();
 				std::cout << "Final score: " << gameController->getFinalScore() << "\n";
 				std::cout << "Leaving game!";
 				Consola::getch();
@@ -41,6 +42,7 @@ void View::setupLayout(GameController *gameController)
 void View::initialLayout(GameController *gameController) const
 {
 	Consola::clrscr();
+	printLogo();
 	std::cout << INITIAL_LAYOUT;
 	std::string command;
 	do {
@@ -768,4 +770,19 @@ CellModel* View::convertStringCommandToCell(std::string command, CellModel* curr
 		if (command.compare("BD") == 0) return gameController->getCellBelowRight(currentCell);
 	}
 	return currentCell;
+}
+
+void View::printLogo() const
+{
+	std::ostringstream os;
+	os << "	      |    |    | \n";
+	os << "             )_)  )_)  )_) \n";
+	os << "            )___))___))___)\ \n";
+	os << "           )____)____)_____)\\ \n";
+	os << "         _____|____|____|____\\\__ \n";
+	os << "---------\\                   /--------- \n";
+	os << "  ^^^^^ ^^^^^^^^^^^^^^^^^^^^^\n";
+	os << "    ^^^^      ^^^^     ^^^    ^^\n";
+	os << "         ^^^^      ^^^\n";
+	std::cout << os.str();
 }
