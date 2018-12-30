@@ -7,7 +7,7 @@
 
 MapModel::MapModel(const int numLines, const int numColumns) : numLines(numLines), numColumns(numColumns) {
 	if (numLines < MIN_LINES || numColumns < MIN_COLUMNS)
-		throw 10;
+		throw std::bad_array_new_length();
 }
 
 MapModel::~MapModel()

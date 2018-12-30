@@ -517,6 +517,7 @@ bool GameController::moveCommand(int id, CellModel* goToPosition)
 		}
 
 		if (ship==nullptr) return false;
+		if (ship->getType() == ShipModel::Type::GHOST) return false;
 
 		if (ship->getOwner()==Owner::LOST) return false;
 
@@ -534,7 +535,6 @@ bool GameController::moveCommand(int id, CellModel* goToPosition)
 	}
 	catch (std::out_of_range e)
 	{
-		//TODO: Add to log ship doesn't exist
 		logger.addLineToInfoLog("Ship does not exist!!");
 		return false;
 	}
@@ -587,6 +587,7 @@ void GameController::proxCommand()
 		else *onEvent = false;
 	}
 	spawnRandomEnemyShip(map->getSeaCells(), map->getPirateProb());
+	if (isGameOver()) endGame();
 	logger.addLineToInfoLog("\nNEXT TURN\n");
 }
 
@@ -594,8 +595,6 @@ void GameController::shipBattles(std::vector<ShipModel*> friendlyShips)
 {
 	for(auto friendlyShip : friendlyShips)
 	{
-		//TODO: Check if ship is on enemy port
-
 		std::vector<SeaModel*> surroundingSeaCells = map->getSurroundingSeaCells(friendlyShip->getPosition());
 		for(auto surroundingSeaCell : surroundingSeaCells)
 		{
@@ -1091,6 +1090,11 @@ void GameController::friendlyFleetMovement(std::vector<ShipModel*> friendlyShips
 	{
 		if (canMoveShip(friendlyShip))
 		{
+			if (friendlyShip->getType()==ShipModel::Type::GHOST) {
+				ghostShipMovement(friendlyShip);
+				friendlyShip->resetMoves();
+				continue;
+			}
 			switch (friendlyShip->getNavigation())
 			{
 				case Navigation::USER:
@@ -1171,7 +1175,20 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 			}
 			else {
 				//Can only attack empty ports
-				if (port->getNumberOfShips() > 0) return false;
+				if (port->getNumberOfShips() > 0) {
+					//Combats ships at port
+					if(ship->getOwner()==Owner::PLAYER) {
+						//Player Vs enemy Ships at port
+						for (auto enemyShip : port->getShips())
+							if (!shipCombat(ship, enemyShip)) return false;
+					} else {
+						//Player at port Vs enemy Ships
+						for (auto friendlyShip : port->getShips())
+							if (!shipCombat(friendlyShip, ship)) return false;
+					}
+					
+					return true;
+				}
 
 				//If ship wins battle it will enter the port
 				if (portCombat(ship, port))
@@ -1242,7 +1259,6 @@ void GameController::autoShipMovement(ShipModel* ship)
 			ship->blockShipMovement();
 			break;
 		case ShipModel::Type::GHOST:
-			//TODO: Implement
 			break;
 		case ShipModel::Type::SAILBOAT:
 			sailboatAutoMovement(ship);
@@ -1339,6 +1355,44 @@ void GameController::schoonerAutoMovement(ShipModel* schooner)
 			}
 		}
 		generateRandomMove(schooner->getPosition());
+	}
+}
+
+void GameController::ghostShipMovement(ShipModel* ghost)
+{
+	GhostShipModel* ghostShip = (GhostShipModel*)ghost;
+	
+	//Checks if can combat enemy ships
+	if (ghostShip->canAttack()) {
+		int totalEnemyShips = game->getEnemyShips().size();
+		if (totalEnemyShips > 0 && ghostShip->canAttack()) {
+			int random = rand() % totalEnemyShips;
+			if (!shipCombat(ghost, game->getEnemyShips().at(random))) return;
+			ghostShip->updateCountdown();
+		}
+	} else {
+		ghostShip->updateCountdown();
+	}
+	
+	
+
+	int random = rand() % 2;
+
+	if (random) {
+		int totalFriendlyPorts = map->getFriendlyPorts().size();
+
+		if (totalFriendlyPorts>0) {
+			random = rand() % totalFriendlyPorts;
+			PortModel* port = map->getFriendlyPorts().at(random);
+
+			if(ghost->getPosition()->getType()!=CellModel::Type::PORT) return;
+
+			PortModel* position = (PortModel*)ghostShip->getPosition();
+
+			if (port->getID()!=position->getID()) {
+				moveShip(ghost, getCellAt(port->getX(), port->getY()));
+			}
+		}
 	}
 }
 
@@ -1464,6 +1518,12 @@ double GameController::calculateShipContentValue(ShipModel* ship)
 		value += ship->getFish() * game->getFishSellPrice();
 	}
 	return value;
+}
+
+bool GameController::isGameOver()
+{
+	//Game ends when there are no friendly ships and no money to buy new ones
+	return game->getFriendlyShips().size() == 0 && game->getPlayerCoins() > game->getShipPrice();
 }
 
 void GameController::endGame()

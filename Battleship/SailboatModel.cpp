@@ -4,7 +4,6 @@
 const int SailboatModel::MAX_SOLDIERS = 20;
 const int SailboatModel::MAX_CAPACITY = 40;
 const int SailboatModel::MAX_WATER = 200;
-//TODO: Change to 1 depending on difficulty
 const int SailboatModel::MAX_MOVES = 2;
 const int SailboatModel::STORM_SINK_PROB_ABOVE_CAPACITY = 35;
 const int SailboatModel::STORM_SINK_PROB_BELOW_CAPACITY = 20;

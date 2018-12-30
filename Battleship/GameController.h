@@ -100,7 +100,7 @@ public:
 	void frigateAutoMovement(ShipModel* frigate);
 	void sailboatAutoMovement(ShipModel* sailboat);
 	void schoonerAutoMovement(ShipModel* schooner);
-	void ghostShipAutoMovement(ShipModel* ghost);
+	void ghostShipMovement(ShipModel* ghost);
 
 	CellModel* goToCell(CellModel* current, CellModel* goTo);
 
@@ -120,7 +120,8 @@ public:
 	void addCoins(double amount);
 	double calculateShipValue(ShipModel* ship);
 	double calculateShipContentValue(ShipModel* ship);
-	
+
+	bool isGameOver();
 	void endGame();
 
 	//Logger Methods

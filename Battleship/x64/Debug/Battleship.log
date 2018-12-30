@@ -1,5 +1,5 @@
 ﻿  View.cpp
-c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(780): warning C4129: ' ': unrecognized character escape sequence
-c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(782): warning C4129: '_': unrecognized character escape sequence
-c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(92): warning C4715: 'View::readInitialCommands': not all control paths return a value
+c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(785): warning C4129: ' ': unrecognized character escape sequence
+c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(787): warning C4129: '_': unrecognized character escape sequence
+c:\users\ricardo\documents\github\battleship-poo\battleship\view.cpp(97): warning C4715: 'View::readInitialCommands': not all control paths return a value
   Battleship.vcxproj -> C:\Users\Ricardo\Documents\GitHub\Battleship-POO\Battleship\x64\Debug\Battleship.exe

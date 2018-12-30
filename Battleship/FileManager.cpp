@@ -15,7 +15,6 @@ FileManager::~FileManager()
 
 bool FileManager::readInitialFileConfigs(std::string filename, MapModel *&map, GameModel *game)
 {
-	//TODO: Add info to logs
 	int portSoldiers=-1;
 
 	std::ifstream file(filename);
@@ -33,7 +32,7 @@ bool FileManager::readInitialFileConfigs(std::string filename, MapModel *&map, G
 			{
 				case InitialConfigsCommands::linhas:
 					if (!setupMap(file, value, map, game)) {
-						//TODO: Error reading file 
+						//Error reading file 
 						return false;
 					}
 					break;
@@ -322,7 +321,8 @@ bool FileManager::setupMap(std::ifstream &file,int const &lines, MapModel *&map,
 			}
 			catch (std::bad_alloc& e) {
 				std::cerr << "bad_alloc caught: " << e.what() << '\n';
-				//TODO: add to log invalid lines, columns number
+			} catch (std::bad_array_new_length& e) {
+				std::cerr << "bad array new length caught: " << e.what() << '\n';
 			}
 
 			if (readMap(file, lines, value, map, game)) {
@@ -334,11 +334,9 @@ bool FileManager::setupMap(std::ifstream &file,int const &lines, MapModel *&map,
 			
 			
 		} else {
-			//TODO: Ordem errada no ficheiro
 			return false;
 		}	
 	} else {
-		//TODO:Add to log 
 		return false;
 	}
 

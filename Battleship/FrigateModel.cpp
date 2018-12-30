@@ -4,7 +4,6 @@
 const int FrigateModel::MAX_SOLDIERS = 50;
 const int FrigateModel::MAX_CAPACITY = 0;
 const int FrigateModel::MAX_WATER = 500;
-//TODO: Change to 1 depending on difficulty
 const int FrigateModel::MAX_MOVES = 2;
 const int FrigateModel::STORM_SOLDIERS_AFFECTED_PERCENTAGE = 15;
 const int FrigateModel::STORM_SINK_PROB = 20;

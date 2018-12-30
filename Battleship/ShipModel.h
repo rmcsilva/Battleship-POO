@@ -14,7 +14,6 @@ class ShipModel
 	int id; //TODO:Unique id generated according to the the amount of ships in game
 protected:
 	ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMoves, Owner owner, CellModel* position);
-	
 	int capacity, soldiers, water, merch, fish;
 	int numOfMoves = 0;
 	Owner owner;

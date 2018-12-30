@@ -83,7 +83,12 @@ bool View::readInitialCommands(std::string const &input, GameController * gameCo
 		case InitialCommands::DIFICULDADE: {
 			std::string difficulty;
 			line >> difficulty;
-			if (gameController->changeGameDifficulty(difficulty)) return true;
+			if (gameController->changeGameDifficulty(difficulty)) {
+				Consola::setTextColor(SUCESS_COLOR);
+				std::cout << "Game Difficulty Changed!\n";
+				Consola::setTextColor(TEXT_COLOR);
+				return true;
+			}
 			break; }
 		default:
 			return true;
