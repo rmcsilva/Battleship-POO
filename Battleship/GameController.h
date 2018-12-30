@@ -74,7 +74,6 @@ public:
 	//Event Logic
 	bool hasEvent() const;
 	bool spawnRandomEvent();
-	//TODO: make event actions to sink ships and such
 	void endEvent(EventModel::Type type);
 	bool spawnRiotEvent(ShipModel* affectedShip);
 	void updateEvent(EventModel* event, GameModel* game, MapModel* map);

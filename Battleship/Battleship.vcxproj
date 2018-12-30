@@ -158,6 +158,7 @@
     <ClInclude Include="GalleonModel.h" />
     <ClInclude Include="GameController.h" />
     <ClInclude Include="GameModel.h" />
+    <ClInclude Include="GameUtil.h" />
     <ClInclude Include="GhostShipModel.h" />
     <ClInclude Include="GroundModel.h" />
     <ClInclude Include="Logger.h" />

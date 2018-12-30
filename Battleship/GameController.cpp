@@ -10,8 +10,7 @@
 #include "MermaidModel.h"
 #include "RiotModel.h"
 #include "StormModel.h"
-
-//TODO: Initialize with defaults
+#include "GameUtil.h"
 
 GameController::GameController()
 {
@@ -115,16 +114,46 @@ bool GameController::readInitialFileConfigs(std::string filename)
 
 bool GameController::changeGameDifficulty(std::string difficulty)
 {
-	//TODO: IMPLEMENT
 	if (difficulty == "facil")
 	{
-		
-	} else if(difficulty == "media")
-	{
-		
-	} else if(difficulty == "dificil")
-	{
-		
+		game->setPlayerCoins(COINS_EASY);
+		game->setEventProbability(EVENT_PROB_EASY);
+		game->setStormEventProbability(STORM_EVENT_PROB_EASY);
+		game->setMermaidEventProbability(MERMAID_EVENT_PROB_EASY);
+		game->setCalmEventProbability(LULL_EVENT_PROB_EASY);
+		game->setRiotEventProbability(RIOT_EVENT_PROB_EASY);
+		game->setShipPrice(SHIP_PRICE_EASY);
+		game->setSoldierPrice(SOLDIER_PRICE_EASY);
+		game->setFishSellPrice(FISH_SELL_PRICE_EASY);
+		game->setMerchSellPrice(MERCH_SELL_PRICE_EASY);
+		game->setMerchBuyPrice(MERCH_BUY_PRICE_EASY);
+		return true;
+	} else if(difficulty == "media") {
+		game->setPlayerCoins(COINS_MEDIUM);
+		game->setEventProbability(EVENT_PROB_MEDIUM);
+		game->setStormEventProbability(STORM_EVENT_PROB_MEDIUM);
+		game->setMermaidEventProbability(MERMAID_EVENT_PROB_MEDIUM);
+		game->setCalmEventProbability(LULL_EVENT_PROB_MEDIUM);
+		game->setRiotEventProbability(RIOT_EVENT_PROB_MEDIUM);
+		game->setShipPrice(SHIP_PRICE_MEDIUM);
+		game->setSoldierPrice(SOLDIER_PRICE_MEDIUM);
+		game->setFishSellPrice(FISH_SELL_PRICE_MEDIUM);
+		game->setMerchSellPrice(MERCH_SELL_PRICE_MEDIUM);
+		game->setMerchBuyPrice(MERCH_BUY_PRICE_MEDIUM);
+		return true;
+	} else if(difficulty == "dificil") {
+		game->setPlayerCoins(COINS_HARD);
+		game->setEventProbability(EVENT_PROB_HARD);
+		game->setStormEventProbability(STORM_EVENT_PROB_HARD);
+		game->setMermaidEventProbability(MERMAID_EVENT_PROB_HARD);
+		game->setCalmEventProbability(LULL_EVENT_PROB_HARD);
+		game->setRiotEventProbability(RIOT_EVENT_PROB_HARD);
+		game->setShipPrice(SHIP_PRICE_HARD);
+		game->setSoldierPrice(SOLDIER_PRICE_HARD);
+		game->setFishSellPrice(FISH_SELL_PRICE_HARD);
+		game->setMerchSellPrice(MERCH_SELL_PRICE_HARD);
+		game->setMerchBuyPrice(MERCH_BUY_PRICE_HARD);
+		return true;
 	}
 	return false;
 }
@@ -557,7 +586,7 @@ void GameController::proxCommand()
 		if (spawnRandomEvent()) *onEvent = true;
 		else *onEvent = false;
 	}
-	//spawnRandomEnemyShip(map->getSeaCells(), map->getPirateProb());
+	spawnRandomEnemyShip(map->getSeaCells(), map->getPirateProb());
 	logger.addLineToInfoLog("\nNEXT TURN\n");
 }
 
@@ -595,7 +624,6 @@ bool GameController::shipCombat(ShipModel* friendlyShip, ShipModel* enemyShip)
 	int friendlyShipSoldiers = friendlyShip->getSoldiers();
 	int enemyShipSoldiers = enemyShip->getSoldiers();
 
-	//TODO: If ship sinks reset surrounding 
 	if (friendlyShipSoldiers == 0 || enemyShipSoldiers == 0)
 	{
 		infoLog << "Ship already sank, list update error!\n";
@@ -1065,7 +1093,6 @@ void GameController::friendlyFleetMovement(std::vector<ShipModel*> friendlyShips
 		{
 			switch (friendlyShip->getNavigation())
 			{
-				//TODO: Implement
 				case Navigation::USER:
 					watchingWaves(friendlyShip);
 					break;
@@ -1091,10 +1118,7 @@ void GameController::enemyFleetMovement(std::vector<ShipModel*> enemyShips)
 		{
 			switch (enemyShip->getNavigation())
 			{
-				//TODO: Implement 
 				case Navigation::AUTO: autoShipMovement(enemyShip); break;
-				//TODO: Enemy ships will only use auto movement
-				case Navigation::LOST: lostShipMovement(enemyShip); break;
 				default: break;
 			}
 		}
@@ -1126,7 +1150,6 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 			if (ship->getType() == ShipModel::Type::SCHOONER && ship->getOwner() != Owner::LOST)
 			{
 				if (sea->hasFish()) {
-					//TODO: Check if can catch fish
 					if (ship->canAddToShipCargo(1)) {
 						sea->catchFish();
 						SchoonerModel* schooner = (SchoonerModel*)ship;
@@ -1211,7 +1234,6 @@ void GameController::autoShipMovement(ShipModel* ship)
 {
 	switch (ship->getType())
 	{
-		//TODO: Complete
 		case ShipModel::Type::FRIGATE:
 			frigateAutoMovement(ship); 
 			break;
@@ -1276,6 +1298,7 @@ void GameController::frigateAutoMovement(ShipModel* frigate)
 		for (auto friendlyShip : game->getFriendlyShips()) {
 			frigate->setGoTo(friendlyShip->getPosition());
 			orderShipMovement(frigate);
+			return;
 		}
 		lostShipMovement(frigate);
 	}
@@ -1448,6 +1471,8 @@ void GameController::endGame()
 	game->setGameState(GameState::END);
 
 	double score = 0;
+
+	score += game->getPlayerCoins();
 
 	for (auto friendlyShip : game->getFriendlyShips()) {
 		score += calculateShipValue(friendlyShip);

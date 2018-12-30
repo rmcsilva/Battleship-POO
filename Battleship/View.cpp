@@ -19,8 +19,8 @@ void View::setupLayout(GameController *gameController)
 		{
 			case GameState::SETUP:
 				//TODO:Uncomment this is for tests only
-				//initialLayout(gameController);
-				gameController->readInitialFileConfigs("initialConfig.txt");
+				initialLayout(gameController);
+				//gameController->readInitialFileConfigs("initialConfig.txt");
 				break;
 			case GameState::GAME:
 				gameLayout(gameController);
@@ -81,9 +81,7 @@ bool View::readInitialCommands(std::string const &input, GameController * gameCo
 		case InitialCommands::DIFICULDADE: {
 			std::string difficulty;
 			line >> difficulty;
-			if (gameController->changeGameDifficulty(difficulty)) {
-				return true;
-			}
+			if (gameController->changeGameDifficulty(difficulty)) return true;
 			break; }
 		default:
 			return true;
@@ -277,7 +275,7 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			}
 			int amount;
 			line >> amount;
-			if (amount < 0) { break; }
+			if (amount < 0) break;
 			if (!gameController->buyMerchCommand(ship, amount)) {
 				std::cout << COMMAND_EXECUTE_ERROR;
 				Consola::getch();
@@ -417,7 +415,6 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 			line >> position;
 
 			int x, y;
-			char port;
 
 			try {
 				x = std::stoi(position);
@@ -509,7 +506,6 @@ bool View::readGameCommands(std::string const& input, GameController* gameContro
 		case GameCommands::INVALID:
 			break;
 	}
-	//Consola::getch();
 	return true;
 }
 
@@ -584,7 +580,6 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 	{
 		Consola::setTextColor(TEXT_BACKGROUND);
 
-		//TODO: Identify ship type
 		if (seaCell->getShipOwner() == Owner::PLAYER)
 			Consola::setBackgroundColor(FRIENDLY_SHIP_COLOR);
 		else if (seaCell->getShipOwner() == Owner::ENEMY)
@@ -596,7 +591,6 @@ void View::updateSeaCell(SeaModel* const& seaCell) const
 		
 		goToMapOffPosition(x, y);
 
-		//TODO: Verify ship type and add corresponding color
 		switch (seaCell->getShipType())
 		{
 			case ShipModel::Type::FRIGATE: std::cout << " F"; break;

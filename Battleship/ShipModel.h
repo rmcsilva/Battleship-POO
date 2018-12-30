@@ -10,7 +10,6 @@ enum class Navigation { USER, AUTO, ORDER, LOST };
 class ShipModel
 {
 	static int shipCount;
-	int price; //value TODO: Check if its still valid
 	const int maxCapacity, maxSoldiers, maxWater, maxMoves;
 	int id; //TODO:Unique id generated according to the the amount of ships in game
 protected:

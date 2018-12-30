@@ -1,21 +1,12 @@
 #pragma once
-#include "PortModel.h"
 #include "SeaModel.h"
 
 enum class GameState { SETUP, GAME, END };
 
 class GameModel
 {
-	static const int COINS_EASY;
-
-	static const int EVENT_PROB_EASY;
-	static const int STORM_EVENT_PROB_EASY;
-	static const int MERMAID_EVENT_PROB_EASY;
-	static const int LULL_EVENT_PROB_EASY;
-	static const int RIOT_EVENT_PROB_EASY;
-
 	int eventProb, stormProb, mermaidProb, lullProb, riotProb;
-	//TODO: Change consts of the prices according to game difficulty
+
 	int shipPrice, soldierPrice;
 	int fishSellPrice, merchSellPrice;
 	int merchBuyPrice;

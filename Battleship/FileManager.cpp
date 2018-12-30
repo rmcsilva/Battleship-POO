@@ -121,12 +121,31 @@ bool FileManager::executeCommandsFromFile(std::string filename, GameController* 
 			case View::GameCommands::COMPRANAV: {
 				char type;
 				linestream >> type;
-				if (!gameController->buyShip(type)) continue;
+				gameController->buyShip(type);
 				break; }
-			case View::GameCommands::VENDENAV: break;
+			case View::GameCommands::VENDENAV: {
+				char type;
+				linestream >> type;
+				gameController->sellShip(type);
+				break; }
 			case View::GameCommands::LISTA: break;
-			case View::GameCommands::COMPRA: break;
-			case View::GameCommands::VENDE: break;
+			case View::GameCommands::COMPRA: {
+				int id;
+				linestream >> id;
+				ShipModel* ship = gameController->getFriendlyShipByID(id);
+				if (ship == nullptr) break;
+				int amount;
+				linestream >> amount;
+				if (amount < 0) break; 
+				gameController->buyMerchCommand(ship, amount);
+				break; }
+			case View::GameCommands::VENDE: {
+				int id;
+				linestream >> id;
+				ShipModel* ship = gameController->getFriendlyShipByID(id);
+				if (ship == nullptr) break;
+				gameController->sellShipCargoCommand(ship);
+				break; }
 			case View::GameCommands::MOVE: {
 				int id;
 				linestream >> id;
@@ -138,8 +157,20 @@ bool FileManager::executeCommandsFromFile(std::string filename, GameController* 
 				CellModel* position = View::convertStringCommandToCell(pos, oldPosition, gameController);
 				if (!gameController->moveCommand(id, position)) continue;
 				break; }
-			case View::GameCommands::AUTO: break;
-			case View::GameCommands::STOP: break;
+			case View::GameCommands::AUTO: {
+				int id;
+				linestream >> id;
+				ShipModel* ship = gameController->getFriendlyShipByID(id);
+				if (ship == nullptr) break;
+				gameController->autoShipCommand(ship);
+				break; }
+			case View::GameCommands::STOP: {
+				int id;
+				linestream >> id;
+				ShipModel* ship = gameController->getFriendlyShipByID(id);
+				if (ship == nullptr) break;
+				gameController->stopShipCommand(ship);
+				break; }
 			case View::GameCommands::PIRATA: {
 				int x, y;
 				linestream >> x >> y;
@@ -174,22 +205,81 @@ bool FileManager::executeCommandsFromFile(std::string filename, GameController* 
 				if (amount < 0) { break; }
 				gameController->addCoins(amount);
 				break; }
-			case View::GameCommands::VAIPARA: break;
-			case View::GameCommands::COMPRASOLD: break;
-			case View::GameCommands::SAVEG: break;
-			case View::GameCommands::LOADG: break;
-			case View::GameCommands::DELG: break;
+			case View::GameCommands::VAIPARA: {
+				int id;
+				linestream >> id;
+				ShipModel* ship = gameController->getFriendlyShipByID(id);
+				if (ship == nullptr) break;
+
+				std::string position;
+				linestream >> position;
+
+				int x, y;
+
+				try {
+					x = std::stoi(position);
+					linestream >> y;
+				}
+				catch (std::invalid_argument e) {
+					char id = position.at(0);
+					CellModel* tmp = gameController->getFriendlyPortPositionByID(id);
+					if (tmp == nullptr) break;
+					x = tmp->getX() + 1;
+					y = tmp->getY() + 1;
+				}
+
+				CellModel* cell;
+				try {
+					cell = gameController->getCellAt(x - 1, y - 1);
+				}
+				catch (std::out_of_range e) {
+					break;
+				}
+
+				gameController->orderShipCommand(ship, cell);
+				break; }
+			case View::GameCommands::COMPRASOLD: {
+				int id;
+				linestream >> id;
+				ShipModel* ship = gameController->getFriendlyShipByID(id);
+				if (ship == nullptr) break;
+				int amount;
+				linestream >> amount;
+				if (amount < 0) break;
+				gameController->buySoldiersCommand(ship, amount);
+				break; }
+			case View::GameCommands::SAVEG: {
+				std::string name;
+				linestream >> name;
+				gameController->saveGameCommand(name);
+				break; }
+			case View::GameCommands::LOADG: {
+				std::string name;
+				linestream >> name;
+				gameController->loadGameCommand(name);
+				break; }
+			case View::GameCommands::DELG: {
+				std::string name;
+				linestream >> name;
+				gameController->deleteGameCommand(name);
+				break; }
 			case View::GameCommands::SAIR: {
 				gameController->endGame();
+				file.close();
+				return false;
 				break; }
-			case View::GameCommands::INVALID: return false;
-			default: return false;
+			case View::GameCommands::INVALID:
+				file.close();
+				return false;
+			default:
+				file.close();
+				return false;
 			}
 		}
 	} else {
+		file.close();
 		return false;
 	}
-
 	file.close();
 	return true;
 }

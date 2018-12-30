@@ -1,19 +1,10 @@
 #include "stdafx.h"
 #include "GameModel.h"
-#include "EventModel.h"
-
-const int GameModel::COINS_EASY = 5000;
-
-const int GameModel::EVENT_PROB_EASY = 20;
-const int GameModel::STORM_EVENT_PROB_EASY = 30;
-const int GameModel::MERMAID_EVENT_PROB_EASY = 30;
-const int GameModel::LULL_EVENT_PROB_EASY = 20;
-const int GameModel::RIOT_EVENT_PROB_EASY = 20;
+#include "GameUtil.h"
 
 GameModel::GameModel()
 {
 	state = GameState::SETUP;
-	//TODO: Check game difficulty
 	coins = COINS_EASY;
 
 	eventProb = EVENT_PROB_EASY;
@@ -21,6 +12,12 @@ GameModel::GameModel()
 	mermaidProb = MERMAID_EVENT_PROB_EASY;
 	lullProb = LULL_EVENT_PROB_EASY;
 	riotProb = RIOT_EVENT_PROB_EASY;
+
+	shipPrice = SHIP_PRICE_EASY;
+	soldierPrice = SOLDIER_PRICE_EASY;
+	fishSellPrice = FISH_SELL_PRICE_EASY;
+	merchSellPrice = MERCH_SELL_PRICE_EASY;
+	merchBuyPrice = MERCH_BUY_PRICE_EASY;
 }
 
 GameModel::~GameModel()
