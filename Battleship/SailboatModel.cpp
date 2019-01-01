@@ -26,7 +26,7 @@ bool SailboatModel::stormAttack()
 
 	int random = rand() % 100;
 
-	if (capacity > capacityThreshold)
+	if (getCapacity() > capacityThreshold)
 	{
 		if (random < 35)
 			return false;

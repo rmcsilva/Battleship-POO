@@ -21,8 +21,8 @@ ShipModel::Type FrigateModel::getType() const {return ShipModel::Type::FRIGATE;}
 
 bool FrigateModel::stormAttack()
 {
-	int soldiersLost = (soldiers * STORM_SOLDIERS_AFFECTED_PERCENTAGE) / 100;
-	soldiers -= soldiersLost;
+	int soldiersLost = (getSoldiers() * STORM_SOLDIERS_AFFECTED_PERCENTAGE) / 100;
+	removeSoldiers(soldiersLost);
 
 	int random = rand() % 100;
 

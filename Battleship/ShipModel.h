@@ -12,14 +12,14 @@ class ShipModel
 	static int shipCount;
 	const int maxCapacity, maxSoldiers, maxWater, maxMoves;
 	int id; //TODO:Unique id generated according to the the amount of ships in game
-protected:
-	ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMoves, Owner owner, CellModel* position);
 	int capacity, soldiers, water, merch, fish;
 	int numOfMoves = 0;
 	Owner owner;
 	Navigation navigation;
 	CellModel* position;
 	CellModel* goTo;
+protected:
+	ShipModel(int maxCapacity, int maxSoldiers, int maxWater, int maxMoves, Owner owner, CellModel* position);
 public:
 	virtual ~ShipModel();
 	enum class Type { FRIGATE, GALLEON, GHOST, SAILBOAT, SCHOONER };
@@ -55,6 +55,8 @@ public:
 	bool canAddSoldiersToShip(int amount);
 	void addSoldiersToShip(int amount);
 	void addWaterToShip(int amount);
+	void removeSoldiers(int soldiersLost);
+	void catchFish();
 	void refillWater();
 	void navigationCost();
 	void moveShip(CellModel* position);

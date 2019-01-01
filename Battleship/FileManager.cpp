@@ -319,10 +319,10 @@ bool FileManager::setupMap(std::ifstream &file,int const &lines, MapModel *&map,
 			try {
 				map = new MapModel(lines, value);
 			}
-			catch (std::bad_alloc& e) {
-				std::cerr << "bad_alloc caught: " << e.what() << '\n';
-			} catch (std::bad_array_new_length& e) {
+			catch (std::bad_array_new_length& e) {
 				std::cerr << "bad array new length caught: " << e.what() << '\n';
+			} catch (std::bad_alloc& e) {
+				std::cerr << "bad_alloc caught: " << e.what() << '\n';
 			}
 
 			if (readMap(file, lines, value, map, game)) {

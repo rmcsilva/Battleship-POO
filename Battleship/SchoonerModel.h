@@ -14,8 +14,6 @@ public:
 	Type getType() const override;
 	bool stormAttack() override;
 
-	void catchFish();
-
 	std::string getAsString() const override;
 
 	SchoonerModel* clone() override;

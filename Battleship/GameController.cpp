@@ -1203,8 +1203,7 @@ bool GameController::moveShip(ShipModel* ship, CellModel* goToPosition)
 				if (sea->hasFish()) {
 					if (ship->canAddToShipCargo(1)) {
 						sea->catchFish();
-						SchoonerModel* schooner = (SchoonerModel*)ship;
-						schooner->catchFish();
+						ship->catchFish();
 					}
 
 				}
@@ -1274,9 +1273,10 @@ void GameController::watchingWaves(ShipModel* ship)
 		if (ship->getType()==ShipModel::Type::SCHOONER) {
 			SeaModel* sea = (SeaModel*)ship->getPosition();
 			if (sea->hasFish()) {
-				SchoonerModel* schooner = (SchoonerModel*)ship;
-				sea->catchFish();
-				schooner->catchFish();
+				if (ship->canAddToShipCargo(1)) {
+					sea->catchFish();
+					ship->catchFish();
+				}
 			}
 		}
 	}

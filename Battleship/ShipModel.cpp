@@ -82,6 +82,20 @@ void ShipModel::addWaterToShip(int amount)
 	}
 }
 
+void ShipModel::removeSoldiers(int soldiersLost)
+{
+	soldiers -= soldiersLost;
+	if (soldiers < 0) {
+		soldiers = 0;
+	}
+}
+
+void ShipModel::catchFish()
+{
+	capacity += 1;
+	fish += 1;
+}
+
 void ShipModel::refillWater() {water = maxWater;}
 
 void ShipModel::navigationCost()

@@ -23,19 +23,13 @@ bool SchoonerModel::stormAttack()
 {
 	int random = rand() % 100;
 
-	if (random < 20) capacity = merch = fish = 0;
+	if (random < 20) empyShipCargo();
 
 	random = rand() % 100;
 
 	if (random < 35) return false;
 
 	return true;
-}
-
-void SchoonerModel::catchFish()
-{
-	fish += 1;
-	capacity += 1;
 }
 
 std::string SchoonerModel::getAsString() const {return "E";}

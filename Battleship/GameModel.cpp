@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "GameModel.h"
 #include "GameUtil.h"
+#include "PortModel.h"
 
 GameModel::GameModel()
 {
@@ -104,10 +105,12 @@ bool GameModel::removeFriendlyShip(ShipModel* ship)
 		if (friendlyShips.at(i)==ship)
 		{
 			CellModel *shipPosition = friendlyShips.at(i)->getPosition();
-			if (shipPosition->getType() == CellModel::Type::SEA)
-			{
+			if (shipPosition->getType() == CellModel::Type::SEA) {
 				SeaModel* seaCell = (SeaModel*)shipPosition;
 				seaCell->removeShip();
+			} else if(shipPosition->getType()==CellModel::Type::PORT) {
+				PortModel* portCell = (PortModel*)shipPosition;
+				portCell->removeShipFromPort(ship);
 			}
 			friendlyShips.erase(friendlyShips.begin() + i);
 			delete ship;
@@ -129,6 +132,9 @@ bool GameModel::removeEnemyShip(ShipModel* ship)
 			{
 				SeaModel* seaCell = (SeaModel*)shipPosition;
 				seaCell->removeShip();
+			} else if (shipPosition->getType() == CellModel::Type::PORT) {
+				PortModel* portCell = (PortModel*)shipPosition;
+				portCell->removeShipFromPort(ship);
 			}
 			enemyShips.erase(enemyShips.begin() + i);
 			delete ship;
