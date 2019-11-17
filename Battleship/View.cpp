@@ -195,6 +195,7 @@ void View::gameAction(GameController* gameController)
 	std::string command;
 	do
 	{
+		if (gameController->isGameOver()) { break; }
 		Consola::clrcommands(gameController->getNumLines() * 2 + 1);
 		showFriendlyPortsInfo(gameController->getFriendlyPorts());
 		showLogsInfo(gameController->getEnemyLog(), gameController->getCombatLog(), gameController->getEventLog());

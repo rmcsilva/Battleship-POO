@@ -1492,7 +1492,7 @@ double GameController::calculateShipContentValue(ShipModel* ship)
 bool GameController::isGameOver()
 {
 	//Game ends when there are no friendly ships and no money to buy new ones
-	return game->getFriendlyShips().size() == 0 && game->getPlayerCoins() > game->getShipPrice();
+	return game->getFriendlyShips().size() == 0 && game->getPlayerCoins() < game->getShipPrice();
 }
 
 void GameController::endGame()
