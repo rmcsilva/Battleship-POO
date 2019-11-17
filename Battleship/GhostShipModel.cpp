@@ -37,3 +37,7 @@ std::string GhostShipModel::getAsString() const {return "S";}
 GhostShipModel* GhostShipModel::clone() {
 	return new GhostShipModel(*this);
 }
+
+void GhostShipModel::shipsAutoMovement(GameController* gameController)
+{
+}

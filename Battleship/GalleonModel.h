@@ -19,5 +19,8 @@ public:
 	std::string getAsString() const override;
 
 	GalleonModel* clone() override;
+
+
+	void shipsAutoMovement(GameController* gameController) override;
 };
 

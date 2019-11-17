@@ -4,6 +4,8 @@
 #define COMBAT_WON_AFFECTED_SOLDIERS_PERCENTAGE 20
 #define PORT_BATTLE_AFFECTED_SOLDIERS_PERCENTAGE 20
 
+class GameController;
+
 enum class Owner { PLAYER, ENEMY, LOST };
 enum class Navigation { USER, AUTO, ORDER, LOST };
 
@@ -71,6 +73,8 @@ public:
 
 	void mermaidAttack(int percentage);
 	virtual bool stormAttack() = 0;
+
+	virtual void shipsAutoMovement(GameController* gameController) = 0;
 
 	virtual std::string getAsString() const = 0;
 	bool operator==(ShipModel const &ship) const;

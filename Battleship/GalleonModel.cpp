@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "GalleonModel.h"
+#include "GameController.h"
 
 const int GalleonModel::MAX_SOLDIERS = 40;
 const int GalleonModel::MAX_CAPACITY = 70;
@@ -36,4 +37,10 @@ std::string GalleonModel::getAsString() const {return "G";}
 
 GalleonModel* GalleonModel::clone() {
 	return new GalleonModel(*this);
+}
+
+void GalleonModel::shipsAutoMovement(GameController* gameController)
+{
+	gameController->watchingWaves(this);
+	blockShipMovement();
 }

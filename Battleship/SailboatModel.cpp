@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "SailboatModel.h"
+#include "GameController.h"
 
 const int SailboatModel::MAX_SOLDIERS = 20;
 const int SailboatModel::MAX_CAPACITY = 40;
@@ -41,4 +42,16 @@ std::string SailboatModel::getAsString() const {return "V";}
 
 SailboatModel* SailboatModel::clone() {
 	return new SailboatModel(*this);
+}
+
+void SailboatModel::shipsAutoMovement(GameController* gameController)
+{
+	for (auto friendlyShip : gameController->getFriendlyShips()) {
+		if (friendlyShip->getType() == ShipModel::Type::SCHOONER) {
+			setGoTo(friendlyShip->getPosition());
+			gameController->orderShipMovement(this);
+			return;
+		}
+	}
+	gameController->lostShipMovement(this);
 }

@@ -56,6 +56,7 @@ GameState GameController::getGameState() const { return game->getGameState(); }
 std::vector<PortModel*> GameController::getFriendlyPorts() const { return map->getFriendlyPorts(); }
 std::vector<PortModel*> GameController::getEnemyPorts() const {return map->getEnemyPorts();}
 std::vector<ShipModel*> GameController::getFriendlyShips() const { return game->getFriendlyShips(); }
+std::vector<ShipModel*> GameController::getEnemyShips() const { return game->getEnemyShips(); }
 std::vector<SeaModel*> GameController::getSeaCells() const {return map->getSeaCells();}
 
 int GameController::getNumLines() const { return map->getNumLines(); }
@@ -1130,6 +1131,8 @@ bool GameController::spawnRandomEnemyShip(std::vector<SeaModel*> seaCells, int p
 	return false;
 }
 
+std::vector<SeaModel*> GameController::getSurroundingSeaCellsInRange2(const CellModel* currentCell) const { return map->getSurroundingSeaCellsInRange2(currentCell); }
+
 void GameController::friendlyFleetMovement(std::vector<ShipModel*> friendlyShips)
 {
 	for (ShipModel* friendlyShip : friendlyShips)
@@ -1296,26 +1299,7 @@ void GameController::lostShipMovement(ShipModel* ship)
 
 void GameController::autoShipMovement(ShipModel* ship)
 {
-	switch (ship->getType())
-	{
-		case ShipModel::Type::FRIGATE:
-			frigateAutoMovement(ship); 
-			break;
-		case ShipModel::Type::GALLEON:
-			watchingWaves(ship);
-			ship->blockShipMovement();
-			break;
-		case ShipModel::Type::GHOST:
-			break;
-		case ShipModel::Type::SAILBOAT:
-			sailboatAutoMovement(ship);
-			break;
-		case ShipModel::Type::SCHOONER:
-			schoonerAutoMovement(ship);
-			break;
-		default: ;
-	}
-	
+	ship->shipsAutoMovement(this);	
 }
 
 void GameController::orderShipMovement(ShipModel* ship)
@@ -1345,74 +1329,10 @@ bool GameController::canMoveToCell(CellModel* cell)
 	return true;
 }
 
-void GameController::frigateAutoMovement(ShipModel* frigate)
-{
-	if (frigate->getOwner()==Owner::PLAYER)
-	{
-		for (auto enemyShip : game->getEnemyShips()) {
-			frigate->setGoTo(enemyShip->getPosition());
-			orderShipMovement(frigate);
-			return;
-		}
-		for (auto friendlyShip : game->getFriendlyShips()) {
-			if (friendlyShip->getType()==ShipModel::Type::SCHOONER || friendlyShip->getType()==ShipModel::Type::GALLEON) {
-				frigate->setGoTo(friendlyShip->getPosition());
-				orderShipMovement(frigate);
-				return;
-			}
-		}
-	} else {
-		for (auto friendlyShip : game->getFriendlyShips()) {
-			frigate->setGoTo(friendlyShip->getPosition());
-			orderShipMovement(frigate);
-			return;
-		}
-		lostShipMovement(frigate);
-	}
-}
-
-void GameController::sailboatAutoMovement(ShipModel* sailboat)
-{
-	for (auto friendlyShip : game->getFriendlyShips()) {
-		if (friendlyShip->getType() == ShipModel::Type::SCHOONER) {
-			sailboat->setGoTo(friendlyShip->getPosition());
-			orderShipMovement(sailboat);
-			return;
-		}
-	}
-	lostShipMovement(sailboat);
-}
-
-void GameController::schoonerAutoMovement(ShipModel* schooner)
-{
-	const int maxWater = schooner->getMaxWater();
-	const int percentageWater = maxWater * schooner->getWater() / 100;
-
-	//Checks if ships needs to go to port
-	if (!schooner->canAddToShipCargo(1) || percentageWater <= 25) {
-		if (!map->getFriendlyPorts().empty()) {
-			schooner->setGoTo((CellModel*)map->getFriendlyPorts().at(0));
-			orderShipMovement(schooner);
-		}
-	} else {
-		//Checks surrouding sea cells for fish
-		for (auto seaCell : map->getSurroundingSeaCellsInRange2(schooner->getPosition())) {
-			if (seaCell->hasFish()) {
-				if (canMoveToCell((CellModel*)seaCell)) {
-					schooner->setGoTo((CellModel*)seaCell);
-					orderShipMovement(schooner);
-					return;
-				}
-			}
-		}
-		generateRandomMove(schooner->getPosition());
-	}
-}
-
 void GameController::ghostShipMovement(ShipModel* ghost)
 {
 	GhostShipModel* ghostShip = (GhostShipModel*)ghost;
-	
+
 	//Checks if can combat enemy ships
 	if (ghostShip->canAttack()) {
 		int totalEnemyShips = game->getEnemyShips().size();
@@ -1424,23 +1344,21 @@ void GameController::ghostShipMovement(ShipModel* ghost)
 	} else {
 		ghostShip->updateCountdown();
 	}
-	
-	
 
 	int random = rand() % 2;
 
 	if (random) {
 		int totalFriendlyPorts = map->getFriendlyPorts().size();
 
-		if (totalFriendlyPorts>0) {
+		if (totalFriendlyPorts > 0) {
 			random = rand() % totalFriendlyPorts;
 			PortModel* port = map->getFriendlyPorts().at(random);
 
-			if(ghost->getPosition()->getType()!=CellModel::Type::PORT) return;
+			if (ghost->getPosition()->getType() != CellModel::Type::PORT) return;
 
 			PortModel* position = (PortModel*)ghostShip->getPosition();
 
-			if (port->getID()!=position->getID()) {
+			if (port->getID() != position->getID()) {
 				moveShip(ghost, getCellAt(port->getX(), port->getY()));
 			}
 		}

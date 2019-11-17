@@ -28,6 +28,7 @@ public:
 	std::vector<PortModel*> getFriendlyPorts() const;
 	std::vector<PortModel*> getEnemyPorts() const;
 	std::vector<ShipModel*> getFriendlyShips() const;
+	std::vector<ShipModel*> getEnemyShips() const;
 	std::vector<SeaModel*> getSeaCells() const;
 	int getNumLines() const;
 	int getNumColumns() const;
@@ -85,6 +86,9 @@ public:
 	//Enemy Ship Spawn Logic
 	bool spawnRandomEnemyShip(std::vector<SeaModel*>seaCells, int probability);
 
+	//Map Logic
+	std::vector<SeaModel*> getSurroundingSeaCellsInRange2(const CellModel* currentCell) const;
+
 	//Ship Movement Logic
 	void friendlyFleetMovement(std::vector<ShipModel*> friendlyShips);
 	void enemyFleetMovement(std::vector<ShipModel*> enemyShips);
@@ -99,9 +103,6 @@ public:
 
 	bool canMoveToCell(CellModel* cell);
 
-	void frigateAutoMovement(ShipModel* frigate);
-	void sailboatAutoMovement(ShipModel* sailboat);
-	void schoonerAutoMovement(ShipModel* schooner);
 	void ghostShipMovement(ShipModel* ghost);
 
 	CellModel* goToCell(CellModel* current, CellModel* goTo);

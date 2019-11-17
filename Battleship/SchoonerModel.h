@@ -17,5 +17,7 @@ public:
 	std::string getAsString() const override;
 
 	SchoonerModel* clone() override;
+
+	void shipsAutoMovement(GameController* gameController) override;
 };
 

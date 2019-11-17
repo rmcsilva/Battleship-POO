@@ -22,5 +22,7 @@ public:
 	std::string getAsString() const override;
 
 	GhostShipModel* clone() override;
+
+	void shipsAutoMovement(GameController* gameController) override;
 };
 
